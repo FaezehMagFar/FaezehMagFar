@@ -5,197 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research Projects - Faezeh (Rojan)</title>
     <link rel="stylesheet" href="styles.css">
+
+    <!-- OPTIONAL: move this to styles.css -->
+    <style>
+        .project-video {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <ul class="nav-menu">
-                <li><a href="index.html">About Me</a></li>
-                <li><a href="professional-contributions.html">Professional Contributions</a></li>
-                <li><a href="research-projects.html" class="active">Research Projects</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="my-toon-world.html">My Toon World</a></li>
-                <li><a href="tools.html">Tools</a></li>
-                <li><a href="knowledge-practice.html">Knowledge & Practice</a></li>
-            </ul>
-            <a href="index.html" class="nav-logo">
-                <img src="logo.png" alt="FMF Logo">
-            </a>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <ul class="nav-menu">
+            <li><a href="index.html">About Me</a></li>
+            <li><a href="professional-contributions.html">Professional Contributions</a></li>
+            <li><a href="research-projects.html" class="active">Research Projects</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="my-toon-world.html">My Toon World</a></li>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="knowledge-practice.html">Knowledge & Practice</a></li>
+        </ul>
+        <a href="index.html" class="nav-logo">
+            <img src="logo.png" alt="FMF Logo">
+        </a>
+    </div>
+</nav>
+
+<main class="main-content">
+
+    <div class="page-header">
+        <h1>Research Projects</h1>
+        <p class="subtitle">Exploring Coastal Resilience, Flood Risk Assessment, and Infrastructure Safety</p>
+    </div>
+
+    <!-- Project 1 -->
+    <section class="research-project">
+        <div class="project-infographic">
+            <video class="project-video" autoplay muted loop playsinline preload="metadata">
+                <source src="closure-criteria.mp4" type="video/mp4">
+                <source src="closure-criteria.webm" type="video/webm">
+            </video>
         </div>
-    </nav>
-
-    <main class="main-content">
-        <div class="page-header">
-            <h1>Research Projects</h1>
-            <p class="subtitle">Exploring Coastal Resilience, Flood Risk Assessment, and Infrastructure Safety</p>
+        <div class="project-details">
+            <h2>Closure Criteria for Coastal Roadways Under Flooding Conditions</h2>
+            <p class="project-meta">
+                <span class="project-status published">Published</span>
+            </p>
+            <p class="project-description">
+                This research develops a comprehensive framework for assessing flood impacts on transportation systems and establishing road closure criteria for coastal roads.
+            </p>
         </div>
+    </section>
 
-        <!-- Project 1: Closure Criteria for Coastal Roadways -->
-        <section class="research-project">
-            <div class="project-infographic">
-                <img src="closure-criteria.png" alt="Closure Criteria for Coastal Roadways Under Flooding Conditions">
-            </div>
-            <div class="project-details">
-                <h2>Closure Criteria for Coastal Roadways Under Flooding Conditions</h2>
-                <p class="project-meta">
-                    <span class="project-status published">Published</span>
-                </p>
-                <p class="project-description">
-                    This research develops a comprehensive framework for assessing flood impacts on transportation systems and establishing road closure criteria for coastal roads. By integrating Delft3D-FM hydrodynamic modeling with empirical road closure data, geospatial analysis, and vehicle stability assessments, the study evaluates flood hazards under current and future climate scenarios including sea level rise projections.
-                </p>
-                <div class="project-highlights">
-                    <h3>Key Contributions:</h3>
-                    <ul>
-                        <li>Integrated hydrodynamic modeling with empirical closure data</li>
-                        <li>Developed vehicle-specific closure criteria based on depth and velocity</li>
-                        <li>Applied Monte Carlo sampling and SVM classification for hazard assessment</li>
-                        <li>Assessed infrastructure resilience under sea level rise scenarios (2050 & 2100)</li>
-                    </ul>
-                </div>
-                <div class="project-links">
-                    <a href="https://www.sciencedirect.com/science/article/pii/S2212420925006296" class="project-btn" target="_blank">Read Publication</a>
-                    <a href="https://www.preventionweb.net/publication/documents-and-publications/establishing-closure-criteria-coastal-roadways-under" class="project-btn secondary" target="_blank">PreventionWeb Feature</a>
-                    <a href="https://faezehmagfar.github.io/Closure-Criteria-for-Coastal-Roadways/" class="project-btn" target="_blank">Web-based Dashboard</a>
-                </div>
-                <p class="project-collaborators">
-                    <strong>Collaborators:</strong> Soheil Radfar, Dr. Hamed Moftakhari, Dr. Hamid Moradkhani
-                </p>
-            </div>
-        </section>
+    <!-- Project 2 -->
+    <section class="research-project">
+        <div class="project-infographic">
+            <video class="project-video" autoplay muted loop playsinline preload="metadata">
+                <source src="project2.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="project-details">
+            <h2>Gulf Coast Extreme Water Level Threshold Prediction via Deep Learning</h2>
+        </div>
+    </section>
 
-        <!-- Project 2: Gulf Coast Extreme Water Level Prediction -->
-        <section class="research-project">
-            <div class="project-infographic">
-                <img src="project2-infographic.png" alt="Gulf Coast Extreme Water Level Threshold Prediction">
-            </div>
-            <div class="project-details">
-                <h2>Gulf Coast Extreme Water Level Threshold Prediction via Deep Learning</h2>
-                <p class="project-meta">
-                    <span class="project-year">2024 - Present</span> | 
-                    <span class="project-status ongoing">Ongoing</span>
-                </p>
-                <p class="project-description">
-                    This project employs advanced deep learning techniques to predict extreme water level thresholds along the Gulf Coast. The research aims to improve early warning systems and enhance coastal resilience planning by developing accurate predictive models for storm surge and compound flooding events.
-                </p>
-                <div class="project-highlights">
-                    <h3>Key Contributions:</h3>
-                    <ul>
-                        <li>Development of deep learning models for water level prediction</li>
-                        <li>Integration of historical water level data and meteorological forcing</li>
-                        <li>Analysis of extreme value statistics for threshold identification</li>
-                        <li>Application to Gulf Coast vulnerable regions</li>
-                    </ul>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="project-btn" target="_blank">Presentation (ICCE 2026)</a>
-                </div>
-                <p class="project-collaborators">
-                    <strong>Collaborators:</strong> Dr. Hamed Moftakhari, Dr. William Sweet, Dr. Jayantha Obeysekera
-                </p>
-            </div>
-        </section>
+    <!-- Project 3 -->
+    <section class="research-project">
+        <div class="project-infographic">
+            <video class="project-video" autoplay muted loop playsinline preload="metadata">
+                <source src="project3.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="project-details">
+            <h2>Estimating Fine Resolution Local Sea Level Scaling Factors</h2>
+        </div>
+    </section>
 
-        <!-- Project 3: Sea Level Scaling Factors -->
-        <section class="research-project">
-            <div class="project-infographic">
-                <img src="project3-infographic.png" alt="Local Sea Level Scaling Factors">
-            </div>
-            <div class="project-details">
-                <h2>Estimating Fine Resolution Local Sea Level Scaling Factors Using Ensemble Deep Learning</h2>
-                <p class="project-meta">
-                    <span class="project-year">2024 - Present</span> | 
-                    <span class="project-status ongoing">Ongoing</span>
-                </p>
-                <p class="project-description">
-                    This research focuses on developing high-resolution local sea level scaling factors using ensemble deep learning approaches. The project addresses the challenge of downscaling global sea level rise projections to local scales, enabling better coastal planning and adaptation strategies.
-                </p>
-                <div class="project-highlights">
-                    <h3>Key Contributions:</h3>
-                    <ul>
-                        <li>Ensemble deep learning framework for sea level prediction</li>
-                        <li>Fine-resolution spatial analysis of sea level variability</li>
-                        <li>Integration of tide gauge data and satellite altimetry</li>
-                        <li>Development of location-specific scaling factors</li>
-                    </ul>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="project-btn" target="_blank">Poster (AGU 2025)</a>
-                </div>
-                <p class="project-collaborators">
-                    <strong>Collaborators:</strong> Dr. Hamed Moftakhari, Dr. William Sweet, Dr. Jayantha Obeysekera
-                </p>
-            </div>
-        </section>
+    <!-- Project 4 -->
+    <section class="research-project">
+        <div class="project-infographic">
+            <video class="project-video" autoplay muted loop playsinline preload="metadata">
+                <source src="project4.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="project-details">
+            <h2>Hybrid Deep Learning for Flood Inundation Mapping</h2>
+        </div>
+    </section>
 
-        <!-- Project 4: Hybrid Deep Learning for Flood Inundation Mapping -->
-        <section class="research-project">
-            <div class="project-infographic">
-                <img src="project4-infographic.png" alt="Hybrid Deep Learning Flood Mapping">
-            </div>
-            <div class="project-details">
-                <h2>Bridging Return Period Gaps in Flood Inundation Mapping Using Hybrid Deep Learning</h2>
-                <p class="project-meta">
-                    <span class="project-year">2024 - Present</span> | 
-                    <span class="project-status ongoing">Ongoing</span>
-                </p>
-                <p class="project-description">
-                    This innovative project combines physics-based modeling with deep learning to create comprehensive flood inundation maps across multiple return periods. The hybrid approach addresses computational limitations of traditional methods while maintaining physical consistency.
-                </p>
-                <div class="project-highlights">
-                    <h3>Key Contributions:</h3>
-                    <ul>
-                        <li>Hybrid modeling framework combining physics-based and ML approaches</li>
-                        <li>Generation of flood maps for multiple return periods</li>
-                        <li>Computational efficiency improvements over traditional methods</li>
-                        <li>Validation against observed flood events</li>
-                    </ul>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="project-btn" target="_blank">Poster (AGU 2025)</a>
-                </div>
-                <p class="project-collaborators">
-                    <strong>Collaborators:</strong> Md. Sarder Sakib, Mohamed Mowafy, Huan Wang, Dr. Sagy Cohen, Dr. Yu-Fen Tsang, Dr. Hamed Moftakhari, Dr. Daniel F. Muñoz, Dr. Patrick Ray, Dr. Fang Lei
-                </p>
-            </div>
-        </section>
+    <!-- Project 5 -->
+    <section class="research-project">
+        <div class="project-infographic">
+            <video class="project-video" autoplay muted loop playsinline preload="metadata">
+                <source src="project5.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="project-details">
+            <h2>Numerical Study of Skirted Foundations for Offshore Wind Turbines</h2>
+        </div>
+    </section>
 
-        <!-- Project 5: Skirted Foundations of Wind Turbines -->
-        <section class="research-project">
-            <div class="project-infographic">
-                <img src="project5-infographic.png" alt="Skirted Foundations Wind Turbines">
-            </div>
-            <div class="project-details">
-                <h2>Numerical Study of Skirted Foundations for Offshore Wind Turbines</h2>
-                <p class="project-meta">
-                    <span class="project-year">2019 - 2022</span> | 
-                    <span class="project-status completed">Completed</span>
-                </p>
-                <p class="project-description">
-                    Master's thesis research investigating the behavior of skirted foundations for offshore and onland wind turbines on sand under lateral dynamic loading. The study provides insights into foundation design optimization for renewable energy infrastructure.
-                </p>
-                <div class="project-highlights">
-                    <h3>Key Contributions:</h3>
-                    <ul>
-                        <li>Numerical modeling of skirted foundation behavior under dynamic loading</li>
-                        <li>Analysis of foundation-soil interaction for wind turbine structures</li>
-                        <li>Review of existing numerical studies and future research directions</li>
-                        <li>Design recommendations for offshore wind turbine foundations</li>
-                    </ul>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="project-btn" target="_blank">Master's Thesis</a>
-                    <a href="#" class="project-btn secondary" target="_blank">Conference Paper</a>
-                </div>
-                <p class="project-collaborators">
-                    <strong>Advisor:</strong> Dr. M. Makarchian
-                </p>
-            </div>
-        </section>
+</main>
 
-    </main>
+<footer class="footer">
+    <p>&copy; 2026 Faezeh (Rojan) Maghsoodifar. All rights reserved.</p>
+</footer>
 
-    <footer class="footer">
-        <p>&copy; 2026 Faezeh (Rojan) Maghsoodifar. All rights reserved.</p>
-    </footer>
 </body>
 </html>
