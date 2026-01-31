@@ -161,7 +161,7 @@ body {
     flex-direction: column;
     gap: 12px;
     margin-bottom: 30px;
-    align-items: left;
+    align-items: flex-start;
 }
 
 .education-item {
@@ -813,4 +813,201 @@ body {
     .edu-years {
         min-width: auto;
     }
+}
+
+/* Research Projects Page Styles */
+.research-project {
+    background-color: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 60px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.research-project:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.project-infographic {
+    width: 100%;
+    overflow: hidden;
+    background-color: #f8f9fa;
+}
+
+.project-infographic img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.research-project:hover .project-infographic img {
+    transform: scale(1.02);
+}
+
+.project-details {
+    padding: 40px;
+}
+
+.project-details h2 {
+    font-size: 28px;
+    color: #222;
+    margin-bottom: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.project-meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.project-year {
+    font-weight: 500;
+    color: #007bff;
+}
+
+.project-status {
+    background-color: #28a745;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.project-description {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+.project-highlights {
+    margin: 30px 0;
+}
+
+.project-highlights h3 {
+    font-size: 18px;
+    color: #222;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.project-highlights ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.project-highlights li {
+    padding: 10px 0 10px 30px;
+    position: relative;
+    color: #444;
+    line-height: 1.6;
+}
+
+.project-highlights li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #007bff;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.project-links {
+    margin: 30px 0;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.project-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+}
+
+.project-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.project-btn.secondary {
+    background-color: #6c757d;
+    box-shadow: 0 2px 8px rgba(108, 117, 125, 0.2);
+}
+
+.project-btn.secondary:hover {
+    background-color: #5a6268;
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+.project-collaborators {
+    font-size: 14px;
+    color: #666;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.project-collaborators strong {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Responsive Design for Research Projects */
+@media (max-width: 768px) {
+    .project-details {
+        padding: 25px;
+    }
+    
+    .project-details h2 {
+        font-size: 24px;
+    }
+    
+    .project-description {
+        text-align: left;
+    }
+    
+    .project-links {
+        flex-direction: column;
+    }
+    
+    .project-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Status Badge Variations */
+.project-status.published {
+    background-color: #28a745;
+}
+
+.project-status.ongoing {
+    background-color: #007bff;
+}
+
+.project-status.completed {
+    background-color: #6c757d;
+}
+
+.project-status.in-progress {
+    background-color: #ffc107;
+    color: #333;
 }
