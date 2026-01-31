@@ -143,43 +143,40 @@ body {
 .education-section {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 12px;
     margin-bottom: 30px;
+    align-items: center;
 }
 
 .education-item {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    border-left: 4px solid #007bff;
-}
-
-.education-header {
     display: flex;
-    justify-content: space-between;
+    gap: 15px;
     align-items: baseline;
-    margin-bottom: 8px;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.degree {
-    font-size: 18px;
-    font-weight: 600;
-    color: #222;
-    margin: 0;
-}
-
-.years {
+    padding: 8px 0;
     font-size: 14px;
-    color: #666;
+}
+
+.edu-years {
+    font-weight: 500;
+    color: #333;
+    min-width: 100px;
+    flex-shrink: 0;
+    text-align: right;
+}
+
+.edu-details {
+    color: #333;
+    line-height: 1.6;
+}
+
+.uni-red {
+    color: #d32f2f;
     font-weight: 500;
 }
 
-.institution {
-    font-size: 15px;
-    color: #555;
-    margin: 0;
+.uni-blue {
+    color: #1976d2;
+    font-weight: 500;
 }
 
 /* Social Links */
@@ -189,6 +186,14 @@ body {
     margin-top: 40px;
 }
 
+/* Social links in profile card */
+.profile-card .social-links {
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
 .social-icon {
     width: 45px;
     height: 45px;
@@ -196,6 +201,11 @@ body {
     align-items: center;
     justify-content: center;
     transition: transform 0.3s ease;
+}
+
+.profile-card .social-icon {
+    width: 40px;
+    height: 40px;
 }
 
 .social-icon img {
@@ -238,6 +248,7 @@ body {
     font-size: 28px;
     font-weight: 500;
     margin-bottom: 15px;
+    margin-top: 10px;
     color: #222;
 }
 
@@ -673,5 +684,14 @@ body {
     
     .research-areas {
         grid-template-columns: 1fr;
+    }
+    
+    .education-item {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .edu-years {
+        min-width: auto;
     }
 }
