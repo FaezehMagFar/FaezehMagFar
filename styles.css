@@ -34,11 +34,11 @@ body {
 .nav-logo {
     display: flex;
     align-items: center;
-    height: 10px;
+    height: 40px;
 }
 
 .nav-logo img {
-    height: 50px;
+    height: 40px;
     width: auto;
     transition: transform 0.3s ease;
 }
@@ -211,8 +211,8 @@ body {
 }
 
 .social-icon {
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -220,8 +220,8 @@ body {
 }
 
 .profile-card .social-icon {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
 }
 
 .social-icon img {
@@ -768,7 +768,7 @@ body {
     }
     
     .nav-logo img {
-        height: 40px;
+        height: 35px;
     }
     
     .nav-menu {
