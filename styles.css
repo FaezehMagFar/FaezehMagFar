@@ -34,7 +34,7 @@ body {
 .nav-logo {
     display: flex;
     align-items: center;
-    height: 40px;
+    height: 60px;
 }
 
 .nav-logo img {
