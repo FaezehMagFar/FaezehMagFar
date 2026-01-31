@@ -145,7 +145,7 @@ body {
     flex-direction: column;
     gap: 12px;
     margin-bottom: 30px;
-    align-items: center;
+    align-items: left;
 }
 
 .education-item {
