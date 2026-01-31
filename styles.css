@@ -120,6 +120,75 @@ body {
     margin-top: 40px;
 }
 
+/* Research Interests Section */
+.section-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #222;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.research-interests {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #444;
+    text-align: justify;
+    margin-bottom: 30px;
+}
+
+/* Education Section */
+.education-section {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.education-item {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.education-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.degree {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222;
+    margin: 0;
+}
+
+.years {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.institution {
+    font-size: 15px;
+    color: #555;
+    margin: 0;
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    gap: 20px;
+    margin-top: 40px;
+}
+
 .social-icon {
     width: 45px;
     height: 45px;
