@@ -9,7 +9,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
-    background-color: #ffffff;
+    background-color: #f5f5f5;
 }
 
 /* Navigation Bar */
@@ -29,6 +29,22 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px 40px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+.nav-logo img {
+    height: 50px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.nav-logo:hover img {
+    transform: scale(1.05);
 }
 
 .nav-menu {
@@ -145,7 +161,7 @@ body {
     flex-direction: column;
     gap: 12px;
     margin-bottom: 30px;
-    align-items: left;
+    align-items: center;
 }
 
 .education-item {
@@ -161,7 +177,7 @@ body {
     color: #333;
     min-width: 100px;
     flex-shrink: 0;
-    text-align: left;
+    text-align: right;
 }
 
 .edu-details {
@@ -170,12 +186,12 @@ body {
 }
 
 .uni-red {
-    color: #DC143C;
+    color: #d32f2f;
     font-weight: 500;
 }
 
 .uni-blue {
-    color: #5B23FF;
+    color: #1976d2;
     font-weight: 500;
 }
 
@@ -310,6 +326,69 @@ body {
     margin-top: 80px;
 }
 
+/* Publications Page Styles */
+.publications-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.publications-header h1 {
+    font-size: 42px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 25px;
+    line-height: 1.3;
+}
+
+.social-links-pub {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.pub-section {
+    margin-bottom: 50px;
+}
+
+.pub-section-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 25px;
+    text-decoration: underline;
+}
+
+.pub-item {
+    margin-bottom: 20px;
+}
+
+.pub-item p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #333;
+    text-align: justify;
+}
+
+.pub-item strong {
+    font-weight: 600;
+}
+
+.pub-item em {
+    font-style: italic;
+}
+
+.pub-item a {
+    color: #1976d2;
+    text-decoration: underline;
+}
+
+.pub-item a:hover {
+    color: #0d47a1;
+}
+
 /* Page Header */
 .page-header {
     text-align: center;
@@ -327,6 +406,37 @@ body {
     font-size: 18px;
     color: #666;
     font-style: italic;
+    margin-bottom: 20px;
+}
+
+.page-header .social-links-pub {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: nowrap;
+}
+
+.page-header .social-icon {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.page-header .social-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.page-header .social-icon:hover {
+    transform: translateY(-3px);
 }
 
 /* Content Sections */
@@ -652,6 +762,15 @@ body {
         gap: 20px;
     }
     
+    .nav-logo {
+        order: -1;
+        margin-bottom: 10px;
+    }
+    
+    .nav-logo img {
+        height: 40px;
+    }
+    
     .nav-menu {
         flex-wrap: wrap;
         justify-content: center;
@@ -672,6 +791,15 @@ body {
     
     .page-header h1 {
         font-size: 36px;
+    }
+    
+    .publications-header h1 {
+        font-size: 32px;
+    }
+    
+    .pub-item p {
+        font-size: 14px;
+        text-align: left;
     }
     
     .gallery-grid {
