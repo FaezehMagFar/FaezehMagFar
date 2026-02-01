@@ -27,16 +27,22 @@
 
     <main class="main-content">
         <div class="blog-post-container">
-            <!-- Main Post Content -->
+            <!-- LEFT SIDE: Main Post Content -->
             <article class="blog-post-full">
                 <!-- Back to Blog -->
                 <a href="../../blog.html" class="back-to-blog">
                     <i class="fas fa-arrow-left"></i> Back to Blog
                 </a>
 
+                <!-- Featured Image -->
+                <div class="post-featured-image">
+                    <img src="overview.png" alt="Understanding DEM, DTM, and DSM">
+                </div>
+
                 <!-- Post Header -->
                 <header class="post-header">
                     <h1 class="post-title-full">Understanding DEM, DTM, and DSM</h1>
+                    
                     <div class="post-meta-full">
                         <div class="author-info-full">
                             <img src="../../profile-photo.jpg" alt="Rojan" class="author-avatar-full">
@@ -70,11 +76,6 @@
                         </div>
                     </div>
                 </header>
-
-                <!-- Featured Image -->
-                <div class="post-featured-image">
-                    <img src="overview.png" alt="Understanding DEM, DTM, and DSM">
-                </div>
 
                 <!-- Post Content -->
                 <div class="post-content">
@@ -137,9 +138,9 @@
                 </div>
             </article>
 
-            <!-- Sidebar with Related/Newer Posts -->
+            <!-- RIGHT SIDE: Sidebar with Related/Newer Posts -->
             <aside class="post-sidebar">
-                <!-- Newer Posts Section -->
+                <!-- Recent Posts Section -->
                 <div class="sidebar-section">
                     <h3 class="sidebar-title">
                         <i class="fas fa-clock"></i> Recent Posts
@@ -261,7 +262,7 @@
             return `
                 <a href="${post.url}" class="sidebar-post-item">
                     <div class="sidebar-post-image">
-                        <img src="${post.image}" alt="${post.title}">
+                        <img src="${post.image}" alt="${post.title}" onerror="this.src='../../Blog/Post1/featured-image.jpg'">
                     </div>
                     <div class="sidebar-post-info">
                         <h4 class="sidebar-post-title">${post.title}</h4>
