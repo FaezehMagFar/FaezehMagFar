@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding DEM, DTM, and DSM - Faezeh (Rojan)</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="../../index.html">About Me</a></li>
+                <li><a href="../../professional-contributions.html">Professional Contributions</a></li>
+                <li><a href="../../research-projects.html">Research Projects</a></li>
+                <li><a href="../../blog.html" class="active">Blog</a></li>
+                <li><a href="../../my-toon-world.html">My Toon World</a></li>
+                <li><a href="../../tools.html">Tools</a></li>
+                <li><a href="../../knowledge-practice.html">Knowledge & Practice</a></li>
+            </ul>
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../logo.png" alt="FMF Logo">
+            </a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <article class="blog-post-full">
+            <!-- Back to Blog -->
+            <a href="../../blog.html" class="back-to-blog">
+                <i class="fas fa-arrow-left"></i> Back to Blog
+            </a>
+
+            <!-- Post Header -->
+            <header class="post-header">
+                <h1 class="post-title-full">Understanding DEM, DTM, and DSM</h1>
+                
+                <div class="post-meta-full">
+                    <div class="author-info-full">
+                        <img src="../../profile-photo.jpg" alt="Rojan" class="author-avatar-full">
+                        <div>
+                            <span class="author-name-full">Rojan</span>
+                            <div class="post-details-full">
+                                <span class="post-date-full">Aug 5, 2025</span>
+                                <span class="post-dot">•</span>
+                                <span class="post-read-time-full">3 min read</span>
+                                <span class="post-dot">•</span>
+                                <span class="view-count-full">
+                                    <i class="fas fa-eye"></i> 13 views
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="share-buttons">
+                        <button class="share-btn" onclick="sharePost('linkedin')" title="Share on LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </button>
+                        <button class="share-btn" onclick="sharePost('twitter')" title="Share on Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </button>
+                        <button class="share-btn" onclick="sharePost('facebook')" title="Share on Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </button>
+                        <button class="share-btn" onclick="copyPostLink()" title="Copy Link">
+                            <i class="fas fa-link"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Featured Image -->
+            <div class="post-featured-image">
+                <img src="featured-image.jpg" alt="Understanding DEM, DTM, and DSM">
+            </div>
+
+            <!-- Post Content -->
+            <div class="post-content">
+                <p>
+                    Digital Elevation Models (DEMs) are at the heart of geospatial analysis, providing a three-dimensional view of the Earth's surface. They are essential tools in fields ranging from flood modeling and coastal engineering to urban planning and environmental science.
+                </p>
+
+                <h2>What is a DEM?</h2>
+                <p>
+                    A Digital Elevation Model (DEM) represents the bare Earth surface, excluding all natural and built features. It's a raster dataset where each pixel contains an elevation value, typically referenced to a vertical datum like NAVD88 or mean sea level.
+                </p>
+
+                <h2>Understanding DTM</h2>
+                <p>
+                    A Digital Terrain Model (DTM) is similar to a DEM but focuses specifically on the terrain surface. It filters out vegetation, buildings, and other surface objects to reveal the underlying ground elevation. DTMs are particularly valuable for:
+                </p>
+                <ul>
+                    <li>Hydrological modeling and watershed analysis</li>
+                    <li>Infrastructure planning and design</li>
+                    <li>Geological studies</li>
+                    <li>Calculating accurate slope and aspect</li>
+                </ul>
+
+                <h2>What About DSM?</h2>
+                <p>
+                    A Digital Surface Model (DSM) captures the Earth's surface including all objects on it - trees, buildings, bridges, and other structures. Unlike DEMs and DTMs, DSMs represent the top of the canopy, rooftops, and other elevated features.
+                </p>
+
+                <h2>Applications in Coastal Research</h2>
+                <p>
+                    In my research on coastal flooding and infrastructure resilience, understanding the differences between these models is crucial. For flood inundation mapping:
+                </p>
+                <ul>
+                    <li><strong>DEMs and DTMs</strong> help identify low-lying areas vulnerable to flooding</li>
+                    <li><strong>DSMs</strong> are essential for understanding how buildings and infrastructure might obstruct or channel floodwaters</li>
+                    <li>High-resolution LiDAR-derived models enable accurate depth of inundation calculations</li>
+                </ul>
+
+                <h2>Choosing the Right Model</h2>
+                <p>
+                    The choice between DEM, DTM, and DSM depends on your specific application:
+                </p>
+                <ul>
+                    <li>Use <strong>DEMs</strong> for general terrain analysis and visualization</li>
+                    <li>Use <strong>DTMs</strong> when you need precise ground elevation without surface features</li>
+                    <li>Use <strong>DSMs</strong> when surface objects are relevant to your analysis</li>
+                </ul>
+
+                <p>
+                    Understanding these fundamental geospatial datasets is the first step toward conducting robust coastal flood modeling and infrastructure vulnerability assessments.
+                </p>
+            </div>
+
+            <!-- Tags -->
+            <div class="post-tags">
+                <span class="tag">Geospatial Analysis</span>
+                <span class="tag">DEM</span>
+                <span class="tag">Flood Modeling</span>
+                <span class="tag">Coastal Engineering</span>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Faezeh (Rojan) Maghsoodifar. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function sharePost(platform) {
+            const title = document.querySelector('.post-title-full').textContent;
+            const url = window.location.href;
+            const text = encodeURIComponent(title);
+            const shareUrl = encodeURIComponent(url);
+            
+            let shareLink = '';
+            
+            switch(platform) {
+                case 'linkedin':
+                    shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`;
+                    break;
+                case 'twitter':
+                    shareLink = `https://twitter.com/intent/tweet?text=${text}&url=${shareUrl}`;
+                    break;
+                case 'facebook':
+                    shareLink = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+                    break;
+            }
+            
+            if (shareLink) {
+                window.open(shareLink, '_blank', 'width=600,height=400');
+            }
+        }
+
+        function copyPostLink() {
+            const url = window.location.href;
+            
+            navigator.clipboard.writeText(url).then(() => {
+                const notification = document.createElement('div');
+                notification.className = 'copy-notification';
+                notification.textContent = '✓ Link copied to clipboard!';
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
