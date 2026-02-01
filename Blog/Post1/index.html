@@ -26,115 +26,140 @@
     </nav>
 
     <main class="main-content">
-        <article class="blog-post-full">
-            <!-- Back to Blog -->
-            <a href="../../blog.html" class="back-to-blog">
-                <i class="fas fa-arrow-left"></i> Back to Blog
-            </a>
+        <div class="blog-post-container">
+            <!-- Main Post Content -->
+            <article class="blog-post-full">
+                <!-- Back to Blog -->
+                <a href="../../blog.html" class="back-to-blog">
+                    <i class="fas fa-arrow-left"></i> Back to Blog
+                </a>
 
-            <!-- Post Header -->
-            <header class="post-header">
-                <h1 class="post-title-full">Understanding DEM, DTM, and DSM</h1>
-                <div class="post-meta-full">
-                    <div class="author-info-full">
-                        <img src="../../profile-photo.jpg" alt="Rojan" class="author-avatar-full">
-                        <div>
-                            <span class="author-name-full">Rojan</span>
-                            <div class="post-details-full">
-                                <span class="post-date-full">Aug 5, 2025</span>
-                                <span class="post-dot">•</span>
-                                <span class="post-read-time-full">3 min read</span>
-                                <span class="post-dot">•</span>
-                                <span class="view-count-full">
-                                    <i class="fas fa-eye"></i> 13 views
-                                </span>
+                <!-- Post Header -->
+                <header class="post-header">
+                    <h1 class="post-title-full">Understanding DEM, DTM, and DSM</h1>
+                    <div class="post-meta-full">
+                        <div class="author-info-full">
+                            <img src="../../profile-photo.jpg" alt="Rojan" class="author-avatar-full">
+                            <div>
+                                <span class="author-name-full">Rojan</span>
+                                <div class="post-details-full">
+                                    <span class="post-date-full">Aug 5, 2025</span>
+                                    <span class="post-dot">•</span>
+                                    <span class="post-read-time-full">3 min read</span>
+                                    <span class="post-dot">•</span>
+                                    <span class="view-count-full">
+                                        <i class="fas fa-eye"></i> 13 views
+                                    </span>
+                                </div>
                             </div>
                         </div>
+                        
+                        <div class="share-buttons">
+                            <button class="share-btn" onclick="sharePost('linkedin')" title="Share on LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </button>
+                            <button class="share-btn" onclick="sharePost('twitter')" title="Share on Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+                            <button class="share-btn" onclick="sharePost('facebook')" title="Share on Facebook">
+                                <i class="fab fa-facebook"></i>
+                            </button>
+                            <button class="share-btn" onclick="copyPostLink()" title="Copy Link">
+                                <i class="fas fa-link"></i>
+                            </button>
+                        </div>
                     </div>
-                    
-                    <div class="share-buttons">
-                        <button class="share-btn" onclick="sharePost('linkedin')" title="Share on LinkedIn">
-                            <i class="fab fa-linkedin"></i>
-                        </button>
-                        <button class="share-btn" onclick="sharePost('twitter')" title="Share on Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </button>
-                        <button class="share-btn" onclick="sharePost('facebook')" title="Share on Facebook">
-                            <i class="fab fa-facebook"></i>
-                        </button>
-                        <button class="share-btn" onclick="copyPostLink()" title="Copy Link">
-                            <i class="fas fa-link"></i>
-                        </button>
-                    </div>
-                                
+                </header>
 
+                <!-- Featured Image -->
+                <div class="post-featured-image">
+                    <img src="overview.png" alt="Understanding DEM, DTM, and DSM">
                 </div>
-            </header>
 
-            <!-- Featured Image -->
-            <div class="post-featured-image">
-                <img src="overview.png" alt="Understanding DEM, DTM, and DSM">
-            </div>
+                <!-- Post Content -->
+                <div class="post-content">
+                    <p>
+                        Digital Elevation Models (DEMs) constitute fundamental datasets in geospatial science, providing quantitative three-dimensional representations of the Earth's surface topology. These datasets are essential for applications spanning hydrological modeling, geomorphological analysis, infrastructure development, and environmental impact assessment. However, significant confusion persists regarding the nomenclature and functional differences between DEM, DTM (Digital Terrain Model), and DSM (Digital Surface Model). While these terms are often used interchangeably in practice, they represent distinct elevation data products with different characteristics and appropriate applications. This article provides a technical comparison of these elevation model types and guidance on their appropriate use in geospatial analysis.
+                    </p>
 
-            <!-- Post Content -->
-            <div class="post-content">
-                <p>
-                    Digital Elevation Models (DEMs) constitute fundamental datasets in geospatial science, providing quantitative three-dimensional representations of the Earth's surface topology. These datasets are essential for applications spanning hydrological modeling, geomorphological analysis, infrastructure development, and environmental impact assessment.However, significant confusion persists regarding the nomenclature and functional differences between DEM, DTM (Digital Terrain Model), and DSM (Digital Surface Model). While these terms are often used interchangeably in practice, they represent distinct elevation data products with different characteristics and appropriate applications. This article provides a technical comparison of these elevation model types and guidance on their appropriate use in geospatial analysis.
+                    <h2>What is a DEM?</h2>
+                    <p>
+                        A Digital Elevation Model (DEM) serves as an umbrella term describing any digital representation of continuous elevation variation across a spatial domain. DEMs consist of gridded (raster) or vector-based elevation data where each cell or point contains an elevation value, typically referenced to a vertical datum such as mean sea level (MSL) or the WGS84 ellipsoid.
+                    </p>
 
-                <h2>What is a DEM?</h2>
-                <p>
-                    A Digital Elevation Model (DEM) serves as an umbrella term describing any digital representation of continuous elevation variation across a spatial domain. DEMs consist of gridded (raster) or vector-based elevation data where each cell or point contains an elevation value, typically referenced to a vertical datum such as mean sea level (MSL) or the WGS84 ellipsoid.
-                </p>
+                    <h2>Understanding DTM</h2>
+                    <p>
+                        A Digital Terrain Model (DTM) is similar to a DEM but focuses specifically on the terrain surface. It filters out vegetation, buildings, and other surface objects to reveal the underlying ground elevation. DTMs are particularly valuable for:
+                    </p>
+                    <ul>
+                        <li>Hydrological modeling and watershed analysis</li>
+                        <li>Infrastructure planning and design</li>
+                        <li>Geological studies</li>
+                        <li>Calculating accurate slope and aspect</li>
+                    </ul>
 
-                <h2>Understanding DTM</h2>
-                <p>
-                    A Digital Terrain Model (DTM) is similar to a DEM but focuses specifically on the terrain surface. It filters out vegetation, buildings, and other surface objects to reveal the underlying ground elevation. DTMs are particularly valuable for:
-                </p>
-                <ul>
-                    <li>Hydrological modeling and watershed analysis</li>
-                    <li>Infrastructure planning and design</li>
-                    <li>Geological studies</li>
-                    <li>Calculating accurate slope and aspect</li>
-                </ul>
+                    <h2>What About DSM?</h2>
+                    <p>
+                        A Digital Surface Model (DSM) captures the Earth's surface including all objects on it - trees, buildings, bridges, and other structures. Unlike DEMs and DTMs, DSMs represent the top of the canopy, rooftops, and other elevated features.
+                    </p>
 
-                <h2>What About DSM?</h2>
-                <p>
-                    A Digital Surface Model (DSM) captures the Earth's surface including all objects on it - trees, buildings, bridges, and other structures. Unlike DEMs and DTMs, DSMs represent the top of the canopy, rooftops, and other elevated features.
-                </p>
+                    <h2>Applications in Coastal Research</h2>
+                    <p>
+                        In my research on coastal flooding and infrastructure resilience, understanding the differences between these models is crucial. For flood inundation mapping:
+                    </p>
+                    <ul>
+                        <li><strong>DEMs and DTMs</strong> help identify low-lying areas vulnerable to flooding</li>
+                        <li><strong>DSMs</strong> are essential for understanding how buildings and infrastructure might obstruct or channel floodwaters</li>
+                        <li>High-resolution LiDAR-derived models enable accurate depth of inundation calculations</li>
+                    </ul>
 
-                <h2>Applications in Coastal Research</h2>
-                <p>
-                    In my research on coastal flooding and infrastructure resilience, understanding the differences between these models is crucial. For flood inundation mapping:
-                </p>
-                <ul>
-                    <li><strong>DEMs and DTMs</strong> help identify low-lying areas vulnerable to flooding</li>
-                    <li><strong>DSMs</strong> are essential for understanding how buildings and infrastructure might obstruct or channel floodwaters</li>
-                    <li>High-resolution LiDAR-derived models enable accurate depth of inundation calculations</li>
-                </ul>
+                    <h2>Choosing the Right Model</h2>
+                    <p>
+                        The choice between DEM, DTM, and DSM depends on your specific application:
+                    </p>
+                    <ul>
+                        <li>Use <strong>DEMs</strong> for general terrain analysis and visualization</li>
+                        <li>Use <strong>DTMs</strong> when you need precise ground elevation without surface features</li>
+                        <li>Use <strong>DSMs</strong> when surface objects are relevant to your analysis</li>
+                    </ul>
 
-                <h2>Choosing the Right Model</h2>
-                <p>
-                    The choice between DEM, DTM, and DSM depends on your specific application:
-                </p>
-                <ul>
-                    <li>Use <strong>DEMs</strong> for general terrain analysis and visualization</li>
-                    <li>Use <strong>DTMs</strong> when you need precise ground elevation without surface features</li>
-                    <li>Use <strong>DSMs</strong> when surface objects are relevant to your analysis</li>
-                </ul>
+                    <p>
+                        Understanding these fundamental geospatial datasets is the first step toward conducting robust coastal flood modeling and infrastructure vulnerability assessments.
+                    </p>
+                </div>
 
-                <p>
-                    Understanding these fundamental geospatial datasets is the first step toward conducting robust coastal flood modeling and infrastructure vulnerability assessments.
-                </p>
-            </div>
+                <!-- Tags -->
+                <div class="post-tags">
+                    <span class="tag">Geospatial Analysis</span>
+                    <span class="tag">DEM</span>
+                    <span class="tag">Flood Modeling</span>
+                    <span class="tag">Coastal Engineering</span>
+                </div>
+            </article>
 
-            <!-- Tags -->
-            <div class="post-tags">
-                <span class="tag">Geospatial Analysis</span>
-                <span class="tag">DEM</span>
-                <span class="tag">Flood Modeling</span>
-                <span class="tag">Coastal Engineering</span>
-            </div>
-        </article>
+            <!-- Sidebar with Related/Newer Posts -->
+            <aside class="post-sidebar">
+                <!-- Newer Posts Section -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-clock"></i> Recent Posts
+                    </h3>
+                    <div id="newer-posts" class="sidebar-posts-list">
+                        <!-- Auto-populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Related Posts Section -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-tags"></i> Related Posts
+                    </h3>
+                    <div id="related-posts" class="sidebar-posts-list">
+                        <!-- Auto-populated by JavaScript -->
+                    </div>
+                </div>
+            </aside>
+        </div>
     </main>
 
     <footer class="footer">
@@ -142,6 +167,118 @@
     </footer>
 
     <script>
+        // ============================================
+        // BLOG POSTS DATABASE
+        // ============================================
+        // Add all your blog posts here
+        const allBlogPosts = [
+            {
+                title: "Understanding DEM, DTM, and DSM",
+                url: "../../Blog/Post1/",
+                date: "2025-08-05",
+                tags: ["Geospatial Analysis", "DEM", "Flood Modeling", "Coastal Engineering"],
+                image: "../../Blog/Post1/featured-image.jpg",
+                excerpt: "Digital Elevation Models are fundamental to geospatial analysis..."
+            },
+            {
+                title: "Coastal Flood Modeling Best Practices",
+                url: "../../Blog/Post2/",
+                date: "2025-07-22",
+                tags: ["Flood Modeling", "Coastal", "Engineering"],
+                image: "../../Blog/Post2/featured-image.jpg",
+                excerpt: "Effective coastal flood modeling requires careful consideration..."
+            },
+            {
+                title: "Machine Learning in Coastal Hydrology",
+                url: "../../Blog/Post3/",
+                date: "2025-06-15",
+                tags: ["Machine Learning", "AI", "Coastal Engineering"],
+                image: "../../Blog/Post3/featured-image.jpg",
+                excerpt: "Exploring deep learning approaches to predict extreme water levels..."
+            }
+            // ADD MORE POSTS HERE AS YOU CREATE THEM
+        ];
+
+        // ============================================
+        // CURRENT POST CONFIGURATION
+        // ============================================
+        // UPDATE THIS FOR EACH POST
+        const currentPost = {
+            title: "Understanding DEM, DTM, and DSM",
+            date: "2025-08-05",
+            tags: ["Geospatial Analysis", "DEM", "Flood Modeling", "Coastal Engineering"]
+        };
+
+        // ============================================
+        // AUTO-POPULATE RELATED & NEWER POSTS
+        // ============================================
+        function populateSidebar() {
+            // Get newer posts (posts with date after current post)
+            const newerPosts = allBlogPosts
+                .filter(post => post.title !== currentPost.title && new Date(post.date) > new Date(currentPost.date))
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 3);
+
+            // Get related posts (posts sharing tags with current post)
+            const relatedPosts = allBlogPosts
+                .filter(post => {
+                    if (post.title === currentPost.title) return false;
+                    const sharedTags = post.tags.filter(tag => currentPost.tags.includes(tag));
+                    return sharedTags.length > 0;
+                })
+                .map(post => {
+                    const sharedTags = post.tags.filter(tag => currentPost.tags.includes(tag));
+                    return { ...post, relevance: sharedTags.length };
+                })
+                .sort((a, b) => b.relevance - a.relevance)
+                .slice(0, 3);
+
+            // Populate newer posts
+            const newerPostsContainer = document.getElementById('newer-posts');
+            if (newerPosts.length > 0) {
+                newerPostsContainer.innerHTML = newerPosts.map(post => createSidebarPostHTML(post)).join('');
+            } else {
+                newerPostsContainer.innerHTML = '<p class="no-posts">No newer posts yet</p>';
+            }
+
+            // Populate related posts
+            const relatedPostsContainer = document.getElementById('related-posts');
+            if (relatedPosts.length > 0) {
+                relatedPostsContainer.innerHTML = relatedPosts.map(post => createSidebarPostHTML(post)).join('');
+            } else {
+                relatedPostsContainer.innerHTML = '<p class="no-posts">No related posts found</p>';
+            }
+        }
+
+        // Create HTML for sidebar post item
+        function createSidebarPostHTML(post) {
+            const postDate = new Date(post.date).toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+
+            return `
+                <a href="${post.url}" class="sidebar-post-item">
+                    <div class="sidebar-post-image">
+                        <img src="${post.image}" alt="${post.title}">
+                    </div>
+                    <div class="sidebar-post-info">
+                        <h4 class="sidebar-post-title">${post.title}</h4>
+                        <span class="sidebar-post-date">
+                            <i class="fas fa-calendar-alt"></i> ${postDate}
+                        </span>
+                    </div>
+                </a>
+            `;
+        }
+
+        // Initialize sidebar on page load
+        document.addEventListener('DOMContentLoaded', populateSidebar);
+
+        // ============================================
+        // SHARE FUNCTIONS
+        // ============================================
         function sharePost(platform) {
             const title = document.querySelector('.post-title-full').textContent;
             const url = window.location.href;
