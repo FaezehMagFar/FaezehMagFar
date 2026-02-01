@@ -918,12 +918,12 @@ body {
     padding: 8px 0 8px 25px;
     position: relative;
     color: #444;
-    line-height: 1.5;
+    line-height: 1.2;
     font-size: 13px;
 }
 
 .project-highlights li::before {
-    content: "→";
+    content: "✹";
     position: absolute;
     left: 0;
     color: #007bff;
