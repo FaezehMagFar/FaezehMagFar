@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Understanding DEM, DTM, and DSM - Faezeh (Rojan)</title>
+    <title>The Spring-Neap Cycle Requirement in Hurricane Hindcast Modeling - Faezeh (Rojan)</title>
     <link rel="stylesheet" href="../../styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -36,7 +36,7 @@
 
                 <!-- Post Header -->
                 <header class="post-header">
-                    <h1 class="post-title-full">Understanding DEM, DTM, and DSM: A Technical Overview of Digital Elevation Models</h1>
+                    <h1 class="post-title-full">The Spring-Neap Cycle Requirement in Hurricane Hindcast Modeling: A Technical Analysis</h1>
                     
                     <div class="post-meta-full">
                         <div class="author-info-full">
@@ -44,12 +44,12 @@
                             <div>
                                 <span class="author-name-full">Rojan</span>
                                 <div class="post-details-full">
-                                    <span class="post-date-full">Aug 5, 2025</span>
+                                    <span class="post-date-full">Jun 3, 2025</span>
                                     <span class="post-dot">•</span>
-                                    <span class="post-read-time-full">3 min read</span>
+                                    <span class="post-read-time-full">4 min read</span>
                                     <span class="post-dot">•</span>
                                     <span class="view-count-full">
-                                        <i class="fas fa-eye"></i> 13 views
+                                        <i class="fas fa-eye"></i> 24 views
                                     </span>
                                 </div>
                             </div>
@@ -74,196 +74,271 @@
 
                 <!-- Post Content -->
                 <div class="post-content">
-                    <p>
-                        Digital Elevation Models (DEMs) constitute fundamental datasets in geospatial science, providing quantitative three-dimensional representations of the Earth's surface topology. These datasets are essential for applications spanning hydrological modeling, geomorphological analysis, infrastructure development, and environmental impact assessment.
+                    <p style="font-style: italic; color: #555; margin-bottom: 20px;">
+                        A methodological framework for robust hydrodynamic modeling of storm surge events
                     </p>
                     
-                    <p>
-                        However, significant confusion persists regarding the nomenclature and functional differences between DEM, DTM (Digital Terrain Model), and DSM (Digital Surface Model). While these terms are often used interchangeably in practice, they represent distinct elevation data products with different characteristics and appropriate applications. This article provides a technical comparison of these elevation model types and guidance on their appropriate use in geospatial analysis.
+                    <p style="font-weight: 600; margin-bottom: 25px;">
+                        DOI: 10.5281/zenodo.15582841
                     </p>
 
                     <!-- Featured Image -->
                     <div class="post-featured-image">
-                        <img src="overview.png" alt="Understanding DEM, DTM, and DSM">
+                        <img src="overview.png" alt="Spring-Neap Cycle in Hurricane Modeling">
                     </div>
 
-                    <h2>Digital Elevation Models (DEMs): Definition and Data Acquisition</h2>
+                    <h2>Abstract</h2>
                     <p>
-                        A <strong>Digital Elevation Model (DEM)</strong> serves as an umbrella term describing any digital representation of continuous elevation variation across a spatial domain. DEMs consist of gridded (raster) or vector-based elevation data where each cell or point contains an elevation value, typically referenced to a vertical datum such as mean sea level (MSL) or the WGS84 ellipsoid.
+                        Hydrodynamic modeling of hurricane-driven storm surge requires careful consideration of temporal domain selection to ensure physical validity and statistical reliability. This article presents evidence-based guidance for simulation duration in coastal water level modeling, demonstrating why hindcasts must encompass a minimum of one complete spring-neap tidal cycle (approximately 14.8 days). We examine the physical mechanisms driving this requirement, including model spin-up dynamics, surge evolution timescales, and statistical metric stabilization.
                     </p>
 
-                    <h3>Data Acquisition Methods</h3>
+                    <h2>Introduction</h2>
                     <p>
-                        DEMs are generated through various remote sensing and surveying techniques:
+                        Hurricane storm surge modeling constitutes a critical component of coastal flood risk assessment, infrastructure vulnerability analysis, and emergency management planning. Despite advances in numerical hydrodynamics, many practitioners encounter systematic model performance degradation when employing abbreviated simulation periods. Short-duration hindcasts frequently yield negative Nash-Sutcliffe Efficiency (NSE) coefficients and other unfavorable performance indicators, even when model configuration and parameterization are appropriate.
                     </p>
                     <p>
-                        <strong>Light Detection and Ranging (LiDAR)</strong>: Active remote sensing technology employing laser pulses to measure surface distance. Airborne LiDAR systems typically achieve vertical accuracies of ±5-15 cm and horizontal resolutions of 0.5-2 meters. LiDAR provides multiple return signals, enabling differentiation between ground and non-ground points.
-                    </p>
-                    <p>
-                        <strong>Photogrammetry</strong>: Passive remote sensing method utilizing stereoscopic image pairs to extract elevation through parallax measurements. Structure-from-Motion (SfM) photogrammetry from Unmanned Aerial Systems (UAS) can achieve sub-decimeter vertical accuracy under optimal conditions.
-                    </p>
-                    <p>
-                        <strong>Interferometric Synthetic Aperture Radar (InSAR)</strong>: Microwave remote sensing technique measuring phase differences between radar signals to derive elevation. Global datasets such as SRTM (Shuttle Radar Topography Mission) and TanDEM-X employ InSAR methodology.
+                        Empirical evidence consistently demonstrates that extending simulation duration from 48-72 hours to 14-20 days substantially improves model skill metrics and physical realism. This improvement is not merely a statistical artifact but reflects fundamental requirements of coastal hydrodynamic physics and numerical model initialization. This article synthesizes current understanding of optimal temporal domain selection for hurricane hindcast applications.
                     </p>
 
-                    <h3>Applications in Geospatial Analysis</h3>
+                    <h2>The Model Spin-Up Requirement: Establishing Dynamic Equilibrium</h2>
+                    
+                    <h3>Theoretical Foundation</h3>
                     <p>
-                        DEMs support quantitative terrain analysis including: hydrological modeling (flow accumulation, watershed delineation, and stream network extraction), geomorphometric analysis (slope, aspect, curvature, and roughness calculation), flood inundation modeling (hydraulic simulation and risk assessment), and viewshed and visibility analysis.
+                        Numerical hydrodynamic models operate on user-specified initial conditions that rarely represent true physical equilibrium states. These artificial initial states introduce numerical transients that must dissipate before the model accurately responds to meteorological forcing. This equilibration period, termed "spin-up" or "warm-up," is essential for establishing physically consistent velocity fields, water surface gradients, and momentum balances.
                     </p>
 
-                    <h2>Digital Terrain Models (DTMs): Bare-Earth Elevation Data</h2>
+                    <h3>Empirical Evidence</h3>
                     <p>
-                        A <strong>Digital Terrain Model (DTM)</strong> represents a subset of DEMs that specifically captures the elevation of the bare-earth surface, excluding all above-ground features including vegetation, buildings, and anthropogenic structures.
+                        Blain et al. (1998) conducted systematic sensitivity analyses demonstrating that 12-day tidal spin-up periods optimize hurricane storm surge simulation accuracy in the ADCIRC (Advanced Circulation) modeling framework. More recently, Orton et al. (2016) employed a 52-day tidal-only initialization period prior to applying Hurricane Sandy meteorological forcing in their Staten Island hindcast study. These extended spin-up durations ensure that:
+                    </p>
+                    <ol>
+                        <li>Boundary-generated numerical artifacts propagate through and exit the computational domain</li>
+                        <li>Tidal harmonics establish stable amplitude and phase relationships</li>
+                        <li>Barotropic momentum equations achieve quasi-steady oscillatory states</li>
+                        <li>Residual circulation patterns reflect actual bathymetric and frictional controls</li>
+                    </ol>
+
+                    <p>
+                        <strong>Operational Implication</strong>: Simulations initiated merely 24-48 hours pre-storm retain substantial spin-up bias, contaminating both the pre-storm baseline and subsequent surge response. The resulting water level predictions reflect initialization artifacts rather than physical storm surge processes.
                     </p>
 
-                    <h3>Data Processing Methodology</h3>
+                    <h2>Temporal Evolution of Storm Surge: The Complete Event Sequence</h2>
+                    
+                    <h3>Storm Surge Phenomenology</h3>
                     <p>
-                        DTM generation requires classification and filtering of raw elevation data to isolate ground returns: (1) <strong>Point cloud classification</strong> – LiDAR returns are classified into ground and non-ground points using algorithms such as Progressive Morphological Filters, cloth simulation, or machine learning classifiers; (2) <strong>Ground point interpolation</strong> – Classified ground points are interpolated to create a continuous surface using methods including Triangulated Irregular Networks (TIN) or inverse distance weighting (IDW); (3) <strong>Quality control</strong> – Manual editing and validation against ground control points to ensure accuracy.
+                        Hurricane-driven storm surge exhibits a multi-phase temporal structure extending well beyond the period of maximum wind forcing:
+                    </p>
+                    <p>
+                        <strong>Phase 1 - Pre-storm setup (12-48 hours pre-landfall)</strong>: Offshore wind stress and inverse barometric effects initiate water level rise. Shelf waves propagate shoreward from the deep ocean, pre-conditioning coastal water levels (Li et al., 2013).
+                    </p>
+                    <p>
+                        <strong>Phase 2 - Peak surge (±6 hours from landfall)</strong>: Maximum water levels occur due to combined wind stress, pressure gradients, wave setup, and astronomical tide superposition. Compound flooding may involve concurrent fluvial discharge, precipitation, and reduced drainage capacity.
+                    </p>
+                    <p>
+                        <strong>Phase 3 - Post-storm recession (3-10 days post-landfall)</strong>: Water levels gradually return to baseline through gravitational relaxation, offshore wind forcing reversal, and shelf wave radiation. Estuarine systems exhibit particularly prolonged recession due to geometric constraints and stratification effects.
                     </p>
 
-                    <h3>Technical Characteristics</h3>
+                    <h3>Evidence for Extended Temporal Windows</h3>
                     <p>
-                        DTMs represent topographic surface without vegetation or structures, preserve natural geomorphological features (ridges, valleys, drainage patterns), typically achieve vertical accuracy of ±10-30 cm (dependent on acquisition method and terrain complexity), and commonly range in resolution from 0.5 m (high-resolution LiDAR) to 30 m (global datasets).
+                        Olbert et al. (2023) demonstrated that neglecting Phase 1 and Phase 3 systematically underestimates both peak water levels and flood duration in estuarine environments. Their compound flood modeling framework for Irish coastal systems revealed that pre-storm conditions significantly modulate peak surge magnitude through antecedent water level positioning relative to tidal phase.
+                    </p>
+                    <p>
+                        Similarly, Ridder et al. (2024) established that threshold-based compound flood analysis requires complete surge evolution characterization. Their hydrodynamic-statistical methodology showed that abbreviated temporal windows misrepresent the joint probability structure of tide-surge interactions, leading to biased extreme value estimates.
+                    </p>
+                    <p>
+                        <strong>Physical Requirement</strong>: Accurate surge simulation necessitates modeling the complete event chronology from initial forcing to full system recovery, typically spanning 14-20 days for mid-latitude hurricanes.
                     </p>
 
-                    <h3>Scientific Applications</h3>
+                    <h2>The Spring-Neap Tidal Cycle: Physical Basis and Definition</h2>
+                    
+                    <h3>Astronomical Tide Theory</h3>
                     <p>
-                        <strong>Geotechnical engineering</strong>: Precise terrain characterization for infrastructure design, requiring accurate ground surface geometry for cut-and-fill calculations and slope stability analysis.
+                        The spring-neap cycle represents the fortnightly modulation of tidal range resulting from lunar-solar gravitational interference. This cycle period (14.765 days, equivalent to half the lunar synodic month) encompasses:
                     </p>
+                    <ul>
+                        <li><strong>Spring tides</strong>: Maximum tidal range occurring at new and full moon when lunar and solar tidal forces align</li>
+                        <li><strong>Neap tides</strong>: Minimum tidal range occurring at first and third quarter moon when lunar and solar forces are orthogonal</li>
+                    </ul>
+
+                    <h3>Modeling Implications</h3>
                     <p>
-                        <strong>Hydrodynamic modeling</strong>: DTMs provide essential input for 2D/3D hydraulic models (HEC-RAS, MIKE FLOOD, TUFLOW) where water flow follows terrain rather than surface obstacles.
+                        Schrijvershof et al. (2023) formalized the spring-neap cycle as the fundamental temporal unit for morphodynamic and hydrodynamic model evaluation. Their synthetic tidal cycle methodology demonstrates that:
                     </p>
+                    <ol>
+                        <li>Tide-surge interaction exhibits systematic spring-neap phase dependence</li>
+                        <li>Peak surge magnitude varies by 15-40% depending on spring-neap timing (World Meteorological Organization, 2011)</li>
+                        <li>Statistical performance metrics converge only when evaluation encompasses complete spring-neap variability</li>
+                    </ol>
                     <p>
-                        <strong>Geomorphological research</strong>: Landform classification, erosion modeling, and tectonic geomorphology studies require unobstructed terrain representation.
-                    </p>
-                    <p>
-                        <strong>Soil and agricultural analysis</strong>: Terrain-based soil property prediction and precision agriculture applications.
+                        <strong>Methodological Standard</strong>: Hindcast simulations must span ≥1 complete spring-neap cycle (minimum 14.8 days) to capture the full spectrum of tidal modulation effects on storm surge.
                     </p>
 
-                    <h2>Digital Surface Models (DSMs): First-Surface Elevation</h2>
+                    <h2>Statistical Performance Metric Convergence</h2>
+                    
+                    <h3>The Nash-Sutcliffe Efficiency Challenge</h3>
                     <p>
-                        A <strong>Digital Surface Model (DSM)</strong> represents the elevation of the first reflective surface encountered by the remote sensing instrument, including vegetation canopy, building rooftops, and all above-ground features.
+                        The Nash-Sutcliffe Efficiency coefficient (NSE) quantifies the proportion of variance in observed data explained by model predictions. However, NSE exhibits extreme sensitivity to both timing errors and amplitude biases when computed over short temporal windows. This sensitivity manifests as:
+                    </p>
+                    <ul>
+                        <li>High volatility for sample sizes n < 100 data points</li>
+                        <li>Disproportionate penalization of phase lag errors in abbreviated series</li>
+                        <li>Potential negative values indicating model performance worse than mean-based prediction</li>
+                    </ul>
+
+                    <h3>Empirical Performance Requirements</h3>
+                    <p>
+                        Ritter and Muñoz-Carpena (2013) conducted Monte Carlo analyses demonstrating that NSE stabilizes statistically only after approximately 100 time steps. For hourly-resolution water level models, this corresponds to minimum evaluation periods of:
+                    </p>
+                    <ul>
+                        <li>4.2 days for statistical stability threshold</li>
+                        <li>7-10 days for reliable performance characterization</li>
+                        <li>14-20 days for robust skill assessment across tidal variability</li>
+                    </ul>
+                    <p>
+                        Short-duration evaluations yield misleading skill metrics due to insufficient sampling of systematic versus random error components. Extended evaluations permit temporal averaging of uncorrelated errors while preserving signal for systematic bias identification.
+                    </p>
+                    <p>
+                        <strong>Statistical Requirement</strong>: Model validation must employ temporal domains sufficient for performance metric convergence, practically requiring 14-20 day periods that span spring-neap variability.
                     </p>
 
-                    <h3>Data Characteristics</h3>
+                    <h2>Computational Domain Physics: Shelf Wave Dynamics</h2>
+                    
+                    <h3>Spatial-Temporal Coupling</h3>
                     <p>
-                        DSMs are typically derived from first-return LiDAR pulses (capturing the initial reflected signal), photogrammetric correlation (matching features in stereo imagery pairs), and radar interferometry (measuring phase differences in microwave returns). The DSM represents the top-of-canopy or top-of-structure elevation rather than ground level.
+                        Hurricane storm surge involves large-scale oceanographic processes that require adequate spatial and temporal domains for proper representation. Li et al. (2013) demonstrated through systematic sensitivity analysis that:
+                    </p>
+                    <ol>
+                        <li>Continental shelf waves generated by hurricane passage require 200-400 km propagation distances for proper development</li>
+                        <li>Shelf wave energy dissipation timescales range from 3-7 days depending on shelf geometry</li>
+                        <li>Surge magnitude at the coast reflects integrated shelf wave dynamics over the full event duration</li>
+                    </ol>
+                    <p>
+                        Insufficient temporal domains effectively truncate these wave processes, preventing proper energy dissipation and momentum balance establishment. The resulting surge predictions misrepresent the physical system response.
+                    </p>
+                    <p>
+                        <strong>Domain Design Criterion</strong>: Offshore boundary placement (typically ~200 m isobath) must be coupled with temporal domains sufficient for shelf wave transit and dissipation (minimum 10-14 days).
                     </p>
 
-                    <h3>Technical Specifications</h3>
-                    <p>
-                        DSMs include all surface features (buildings, trees, and other elevated structures), typically achieve vertical accuracy of ±15-50 cm for LiDAR-derived products, and are particularly useful when normalized against DTM to produce Canopy Height Models (CHM = DSM - DTM).
-                    </p>
-
-                    <h3>Scientific Applications</h3>
-                    <p>
-                        <strong>Urban morphology studies</strong>: Three-dimensional urban form analysis, building height extraction, and urban heat island research requiring accurate built environment representation.
-                    </p>
-                    <p>
-                        <strong>Telecommunications network design</strong>: Line-of-sight analysis, Fresnel zone clearance calculations, and signal propagation modeling over actual terrain with obstacles.
-                    </p>
-                    <p>
-                        <strong>Forestry and carbon accounting</strong>: Canopy height estimation through DSM-DTM differencing, above-ground biomass calculation using allometric equations, and forest inventory.
-                    </p>
-                    <p>
-                        <strong>Solar radiation modeling</strong>: Shadow analysis and photovoltaic potential assessment requiring accurate representation of horizon obstructions.
-                    </p>
-
-                    <h2>Comparative Analysis</h2>
+                    <h2>Recommended Best Practices for Hurricane Hindcast Modeling</h2>
+                    
+                    <h3>Methodological Framework</h3>
                     <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
                         <thead>
                             <tr style="background-color: #f4f4f4;">
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>Parameter</strong></th>
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>DEM (General)</strong></th>
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>DTM</strong></th>
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>DSM</strong></th>
+                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>Component</strong></th>
+                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>Specification</strong></th>
+                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>Physical/Statistical Basis</strong></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Surface representation</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Generic elevation</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Bare-earth topography</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">First-return surface (includes features)</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Spin-up duration</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">10-15 days tidal-only forcing</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">Numerical transient dissipation (Blain et al., 1998)</td>
                             </tr>
                             <tr style="background-color: #f9f9f9;">
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Data content</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Variable (context-dependent)</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Ground points only</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Ground + vegetation + structures</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Storm event window</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">14-20 days (≥1 spring-neap cycle)</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">Surge evolution + tidal modulation (WMO, 2011)</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Typical accuracy (vertical)</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">±0.5-5 m (dataset dependent)</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">±0.1-0.5 m (high-res LiDAR)</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">±0.15-1 m</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Offshore boundary</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">~200 m isobath or surge convergence</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">Shelf wave dynamics (Li et al., 2013)</td>
                             </tr>
                             <tr style="background-color: #f9f9f9;">
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Processing requirement</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Minimal</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Point classification essential</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Direct first-return processing</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Temporal resolution</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">≤30 minutes (preferably 6-10 minutes)</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">Tidal harmonic resolution + CFL stability</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Primary applications</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">General terrain analysis</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Engineering, hydrology</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Urban planning, ecology</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Performance metrics</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">NSE, KGE, RMSE, bias, R²</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">Computed over full event window (Ritter & Muñoz-Carpena, 2013)</td>
                             </tr>
                             <tr style="background-color: #f9f9f9;">
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Canopy penetration</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">N/A</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Requires penetration</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Records canopy top</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Documentation</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">Explicit spin-up, boundaries, window length</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">Reproducibility and transparency standards</td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <h2>Selection Criteria for Research Applications</h2>
+                    <h3>Pre-Processing Requirements</h3>
+                    <ol>
+                        <li><strong>Initial condition specification</strong>: Use tidal prediction at simulation start or results from extended spin-up run</li>
+                        <li><strong>Meteorological forcing</strong>: Include 12-24 hour pre-storm period for setup development</li>
+                        <li><strong>Boundary conditions</strong>: Specify tidal constituents with amplitude/phase from regional tidal models (e.g., TPXO, FES)</li>
+                    </ol>
+
+                    <h3>Post-Processing Validation</h3>
+                    <ol>
+                        <li>Verify spin-up adequacy through inspection of pre-storm water level time series</li>
+                        <li>Compute residual surge (observed minus predicted astronomical tide) for comparison</li>
+                        <li>Evaluate metrics over multiple sub-windows to assess temporal stability</li>
+                        <li>Compare spring versus neap tide surge amplification factors</li>
+                    </ol>
+
+                    <h2>Computational Efficiency Considerations</h2>
                     <p>
-                        <strong>Use DEM (generic term) when:</strong> Referring to elevation data generally without specification, working with lower-resolution datasets where feature distinction is not maintained (e.g., SRTM 30m), or conducting broad-scale topographic analysis where surface/terrain distinction is not critical.
-                    </p>
-                    <p>
-                        <strong>Use DTM when:</strong> Ground surface geometry is the variable of interest, conducting hydraulic or hydrological simulations requiring terrain-following flow, performing engineering calculations (earthwork volumes, slope stability), or analyzing geomorphological processes operating on the bare-earth surface.
-                    </p>
-                    <p>
-                        <strong>Use DSM when:</strong> Above-ground features are relevant to the analysis, quantifying vegetation structure or urban morphology, performing viewshed analysis where obstacles matter, calculating Canopy Height Models (CHM = DSM - DTM), or modeling solar irradiance or telecommunications propagation.
+                        While extended simulations increase computational cost, modern high-performance computing resources and model efficiency improvements have substantially reduced this barrier. The scientific credibility gained through physically adequate temporal domains far outweighs the marginal computational expense. Furthermore, parallelization and GPU acceleration increasingly enable 20-day hindcasts to complete within operationally acceptable timeframes.
                     </p>
 
-                    <h2>Methodological Considerations</h2>
+                    <h2>Conclusions</h2>
                     <p>
-                        <strong>Data resolution</strong>: Spatial resolution requirements depend on application scale. Urban flood modeling may require ≤1 m resolution DTMs, while regional hydrological studies function adequately with 30 m resolution data.
+                        Hurricane hindcast modeling requires temporal domains extending substantially beyond the immediate storm passage period. The convergence of multiple physical and statistical requirements establishes the spring-neap cycle (14.8 days) as the minimum adequate temporal domain for robust surge simulation:
                     </p>
+                    <ol>
+                        <li><strong>Model spin-up</strong>: 10-15 days required for numerical equilibration</li>
+                        <li><strong>Surge evolution</strong>: Complete event chronology spans 14-20 days from pre-storm setup through post-storm recession</li>
+                        <li><strong>Tidal modulation</strong>: Spring-neap variability must be captured for accurate tide-surge interaction representation</li>
+                        <li><strong>Statistical validity</strong>: Performance metrics stabilize only over 100+ time steps (4-7 days minimum, 14-20 days optimal)</li>
+                        <li><strong>Domain physics</strong>: Shelf wave processes require extended temporal domains for proper development and dissipation</li>
+                    </ol>
                     <p>
-                        <strong>Vertical datum</strong>: Ensure consistency in vertical reference systems when integrating multiple datasets. Common datums include EGM96/EGM2008 (gravimetric geoid), NAVD88 (North America), or local orthometric heights.
-                    </p>
-                    <p>
-                        <strong>Uncertainty quantification</strong>: Elevation model accuracy varies with terrain slope, vegetation density, and acquisition parameters. Propagate positional uncertainty through analytical workflows where appropriate.
-                    </p>
-                    <p>
-                        <strong>Temporal considerations</strong>: Elevation models represent conditions at acquisition time. Dynamic surfaces (coastal areas, active landslides, urban construction) may require updated data for time-sensitive applications.
+                        The practice of abbreviating hindcasts to 48-72 hour windows, while computationally expedient, systematically compromises physical realism and statistical reliability. Adoption of spring-neap cycle temporal standards represents an evidence-based methodological improvement with direct implications for coastal flood risk assessment accuracy.
                     </p>
 
-                    <h2>Conclusion</h2>
-                    <p>
-                        The distinction between DEM, DTM, and DSM is not merely semantic but reflects fundamental differences in data content and appropriate application domains. DTMs provide terrain-referenced ground surface elevation critical for geomorphological and hydrological applications, while DSMs capture the complete surface including above-ground features essential for urban analysis and ecological studies. DEM serves as the general terminology encompassing both specialized products.
+                    <h2>References</h2>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Blain, C. A., Westerink, J. J., & Luettich, R. A., Jr. (1998). Grid convergence studies for the prediction of hurricane storm surge. <em>International Journal for Numerical Methods in Fluids</em>, <em>26</em>(4), 369–401. https://doi.org/10.1002/(SICI)1097-0363(19980228)26:4<369::AID-FLD624>3.0.CO;2-U
                     </p>
-                    <p>
-                        Rigorous application of appropriate elevation model types ensures analytical validity and prevents systematic errors in geospatial modeling workflows. Researchers and practitioners must carefully evaluate their analytical requirements against elevation data characteristics to select optimal datasets for their specific applications.
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Li, R., Xie, L., Liu, B., & Guan, C. (2013). On the sensitivity of hurricane storm-surge simulation to domain size. <em>Ocean Modelling</em>, <em>67</em>, 1–12. https://doi.org/10.1016/j.ocemod.2013.03.004
                     </p>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Olbert, A. I., Moradian, S., Nash, S., Comer, J., Kaźmierczak, B., Falconer, R. A., & Hartnett, M. (2023). Combined statistical and hydrodynamic modelling of compound flooding in coastal areas: Methodology and application. <em>Journal of Hydrology</em>, <em>620</em>, 129383. https://doi.org/10.1016/j.jhydrol.2023.129383
+                    </p>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Orton, P. M., Talke, S. A., & Blumberg, A. F. (2016). Modeling and simulation of storm surge on Staten Island to understand inundation mitigation strategies. <em>Journal of Coastal Research</em>, <em>76</em>(sp1), 52–68. https://doi.org/10.2112/SI76-006
+                    </p>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Ridder, S., Moradian, S., Vasilopoulos, G., Nash, S., & Olbert, A. I. (2024). Thresholds for estuarine compound flooding using a combined hydrodynamic–statistical modelling approach. <em>Natural Hazards and Earth System Sciences</em>, <em>24</em>(3), 973–997. https://doi.org/10.5194/nhess-24-973-2024
+                    </p>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Ritter, A., & Muñoz-Carpena, R. (2013). Performance evaluation of hydrological models: Statistical significance for reducing subjectivity in goodness-of-fit assessments. <em>Journal of Hydrology</em>, <em>480</em>, 33–45. https://doi.org/10.1016/j.jhydrol.2012.12.004
+                    </p>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Schrijvershof, R. A., van Maren, D. S., Torfs, P. J. J. F., & Hoitink, A. J. F. (2023). A synthetic spring–neap tidal cycle for long-term morphodynamic models. <em>Journal of Geophysical Research: Earth Surface</em>, <em>128</em>(3), e2022JF006799. https://doi.org/10.1029/2022JF006799
+                    </p>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        World Meteorological Organization. (2011). <em>Guide to storm surge forecasting</em> (WMO-No. 1076). Author.
+                    </p>
+
                     <p style="margin-top: 30px; font-style: italic; color: #666;">
-                        <em>References to specific datasets, software platforms, or additional technical specifications can be provided based on regional availability and project-specific requirements.</em>
+                        <em>Keywords: storm surge modeling, hurricane hindcast, spring-neap cycle, model spin-up, hydrodynamic simulation, Nash-Sutcliffe Efficiency, coastal flooding, compound flooding, tide-surge interaction</em>
                     </p>
                 </div>
 
                 <!-- Tags -->
                 <div class="post-tags">
-                    <span class="tag">Geospatial Analysis</span>
-                    <span class="tag">DEM</span>
+                    <span class="tag">Storm Surge</span>
+                    <span class="tag">Hurricane Modeling</span>
+                    <span class="tag">Coastal Hydrology</span>
+                    <span class="tag">Hydrodynamic Modeling</span>
                     <span class="tag">Flood Modeling</span>
-                    <span class="tag">Coastal Engineering</span>
-                    <span class="tag">Remote Sensing</span>
-                    <span class="tag">LiDAR</span>
+                    <span class="tag">Tidal Analysis</span>
+                    <span class="tag">Nash-Sutcliffe Efficiency</span>
                 </div>
             </article>
 
@@ -311,12 +386,12 @@
                 excerpt: "Digital Elevation Models are fundamental to geospatial analysis..."
             },
             {
-                title: "Coastal Flood Modeling Best Practices",
+                title: "The Spring-Neap Cycle Requirement in Hurricane Hindcast Modeling",
                 url: "../../Blog/Post2/",
-                date: "2025-07-22",
-                tags: ["Flood Modeling", "Coastal", "Engineering"],
+                date: "2025-06-03",
+                tags: ["Storm Surge", "Hurricane Modeling", "Coastal Hydrology", "Flood Modeling"],
                 image: "../../Blog/Post2/featured-image.jpg",
-                excerpt: "Effective coastal flood modeling requires careful consideration..."
+                excerpt: "A technical analysis of why hurricane hindcasts must span complete tidal cycles..."
             },
             {
                 title: "Machine Learning in Coastal Hydrology",
@@ -334,9 +409,9 @@
         // ============================================
         // UPDATE THIS FOR EACH POST
         const currentPost = {
-            title: "Understanding DEM, DTM, and DSM",
-            date: "2025-08-05",
-            tags: ["Geospatial Analysis", "DEM", "Flood Modeling", "Coastal Engineering"]
+            title: "The Spring-Neap Cycle Requirement in Hurricane Hindcast Modeling",
+            date: "2025-06-03",
+            tags: ["Storm Surge", "Hurricane Modeling", "Coastal Hydrology", "Flood Modeling"]
         };
 
         // ============================================
