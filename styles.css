@@ -1016,16 +1016,16 @@ body {
 
 @media (max-width: 1024px) and (min-width: 769px) {
     .project-infographic {
-        width: 55%;
+        width: 45%;
     }
     
     .project-details {
-        width: 45%;
+        width: 55%;
         padding: 30px;
     }
     
     .project-details h2 {
-        font-size: 24px;
+        font-size: 22px;
     }
 }
 
