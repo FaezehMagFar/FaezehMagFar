@@ -4,23 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - Faezeh (Rojan)</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
             <ul class="nav-menu">
-                <li><a href="../index.html">About Me</a></li>
-                <li><a href="../professional-contributions.html">Professional Contributions</a></li>
-                <li><a href="../research-projects.html">Research Projects</a></li>
-                <li><a href="../blog.html" class="active">Blog</a></li>
-                <li><a href="../my-toon-world.html">My Toon World</a></li>
-                <li><a href="../tools.html">Tools</a></li>
-                <li><a href="../knowledge-practice.html">Knowledge & Practice</a></li>
+                <li><a href="index.html">About Me</a></li>
+                <li><a href="professional-contributions.html">Professional Contributions</a></li>
+                <li><a href="research-projects.html">Research Projects</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="my-toon-world.html">My Toon World</a></li>
+                <li><a href="tools.html">Tools</a></li>
+                <li><a href="knowledge-practice.html">Knowledge & Practice</a></li>
             </ul>
-            <a href="../index.html" class="nav-logo">
-                <img src="../logo.png" alt="FMF Logo">
+            <a href="index.html" class="nav-logo">
+                <img src="logo.png" alt="FMF Logo">
             </a>
         </div>
     </nav>
@@ -82,9 +82,9 @@
                     </p>
                     
                     <div class="blog-post-footer">
-                        <div class="blog-view-count">
+                        <div class="blog-view-count" data-post-id="Blog-Post1">
                             <i class="fas fa-eye"></i>
-                            <span>13 views</span>
+                            <span class="view-count-number">0</span> views
                         </div>
                         <div class="blog-tags-preview">
                             <span class="blog-tag-small">Geospatial</span>
@@ -144,9 +144,9 @@
                     </p>
                     
                     <div class="blog-post-footer">
-                        <div class="blog-view-count">
+                        <div class="blog-view-count" data-post-id="Blog-Post2">
                             <i class="fas fa-eye"></i>
-                            <span>27 views</span>
+                            <span class="view-count-number">0</span> views
                         </div>
                         <div class="blog-tags-preview">
                             <span class="blog-tag-small">Flood Modeling</span>
@@ -205,9 +205,9 @@
                     </p>
                     
                     <div class="blog-post-footer">
-                        <div class="blog-view-count">
+                        <div class="blog-view-count" data-post-id="Blog-Post3">
                             <i class="fas fa-eye"></i>
-                            <span>45 views</span>
+                            <span class="view-count-number">0</span> views
                         </div>
                         <div class="blog-tags-preview">
                             <span class="blog-tag-small">Machine Learning</span>
@@ -284,7 +284,6 @@
             const fullUrl = window.location.origin + '/' + postPath;
             
             navigator.clipboard.writeText(fullUrl).then(() => {
-                // Show copied notification
                 const notification = document.createElement('div');
                 notification.className = 'copy-notification';
                 notification.textContent = '✓ Link copied to clipboard!';
@@ -304,6 +303,42 @@
                 alert('Failed to copy link');
             });
         }
+
+        // ============================================
+        // AUTOMATIC VIEW COUNTER FOR BLOG CARDS
+        // ============================================
+        function loadAllViewCounts() {
+            // Get all view count elements
+            const viewCountElements = document.querySelectorAll('.blog-view-count[data-post-id]');
+            
+            viewCountElements.forEach(element => {
+                const postId = element.getAttribute('data-post-id');
+                loadViewCountForCard(postId, element);
+            });
+        }
+
+        function loadViewCountForCard(postId, element) {
+            // Convert post ID to match the format used in individual posts
+            const apiPostId = '-' + postId.replace('/', '-');
+            const apiUrl = `https://api.countapi.xyz/get/faezemqfr.github.io/${apiPostId}`;
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.value !== undefined) {
+                        const numberSpan = element.querySelector('.view-count-number');
+                        if (numberSpan) {
+                            numberSpan.textContent = data.value;
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.log('View counter unavailable for', postId);
+                });
+        }
+
+        // Load all view counts when page loads
+        document.addEventListener('DOMContentLoaded', loadAllViewCounts);
     </script>
 </body>
 </html>
