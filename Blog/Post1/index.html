@@ -36,7 +36,7 @@
 
                 <!-- Post Header -->
                 <header class="post-header">
-                    <h1 class="post-title-full">Understanding DEM, DTM, and DSM: A Technical Overview of Digital Elevation Models</h1>
+                    <h1 class="post-title-full">Understanding DEM, DTM, and DSM</h1>
                     
                     <div class="post-meta-full">
                         <div class="author-info-full">
@@ -74,185 +74,60 @@
 
                 <!-- Post Content -->
                 <div class="post-content">
+                    <!-- FIRST PARAGRAPH -->
                     <p>
-                        Digital Elevation Models (DEMs) constitute fundamental datasets in geospatial science, providing quantitative three-dimensional representations of the Earth's surface topology. These datasets are essential for applications spanning hydrological modeling, geomorphological analysis, infrastructure development, and environmental impact assessment.
-                    </p>
-                    
-                    <p>
-                        However, significant confusion persists regarding the nomenclature and functional differences between DEM, DTM (Digital Terrain Model), and DSM (Digital Surface Model). While these terms are often used interchangeably in practice, they represent distinct elevation data products with different characteristics and appropriate applications. This article provides a technical comparison of these elevation model types and guidance on their appropriate use in geospatial analysis.
+                        Digital Elevation Models (DEMs) constitute fundamental datasets in geospatial science, providing quantitative three-dimensional representations of the Earth's surface topology. These datasets are essential for applications spanning hydrological modeling, geomorphological analysis, infrastructure development, and environmental impact assessment. However, significant confusion persists regarding the nomenclature and functional differences between DEM, DTM (Digital Terrain Model), and DSM (Digital Surface Model). While these terms are often used interchangeably in practice, they represent distinct elevation data products with different characteristics and appropriate applications. This article provides a technical comparison of these elevation model types and guidance on their appropriate use in geospatial analysis.
                     </p>
 
-                    <!-- Featured Image -->
+                    <!-- FEATURED IMAGE (AFTER FIRST PARAGRAPH) -->
                     <div class="post-featured-image">
                         <img src="overview.png" alt="Understanding DEM, DTM, and DSM">
                     </div>
 
-                    <h2>Digital Elevation Models (DEMs): Definition and Data Acquisition</h2>
+                    <!-- REST OF CONTENT -->
+                    <h2>What is a DEM?</h2>
                     <p>
-                        A <strong>Digital Elevation Model (DEM)</strong> serves as an umbrella term describing any digital representation of continuous elevation variation across a spatial domain. DEMs consist of gridded (raster) or vector-based elevation data where each cell or point contains an elevation value, typically referenced to a vertical datum such as mean sea level (MSL) or the WGS84 ellipsoid.
+                        A Digital Elevation Model (DEM) serves as an umbrella term describing any digital representation of continuous elevation variation across a spatial domain. DEMs consist of gridded (raster) or vector-based elevation data where each cell or point contains an elevation value, typically referenced to a vertical datum such as mean sea level (MSL) or the WGS84 ellipsoid.
                     </p>
 
-                    <h3>Data Acquisition Methods</h3>
+                    <h2>Understanding DTM</h2>
                     <p>
-                        DEMs are generated through various remote sensing and surveying techniques:
+                        A Digital Terrain Model (DTM) is similar to a DEM but focuses specifically on the terrain surface. It filters out vegetation, buildings, and other surface objects to reveal the underlying ground elevation. DTMs are particularly valuable for:
                     </p>
+                    <ul>
+                        <li>Hydrological modeling and watershed analysis</li>
+                        <li>Infrastructure planning and design</li>
+                        <li>Geological studies</li>
+                        <li>Calculating accurate slope and aspect</li>
+                    </ul>
+
+                    <h2>What About DSM?</h2>
                     <p>
-                        <strong>Light Detection and Ranging (LiDAR)</strong>: Active remote sensing technology employing laser pulses to measure surface distance. Airborne LiDAR systems typically achieve vertical accuracies of ±5-15 cm and horizontal resolutions of 0.5-2 meters. LiDAR provides multiple return signals, enabling differentiation between ground and non-ground points.
-                    </p>
-                    <p>
-                        <strong>Photogrammetry</strong>: Passive remote sensing method utilizing stereoscopic image pairs to extract elevation through parallax measurements. Structure-from-Motion (SfM) photogrammetry from Unmanned Aerial Systems (UAS) can achieve sub-decimeter vertical accuracy under optimal conditions.
-                    </p>
-                    <p>
-                        <strong>Interferometric Synthetic Aperture Radar (InSAR)</strong>: Microwave remote sensing technique measuring phase differences between radar signals to derive elevation. Global datasets such as SRTM (Shuttle Radar Topography Mission) and TanDEM-X employ InSAR methodology.
+                        A Digital Surface Model (DSM) captures the Earth's surface including all objects on it - trees, buildings, bridges, and other structures. Unlike DEMs and DTMs, DSMs represent the top of the canopy, rooftops, and other elevated features.
                     </p>
 
-                    <h3>Applications in Geospatial Analysis</h3>
+                    <h2>Applications in Coastal Research</h2>
                     <p>
-                        DEMs support quantitative terrain analysis including: hydrological modeling (flow accumulation, watershed delineation, and stream network extraction), geomorphometric analysis (slope, aspect, curvature, and roughness calculation), flood inundation modeling (hydraulic simulation and risk assessment), and viewshed and visibility analysis.
+                        In my research on coastal flooding and infrastructure resilience, understanding the differences between these models is crucial. For flood inundation mapping:
                     </p>
+                    <ul>
+                        <li><strong>DEMs and DTMs</strong> help identify low-lying areas vulnerable to flooding</li>
+                        <li><strong>DSMs</strong> are essential for understanding how buildings and infrastructure might obstruct or channel floodwaters</li>
+                        <li>High-resolution LiDAR-derived models enable accurate depth of inundation calculations</li>
+                    </ul>
 
-                    <h2>Digital Terrain Models (DTMs): Bare-Earth Elevation Data</h2>
+                    <h2>Choosing the Right Model</h2>
                     <p>
-                        A <strong>Digital Terrain Model (DTM)</strong> represents a subset of DEMs that specifically captures the elevation of the bare-earth surface, excluding all above-ground features including vegetation, buildings, and anthropogenic structures.
+                        The choice between DEM, DTM, and DSM depends on your specific application:
                     </p>
+                    <ul>
+                        <li>Use <strong>DEMs</strong> for general terrain analysis and visualization</li>
+                        <li>Use <strong>DTMs</strong> when you need precise ground elevation without surface features</li>
+                        <li>Use <strong>DSMs</strong> when surface objects are relevant to your analysis</li>
+                    </ul>
 
-                    <h3>Data Processing Methodology</h3>
                     <p>
-                        DTM generation requires classification and filtering of raw elevation data to isolate ground returns: (1) <strong>Point cloud classification</strong> – LiDAR returns are classified into ground and non-ground points using algorithms such as Progressive Morphological Filters, cloth simulation, or machine learning classifiers; (2) <strong>Ground point interpolation</strong> – Classified ground points are interpolated to create a continuous surface using methods including Triangulated Irregular Networks (TIN) or inverse distance weighting (IDW); (3) <strong>Quality control</strong> – Manual editing and validation against ground control points to ensure accuracy.
-                    </p>
-
-                    <h3>Technical Characteristics</h3>
-                    <p>
-                        DTMs represent topographic surface without vegetation or structures, preserve natural geomorphological features (ridges, valleys, drainage patterns), typically achieve vertical accuracy of ±10-30 cm (dependent on acquisition method and terrain complexity), and commonly range in resolution from 0.5 m (high-resolution LiDAR) to 30 m (global datasets).
-                    </p>
-
-                    <h3>Scientific Applications</h3>
-                    <p>
-                        <strong>Geotechnical engineering</strong>: Precise terrain characterization for infrastructure design, requiring accurate ground surface geometry for cut-and-fill calculations and slope stability analysis.
-                    </p>
-                    <p>
-                        <strong>Hydrodynamic modeling</strong>: DTMs provide essential input for 2D/3D hydraulic models (HEC-RAS, MIKE FLOOD, TUFLOW) where water flow follows terrain rather than surface obstacles.
-                    </p>
-                    <p>
-                        <strong>Geomorphological research</strong>: Landform classification, erosion modeling, and tectonic geomorphology studies require unobstructed terrain representation.
-                    </p>
-                    <p>
-                        <strong>Soil and agricultural analysis</strong>: Terrain-based soil property prediction and precision agriculture applications.
-                    </p>
-
-                    <h2>Digital Surface Models (DSMs): First-Surface Elevation</h2>
-                    <p>
-                        A <strong>Digital Surface Model (DSM)</strong> represents the elevation of the first reflective surface encountered by the remote sensing instrument, including vegetation canopy, building rooftops, and all above-ground features.
-                    </p>
-
-                    <h3>Data Characteristics</h3>
-                    <p>
-                        DSMs are typically derived from first-return LiDAR pulses (capturing the initial reflected signal), photogrammetric correlation (matching features in stereo imagery pairs), and radar interferometry (measuring phase differences in microwave returns). The DSM represents the top-of-canopy or top-of-structure elevation rather than ground level.
-                    </p>
-
-                    <h3>Technical Specifications</h3>
-                    <p>
-                        DSMs include all surface features (buildings, trees, and other elevated structures), typically achieve vertical accuracy of ±15-50 cm for LiDAR-derived products, and are particularly useful when normalized against DTM to produce Canopy Height Models (CHM = DSM - DTM).
-                    </p>
-
-                    <h3>Scientific Applications</h3>
-                    <p>
-                        <strong>Urban morphology studies</strong>: Three-dimensional urban form analysis, building height extraction, and urban heat island research requiring accurate built environment representation.
-                    </p>
-                    <p>
-                        <strong>Telecommunications network design</strong>: Line-of-sight analysis, Fresnel zone clearance calculations, and signal propagation modeling over actual terrain with obstacles.
-                    </p>
-                    <p>
-                        <strong>Forestry and carbon accounting</strong>: Canopy height estimation through DSM-DTM differencing, above-ground biomass calculation using allometric equations, and forest inventory.
-                    </p>
-                    <p>
-                        <strong>Solar radiation modeling</strong>: Shadow analysis and photovoltaic potential assessment requiring accurate representation of horizon obstructions.
-                    </p>
-
-                    <h2>Comparative Analysis</h2>
-                    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-                        <thead>
-                            <tr style="background-color: #f4f4f4;">
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>Parameter</strong></th>
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>DEM (General)</strong></th>
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>DTM</strong></th>
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>DSM</strong></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Surface representation</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Generic elevation</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Bare-earth topography</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">First-return surface (includes features)</td>
-                            </tr>
-                            <tr style="background-color: #f9f9f9;">
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Data content</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Variable (context-dependent)</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Ground points only</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Ground + vegetation + structures</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Typical accuracy (vertical)</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">±0.5-5 m (dataset dependent)</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">±0.1-0.5 m (high-res LiDAR)</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">±0.15-1 m</td>
-                            </tr>
-                            <tr style="background-color: #f9f9f9;">
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Processing requirement</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Minimal</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Point classification essential</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Direct first-return processing</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Primary applications</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">General terrain analysis</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Engineering, hydrology</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Urban planning, ecology</td>
-                            </tr>
-                            <tr style="background-color: #f9f9f9;">
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Canopy penetration</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">N/A</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Requires penetration</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Records canopy top</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h2>Selection Criteria for Research Applications</h2>
-                    <p>
-                        <strong>Use DEM (generic term) when:</strong> Referring to elevation data generally without specification, working with lower-resolution datasets where feature distinction is not maintained (e.g., SRTM 30m), or conducting broad-scale topographic analysis where surface/terrain distinction is not critical.
-                    </p>
-                    <p>
-                        <strong>Use DTM when:</strong> Ground surface geometry is the variable of interest, conducting hydraulic or hydrological simulations requiring terrain-following flow, performing engineering calculations (earthwork volumes, slope stability), or analyzing geomorphological processes operating on the bare-earth surface.
-                    </p>
-                    <p>
-                        <strong>Use DSM when:</strong> Above-ground features are relevant to the analysis, quantifying vegetation structure or urban morphology, performing viewshed analysis where obstacles matter, calculating Canopy Height Models (CHM = DSM - DTM), or modeling solar irradiance or telecommunications propagation.
-                    </p>
-
-                    <h2>Methodological Considerations</h2>
-                    <p>
-                        <strong>Data resolution</strong>: Spatial resolution requirements depend on application scale. Urban flood modeling may require ≤1 m resolution DTMs, while regional hydrological studies function adequately with 30 m resolution data.
-                    </p>
-                    <p>
-                        <strong>Vertical datum</strong>: Ensure consistency in vertical reference systems when integrating multiple datasets. Common datums include EGM96/EGM2008 (gravimetric geoid), NAVD88 (North America), or local orthometric heights.
-                    </p>
-                    <p>
-                        <strong>Uncertainty quantification</strong>: Elevation model accuracy varies with terrain slope, vegetation density, and acquisition parameters. Propagate positional uncertainty through analytical workflows where appropriate.
-                    </p>
-                    <p>
-                        <strong>Temporal considerations</strong>: Elevation models represent conditions at acquisition time. Dynamic surfaces (coastal areas, active landslides, urban construction) may require updated data for time-sensitive applications.
-                    </p>
-
-                    <h2>Conclusion</h2>
-                    <p>
-                        The distinction between DEM, DTM, and DSM is not merely semantic but reflects fundamental differences in data content and appropriate application domains. DTMs provide terrain-referenced ground surface elevation critical for geomorphological and hydrological applications, while DSMs capture the complete surface including above-ground features essential for urban analysis and ecological studies. DEM serves as the general terminology encompassing both specialized products.
-                    </p>
-                    <p>
-                        Rigorous application of appropriate elevation model types ensures analytical validity and prevents systematic errors in geospatial modeling workflows. Researchers and practitioners must carefully evaluate their analytical requirements against elevation data characteristics to select optimal datasets for their specific applications.
-                    </p>
-                    <p style="margin-top: 30px; font-style: italic; color: #666;">
-                        <em>References to specific datasets, software platforms, or additional technical specifications can be provided based on regional availability and project-specific requirements.</em>
+                        Understanding these fundamental geospatial datasets is the first step toward conducting robust coastal flood modeling and infrastructure vulnerability assessments.
                     </p>
                 </div>
 
@@ -262,8 +137,6 @@
                     <span class="tag">DEM</span>
                     <span class="tag">Flood Modeling</span>
                     <span class="tag">Coastal Engineering</span>
-                    <span class="tag">Remote Sensing</span>
-                    <span class="tag">LiDAR</span>
                 </div>
             </article>
 
