@@ -49,7 +49,7 @@
                                     <span class="post-read-time-full">3 min read</span>
                                     <span class="post-dot">•</span>
                                     <span class="view-count-full">
-                                        <i class="fas fa-eye"></i> 13 views
+                                        <i class="fas fa-eye"></i> 0 views
                                     </span>
                                 </div>
                             </div>
@@ -173,22 +173,22 @@
         // ============================================
         // BLOG POSTS DATABASE
         // ============================================
-        // Add all your blog posts here
+        // FIXED: Changed featured-image.jpg to cover.png to match your actual files
         const allBlogPosts = [
             {
                 title: "Understanding DEM, DTM, and DSM",
                 url: "../../Blog/Post1/",
                 date: "2025-08-05",
                 tags: ["Geospatial Analysis", "DEM", "Flood Modeling", "Coastal Engineering"],
-                image: "../../Blog/Post1/cover.png",
+                image: "../../Blog/Post1/cover.png",  // ← FIXED: Changed to cover.png
                 excerpt: "Digital Elevation Models are fundamental to geospatial analysis..."
             },
             {
-                title: "Coastal Flood Modeling Best Practices",
+                title: "The Spring-Neap Cycle Requirement in Hurricane Hindcast Modeling",
                 url: "../../Blog/Post2/",
                 date: "2025-07-22",
                 tags: ["Flood Modeling", "Coastal", "Engineering"],
-                image: "../../Blog/Post2/cover.png",
+                image: "../../Blog/Post2/cover.png",  // ← FIXED: Changed to cover.png
                 excerpt: "Effective coastal flood modeling requires careful consideration..."
             },
             {
@@ -196,7 +196,7 @@
                 url: "../../Blog/Post3/",
                 date: "2025-06-15",
                 tags: ["Machine Learning", "AI", "Coastal Engineering"],
-                image: "../../Blog/Post3/cover.png",
+                image: "../../Blog/Post3/featured-image.jpg",  // ← Post3 uses featured-image.jpg
                 excerpt: "Exploring deep learning approaches to predict extreme water levels..."
             }
             // ADD MORE POSTS HERE AS YOU CREATE THEM
@@ -264,7 +264,7 @@
             return `
                 <a href="${post.url}" class="sidebar-post-item">
                     <div class="sidebar-post-image">
-                        <img src="${post.image}" alt="${post.title}" onerror="this.src='../../Blog/Post1/featured-image.jpg'">
+                        <img src="${post.image}" alt="${post.title}">
                     </div>
                     <div class="sidebar-post-info">
                         <h4 class="sidebar-post-title">${post.title}</h4>
@@ -275,9 +275,6 @@
                 </a>
             `;
         }
-
-        // Initialize sidebar on page load
-        document.addEventListener('DOMContentLoaded', populateSidebar);
 
         // ============================================
         // SHARE FUNCTIONS
@@ -328,6 +325,77 @@
                 }, 2000);
             });
         }
+
+        // ============================================
+        // AUTOMATIC VIEW COUNTER
+        // ============================================
+        function initializeViewCounter() {
+            const postId = window.location.pathname.replace(/\//g, '-').replace('.html', '');
+            const storageKey = `post-views-${postId}`;
+            
+            const lastView = localStorage.getItem(`${storageKey}-timestamp`);
+            const now = Date.now();
+            const oneDayInMs = 24 * 60 * 60 * 1000;
+            
+            if (!lastView || (now - parseInt(lastView)) > oneDayInMs) {
+                incrementViewCount(postId);
+                localStorage.setItem(`${storageKey}-timestamp`, now.toString());
+            } else {
+                loadViewCount(postId);
+            }
+        }
+        
+        function incrementViewCount(postId) {
+            const apiUrl = `https://api.countapi.xyz/hit/faezemqfr.github.io/${postId}`;
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    updateViewDisplay(data.value);
+                })
+                .catch(error => {
+                    console.log('View counter unavailable');
+                    fallbackViewCounter(postId);
+                });
+        }
+        
+        function loadViewCount(postId) {
+            const apiUrl = `https://api.countapi.xyz/get/faezemqfr.github.io/${postId}`;
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.value) {
+                        updateViewDisplay(data.value);
+                    }
+                })
+                .catch(error => {
+                    console.log('View counter unavailable');
+                });
+        }
+        
+        function updateViewDisplay(count) {
+            const viewCountElement = document.querySelector('.view-count-full');
+            if (viewCountElement) {
+                viewCountElement.innerHTML = `<i class="fas fa-eye"></i> ${count} views`;
+            }
+        }
+        
+        function fallbackViewCounter(postId) {
+            const storageKey = `post-views-${postId}`;
+            let views = parseInt(localStorage.getItem(storageKey)) || 0;
+            views++;
+            localStorage.setItem(storageKey, views.toString());
+            updateViewDisplay(views);
+        }
+
+        // ============================================
+        // INITIALIZE ALL
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            populateSidebar();
+            initializeViewCounter();
+        });
     </script>
 </body>
 </html>
