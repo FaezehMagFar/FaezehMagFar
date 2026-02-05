@@ -156,7 +156,7 @@
                 </div>
             </article>
 
-            <!-- Blog Post Card 3 - CORRECTED -->
+            <!-- Blog Post Card 3 -->
             <article class="blog-post-card" onclick="openPost('Blog/Post3/')">
                 <div class="blog-post-image">
                     <img src="Blog/Post3/cover.png" alt="Flood Mapping and Modeling">
@@ -213,6 +213,68 @@
                             <span class="blog-tag-small">Flood Modeling</span>
                             <span class="blog-tag-small">HAND</span>
                             <span class="blog-tag-small">Bathtub</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Blog Post Card 4 - NEW POST 4 -->
+            <article class="blog-post-card" onclick="openPost('Blog/Post4/')">
+                <div class="blog-post-image">
+                    <img src="Blog/Post4/cover.png" alt="Bathymetry in Coastal Engineering">
+                    <div class="post-overlay">
+                        <span class="read-more-overlay">Read Article →</span>
+                    </div>
+                </div>
+                <div class="blog-post-details">
+                    <div class="blog-post-header">
+                        <div class="blog-author-section">
+                            <img src="profile-photo.jpg" alt="Rojan" class="blog-author-avatar">
+                            <div class="blog-author-info">
+                                <span class="blog-author-name">Rojan</span>
+                                <div class="blog-post-metadata">
+                                    <span class="blog-post-date">Nov 10, 2024</span>
+                                    <span class="metadata-dot">•</span>
+                                    <span class="blog-read-time">7 min read</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blog-actions">
+                            <button class="blog-share-btn" onclick="event.stopPropagation(); toggleBlogMenu(event, 'blogmenu4')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                            <div class="blog-share-menu" id="blogmenu4">
+                                <button onclick="event.stopPropagation(); shareBlogPost('The Role of Bathymetry in Hydrodynamic Modeling', 'Blog/Post4/', 'linkedin')">
+                                    <i class="fab fa-linkedin"></i> LinkedIn
+                                </button>
+                                <button onclick="event.stopPropagation(); shareBlogPost('The Role of Bathymetry in Hydrodynamic Modeling', 'Blog/Post4/', 'twitter')">
+                                    <i class="fab fa-twitter"></i> Twitter
+                                </button>
+                                <button onclick="event.stopPropagation(); shareBlogPost('The Role of Bathymetry in Hydrodynamic Modeling', 'Blog/Post4/', 'facebook')">
+                                    <i class="fab fa-facebook"></i> Facebook
+                                </button>
+                                <button onclick="event.stopPropagation(); copyBlogLink('Blog/Post4/')">
+                                    <i class="fas fa-link"></i> Copy Link
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="blog-post-title">The Role of Bathymetry in Hydrodynamic Modeling and Coastal Resilience</h2>
+                    
+                    <p class="blog-post-excerpt">
+                        Bathymetry is the underwater equivalent of topography, shaping subaqueous landscapes in ways that profoundly influence coastal and estuarine processes. This article explores how detailed bathymetric data is crucial for predicting water movement, designing resilient infrastructure, and mitigating flooding and erosion...
+                    </p>
+                    
+                    <div class="blog-post-footer">
+                        <div class="blog-view-count" data-post-id="Blog-Post4">
+                            <i class="fas fa-eye"></i>
+                            <span class="view-count-number">0</span> views
+                        </div>
+                        <div class="blog-tags-preview">
+                            <span class="blog-tag-small">Bathymetry</span>
+                            <span class="blog-tag-small">Coastal</span>
+                            <span class="blog-tag-small">Modeling</span>
                         </div>
                     </div>
                 </div>
@@ -323,12 +385,9 @@
             const apiPostId = '--' + postId + '-';
             const apiUrl = `https://api.countapi.xyz/get/faezemqfr.github.io/${apiPostId}`;
             
-            console.log('Fetching view count for:', apiPostId); // Debug log
-            
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
-                    console.log('API response for', postId, ':', data); // Debug log
                     if (data.value !== undefined && data.value !== null) {
                         const numberSpan = element.querySelector('.view-count-number');
                         if (numberSpan) {
