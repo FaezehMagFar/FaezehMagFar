@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Understanding DEM, DTM, and DSM - Faezeh (Rojan)</title>
+    <title>Understanding Flood Mapping and Modeling: Bathtub, HAND, and Hydrodynamic Methods - Faezeh (Rojan)</title>
     <link rel="stylesheet" href="../../styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -36,7 +36,7 @@
 
                 <!-- Post Header -->
                 <header class="post-header">
-                    <h1 class="post-title-full">Understanding DEM, DTM, and DSM: A Technical Overview of Digital Elevation Models</h1>
+                    <h1 class="post-title-full">Understanding Flood Mapping and Modeling: Bathtub, HAND, and Hydrodynamic Methods</h1>
                     
                     <div class="post-meta-full">
                         <div class="author-info-full">
@@ -44,12 +44,12 @@
                             <div>
                                 <span class="author-name-full">Rojan</span>
                                 <div class="post-details-full">
-                                    <span class="post-date-full">Aug 5, 2025</span>
+                                    <span class="post-date-full">Feb 24, 2025</span>
                                     <span class="post-dot">•</span>
-                                    <span class="post-read-time-full">3 min read</span>
+                                    <span class="post-read-time-full">6 min read</span>
                                     <span class="post-dot">•</span>
                                     <span class="view-count-full">
-                                        <i class="fas fa-eye"></i> 13 views
+                                        <i class="fas fa-eye"></i> 0 views
                                     </span>
                                 </div>
                             </div>
@@ -74,196 +74,262 @@
 
                 <!-- Post Content -->
                 <div class="post-content">
+                    <!-- FIRST PARAGRAPH -->
                     <p>
-                        Digital Elevation Models (DEMs) constitute fundamental datasets in geospatial science, providing quantitative three-dimensional representations of the Earth's surface topology. These datasets are essential for applications spanning hydrological modeling, geomorphological analysis, infrastructure development, and environmental impact assessment.
-                    </p>
-                    
-                    <p>
-                        However, significant confusion persists regarding the nomenclature and functional differences between DEM, DTM (Digital Terrain Model), and DSM (Digital Surface Model). While these terms are often used interchangeably in practice, they represent distinct elevation data products with different characteristics and appropriate applications. This article provides a technical comparison of these elevation model types and guidance on their appropriate use in geospatial analysis.
+                        Flooding poses a significant threat to communities worldwide, making accurate flood prediction essential for effective planning and risk management. Various modeling approaches exist, each with distinct strengths and limitations. This article explores three common flood modeling methods: the Bathtub Model, HAND-based (Height Above the Nearest Drainage) Model, and Hydrodynamic Models, examining their methodologies, applications, and implications for flood risk assessment.
                     </p>
 
-                    <!-- Featured Image -->
+                    <!-- FEATURED IMAGE (AFTER FIRST PARAGRAPH) -->
                     <div class="post-featured-image">
-                        <img src="overview.png" alt="Understanding DEM, DTM, and DSM">
+                        <img src="overview.png" alt="Flood Mapping and Modeling Methods">
                     </div>
 
-                    <h2>Digital Elevation Models (DEMs): Definition and Data Acquisition</h2>
+                    <h2>1. The Bathtub Model: Simplicity with Limitations</h2>
+                    
+                    <h3>Overview and Methodology</h3>
                     <p>
-                        A <strong>Digital Elevation Model (DEM)</strong> serves as an umbrella term describing any digital representation of continuous elevation variation across a spatial domain. DEMs consist of gridded (raster) or vector-based elevation data where each cell or point contains an elevation value, typically referenced to a vertical datum such as mean sea level (MSL) or the WGS84 ellipsoid.
+                        The bathtub model represents one of the simplest approaches to flood mapping. It assumes water levels rise uniformly, similar to filling a bathtub. Any area below a specified elevation is considered flooded, making it efficient and straightforward to implement, particularly for large-scale screening assessments.
+                    </p>
+                    <p>
+                        However, this method disregards actual water movement dynamics, which can lead to significant inaccuracies. By ignoring gravity-driven flow, friction, and drainage patterns, the bathtub model becomes less reliable for detailed flood assessments.
                     </p>
 
-                    <h3>Data Acquisition Methods</h3>
+                    <h3>Equations Used</h3>
                     <p>
-                        DEMs are generated through various remote sensing and surveying techniques:
+                        <strong>❌ Neither mass nor momentum equations</strong>
                     </p>
                     <p>
-                        <strong>Light Detection and Ranging (LiDAR)</strong>: Active remote sensing technology employing laser pulses to measure surface distance. Airborne LiDAR systems typically achieve vertical accuracies of ±5-15 cm and horizontal resolutions of 0.5-2 meters. LiDAR provides multiple return signals, enabling differentiation between ground and non-ground points.
-                    </p>
-                    <p>
-                        <strong>Photogrammetry</strong>: Passive remote sensing method utilizing stereoscopic image pairs to extract elevation through parallax measurements. Structure-from-Motion (SfM) photogrammetry from Unmanned Aerial Systems (UAS) can achieve sub-decimeter vertical accuracy under optimal conditions.
-                    </p>
-                    <p>
-                        <strong>Interferometric Synthetic Aperture Radar (InSAR)</strong>: Microwave remote sensing technique measuring phase differences between radar signals to derive elevation. Global datasets such as SRTM (Shuttle Radar Topography Mission) and TanDEM-X employ InSAR methodology.
+                        <strong>Why?</strong> The bathtub model is a static approach that assumes water rises uniformly. It does not simulate water movement and does not solve any physical equations.
                     </p>
 
-                    <h3>Applications in Geospatial Analysis</h3>
+                    <h3>Real-World Applications</h3>
                     <p>
-                        DEMs support quantitative terrain analysis including: hydrological modeling (flow accumulation, watershed delineation, and stream network extraction), geomorphometric analysis (slope, aspect, curvature, and roughness calculation), flood inundation modeling (hydraulic simulation and risk assessment), and viewshed and visibility analysis.
+                        Bathtub models are commonly used for coastal flood assessments, such as sea-level rise and storm surge mapping in regions like the U.S. East Coast and the Gulf of Mexico. Their simplicity allows for quick, large-scale hazard screening, often informing global or national policy assessments.
+                    </p>
+                    <p>
+                        <strong>Data Requirements:</strong>
+                    </p>
+                    <ul>
+                        <li>High-resolution DEMs (typically LiDAR-derived with 15-30 cm vertical accuracy)</li>
+                        <li>Historical or projected water level data</li>
+                        <li>GIS platforms such as ArcGIS or QGIS for implementation</li>
+                    </ul>
+
+                    <h3>Limitations and Performance</h3>
+                    <p>
+                        While easily scalable, bathtub models overlook critical hydrodynamic processes such as:
+                    </p>
+                    <ul>
+                        <li>Gravity-driven water movement</li>
+                        <li>Frictional losses</li>
+                        <li>Natural drainage patterns</li>
+                    </ul>
+                    <p>
+                        Studies by Sanders et al. (2024) demonstrate that bathtub models frequently overestimate flood extents, with Critical Success Index (CSI) values below 0.5, indicating poor agreement with observed flood events. This can result in misallocated resources and overlooked vulnerabilities.
+                    </p>
+                    <p>
+                        According to the Association of State Floodplain Managers (ASFPM), while bathtub models can provide broad-scale insights, their simplified assumptions can misrepresent risks at the asset level. The ASFPM advises that users understand model limitations and avoid relying solely on bathtub models for detailed risk assessments.
                     </p>
 
-                    <h2>Digital Terrain Models (DTMs): Bare-Earth Elevation Data</h2>
+                    <h3>The Flow-Tub Enhancement</h3>
                     <p>
-                        A <strong>Digital Terrain Model (DTM)</strong> represents a subset of DEMs that specifically captures the elevation of the bare-earth surface, excluding all above-ground features including vegetation, buildings, and anthropogenic structures.
+                        To address these limitations, the Flow-Tub model introduces:
+                    </p>
+                    <ul>
+                        <li><strong>Hydraulic Connectivity</strong>: Only areas with valid hydrological connections to water sources are considered flooded, avoiding false positives.</li>
+                        <li><strong>Path-Based Attenuation</strong>: Water depths decrease along flow paths, reflecting real-world energy losses.</li>
+                    </ul>
+                    <p>
+                        Field validation in the San Francisco Bay Area demonstrated that applying an attenuation factor of approximately 20 cm/km significantly improved flood depth estimates (Kasmalkar et al., 2024).
+                    </p>
+                    <p>
+                        <strong>💡 Takeaway:</strong> The bathtub model is a good first-pass tool for screening, but it should be supplemented with more advanced methods for detailed assessments.
                     </p>
 
-                    <h3>Data Processing Methodology</h3>
+                    <h2>2. HAND-Based Models: Bridging Simplicity and Complexity</h2>
+                    
+                    <h3>Concept and Methodology</h3>
                     <p>
-                        DTM generation requires classification and filtering of raw elevation data to isolate ground returns: (1) <strong>Point cloud classification</strong> – LiDAR returns are classified into ground and non-ground points using algorithms such as Progressive Morphological Filters, cloth simulation, or machine learning classifiers; (2) <strong>Ground point interpolation</strong> – Classified ground points are interpolated to create a continuous surface using methods including Triangulated Irregular Networks (TIN) or inverse distance weighting (IDW); (3) <strong>Quality control</strong> – Manual editing and validation against ground control points to ensure accuracy.
+                        HAND modeling represents a middle ground between simple bathtub approaches and complex hydrodynamic models. It calculates the vertical elevation difference between any point on the landscape and its nearest drainage point. This vertical separation serves as a proxy for potential flood depth when water levels in drainage channels rise.
                     </p>
 
-                    <h3>Technical Characteristics</h3>
+                    <h3>Equations Used</h3>
                     <p>
-                        DTMs represent topographic surface without vegetation or structures, preserve natural geomorphological features (ridges, valleys, drainage patterns), typically achieve vertical accuracy of ±10-30 cm (dependent on acquisition method and terrain complexity), and commonly range in resolution from 0.5 m (high-resolution LiDAR) to 30 m (global datasets).
+                        <strong>✅ Mass conservation (implicitly) ❌ Momentum equation (not used)</strong>
+                    </p>
+                    <p>
+                        <strong>Why?</strong> HAND is a terrain-based method that estimates flood extent based on topography and elevation differences. While it assumes water will drain following topographic gradients (implying conservation of mass), it does not explicitly solve mass conservation equations. Importantly, it does not consider velocity, acceleration, or friction, so momentum equations are not applied.
                     </p>
 
-                    <h3>Scientific Applications</h3>
+                    <h3>Implementation Context</h3>
                     <p>
-                        <strong>Geotechnical engineering</strong>: Precise terrain characterization for infrastructure design, requiring accurate ground surface geometry for cut-and-fill calculations and slope stability analysis.
+                        HAND offers a more realistic representation of flood vulnerability compared to bathtub models (Teng et al., 2017). This approach is particularly valuable in regions with limited hydrological data but available topographic information, such as:
+                    </p>
+                    <ul>
+                        <li>Developing countries with sparse gauging networks</li>
+                        <li>Remote areas where detailed hydrodynamic modeling is impractical</li>
+                        <li>Rapid response scenarios requiring quick flood mapping</li>
+                    </ul>
+
+                    <h3>Tools and Datasets</h3>
+                    <p>
+                        <strong>Remote Sensing and DEMs:</strong> HAND relies on DEMs to extract flow accumulation, flow direction, and drainage networks. LiDAR-derived DEMs are preferred for accuracy.
                     </p>
                     <p>
-                        <strong>Hydrodynamic modeling</strong>: DTMs provide essential input for 2D/3D hydraulic models (HEC-RAS, MIKE FLOOD, TUFLOW) where water flow follows terrain rather than surface obstacles.
+                        <strong>GIS-Based Analysis:</strong> Platforms like ArcGIS facilitate spatial hydrological and hypsometric analysis to generate HAND outputs.
                     </p>
                     <p>
-                        <strong>Geomorphological research</strong>: Landform classification, erosion modeling, and tectonic geomorphology studies require unobstructed terrain representation.
-                    </p>
-                    <p>
-                        <strong>Soil and agricultural analysis</strong>: Terrain-based soil property prediction and precision agriculture applications.
+                        <strong>Reference Flood Maps:</strong> HAND results are often compared with FEMA flood maps and outputs from hydrodynamic models.
                     </p>
 
-                    <h2>Digital Surface Models (DSMs): First-Surface Elevation</h2>
+                    <h3>Scientific Findings and Performance</h3>
                     <p>
-                        A <strong>Digital Surface Model (DSM)</strong> represents the elevation of the first reflective surface encountered by the remote sensing instrument, including vegetation canopy, building rooftops, and all above-ground features.
+                        Studies across diverse geographic settings have highlighted HAND's utility:
+                    </p>
+                    <p>
+                        <strong>Accuracy:</strong> In regions with straightforward topography, HAND-based flood maps can produce inundation extents comparable to those from hydrodynamic models (Thalakkottukara et al., 2024).
+                    </p>
+                    <p>
+                        <strong>Uncertainty:</strong> DEM resolution, discharge-stage relationships, and drainage network thresholds can influence flood depth estimates by up to 16% (Li et al., 2022).
+                    </p>
+                    <p>
+                        <strong>Case Study:</strong> In Indonesia's Kapuas Sintang watershed, HAND facilitated multi-level flood risk classification, directly supporting local planning efforts (Purwanto & Paiman, 2023).
+                    </p>
+                    <p>
+                        <strong>💡 Takeaway:</strong> HAND is a practical alternative when hydrodynamic modeling isn't feasible. It balances accuracy and efficiency, making it useful for regional flood assessments.
                     </p>
 
-                    <h3>Data Characteristics</h3>
+                    <h2>3. Hydrodynamic Models: The Gold Standard for Accuracy</h2>
+                    
+                    <h3>Physical Basis and Computational Approach</h3>
                     <p>
-                        DSMs are typically derived from first-return LiDAR pulses (capturing the initial reflected signal), photogrammetric correlation (matching features in stereo imagery pairs), and radar interferometry (measuring phase differences in microwave returns). The DSM represents the top-of-canopy or top-of-structure elevation rather than ground level.
+                        Hydrodynamic models provide the most detailed and realistic flood predictions. They solve mathematical equations describing water movement, capturing essential physical processes such as:
+                    </p>
+                    <ul>
+                        <li>Momentum transfer</li>
+                        <li>Pressure gradients</li>
+                        <li>Frictional effects from terrain and vegetation</li>
+                        <li>Time-dependent water accumulation and drainage</li>
+                    </ul>
+
+                    <h3>Governing Equations</h3>
+                    <p>
+                        <strong>✅ Mass conservation ✅ Momentum equations (Shallow Water/Navier-Stokes equations)</strong>
+                    </p>
+                    <p>
+                        <strong>Why?</strong> Hydrodynamic models use fully dynamic equations to simulate water movement over land and through channels. They solve:
+                    </p>
+                    <ul>
+                        <li><strong>Continuity Equation (Mass Conservation)</strong> – Ensures that water volume is conserved throughout the domain.</li>
+                        <li><strong>Momentum Equations (Shallow Water Equations or Navier-Stokes Equations)</strong> – Accounts for forces affecting water flow, including gravity, friction, and inertia.</li>
+                    </ul>
+
+                    <h3>Implementation Requirements</h3>
+                    <p>
+                        While hydrodynamic models offer the highest accuracy, they also demand substantial resources:
+                    </p>
+                    <p>
+                        <strong>Computational Infrastructure:</strong> High-performance computing is often required, particularly for large areas or fine spatial resolutions.
+                    </p>
+                    <p>
+                        <strong>Data Inputs:</strong> Detailed information on topography, land cover, precipitation, and boundary conditions.
+                    </p>
+                    <p>
+                        <strong>Technical Expertise:</strong> Skilled modelers are needed for setup, calibration, and interpretation.
                     </p>
 
-                    <h3>Technical Specifications</h3>
+                    <h3>Leading Tools and Applications</h3>
+                    <ul>
+                        <li><strong>HEC-RAS:</strong> Widely used for floodplain mapping and risk assessment.</li>
+                        <li><strong>Delft3D-FM:</strong> Preferred for coastal and estuarine flooding, especially when river, tide, and storm surge interactions are involved.</li>
+                        <li><strong>ADCIRC:</strong> Specialized for hurricane storm surge modeling along coastal regions.</li>
+                    </ul>
+
+                    <h3>Performance and Limitations</h3>
                     <p>
-                        DSMs include all surface features (buildings, trees, and other elevated structures), typically achieve vertical accuracy of ±15-50 cm for LiDAR-derived products, and are particularly useful when normalized against DTM to produce Canopy Height Models (CHM = DSM - DTM).
+                        When properly calibrated, hydrodynamic models achieve high accuracy:
+                    </p>
+                    <p>
+                        <strong>Performance:</strong> Root mean square errors (RMSE) for water depths often fall below 0.5 m in well-documented scenarios.
+                    </p>
+                    <p>
+                        <strong>Complex Phenomena:</strong> Capable of capturing flow patterns, breach propagation, and natural channel dynamics.
+                    </p>
+                    <p>
+                        However, challenges remain:
+                    </p>
+                    <ul>
+                        <li><strong>Setup and Calibration:</strong> Model configuration can take weeks or months.</li>
+                        <li><strong>Computational Cost:</strong> Running high-resolution simulations requires significant processing power.</li>
+                        <li><strong>Data Demands:</strong> Applications in data-scarce regions are limited.</li>
+                    </ul>
+                    <p>
+                        <strong>💡</strong> Hydrodynamic models are indispensable for detailed, site-specific assessments, especially for infrastructure planning and emergency management.
                     </p>
 
-                    <h3>Scientific Applications</h3>
+                    <h2>Integrating Approaches: A Practical Framework</h2>
                     <p>
-                        <strong>Urban morphology studies</strong>: Three-dimensional urban form analysis, building height extraction, and urban heat island research requiring accurate built environment representation.
+                        Rather than treating these methods as competing alternatives, modern flood risk management increasingly adopts a tiered, multi-model approach:
                     </p>
+                    <ol>
+                        <li><strong>Initial Screening:</strong> Bathtub or enhanced Flow-Tub models identify potentially vulnerable areas across large regions.</li>
+                        <li><strong>Refined Assessment:</strong> HAND-based models provide more realistic flood extents for priority areas identified during screening.</li>
+                        <li><strong>Detailed Planning:</strong> Hydrodynamic models deliver high-resolution simulations for densely populated areas or complex hydraulic environments.</li>
+                    </ol>
                     <p>
-                        <strong>Telecommunications network design</strong>: Line-of-sight analysis, Fresnel zone clearance calculations, and signal propagation modeling over actual terrain with obstacles.
-                    </p>
-                    <p>
-                        <strong>Forestry and carbon accounting</strong>: Canopy height estimation through DSM-DTM differencing, above-ground biomass calculation using allometric equations, and forest inventory.
-                    </p>
-                    <p>
-                        <strong>Solar radiation modeling</strong>: Shadow analysis and photovoltaic potential assessment requiring accurate representation of horizon obstructions.
-                    </p>
-
-                    <h2>Comparative Analysis</h2>
-                    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-                        <thead>
-                            <tr style="background-color: #f4f4f4;">
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>Parameter</strong></th>
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>DEM (General)</strong></th>
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>DTM</strong></th>
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left;"><strong>DSM</strong></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Surface representation</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Generic elevation</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Bare-earth topography</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">First-return surface (includes features)</td>
-                            </tr>
-                            <tr style="background-color: #f9f9f9;">
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Data content</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Variable (context-dependent)</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Ground points only</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Ground + vegetation + structures</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Typical accuracy (vertical)</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">±0.5-5 m (dataset dependent)</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">±0.1-0.5 m (high-res LiDAR)</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">±0.15-1 m</td>
-                            </tr>
-                            <tr style="background-color: #f9f9f9;">
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Processing requirement</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Minimal</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Point classification essential</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Direct first-return processing</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Primary applications</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">General terrain analysis</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Engineering, hydrology</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Urban planning, ecology</td>
-                            </tr>
-                            <tr style="background-color: #f9f9f9;">
-                                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Canopy penetration</strong></td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">N/A</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Requires penetration</td>
-                                <td style="border: 1px solid #ddd; padding: 10px;">Records canopy top</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h2>Selection Criteria for Research Applications</h2>
-                    <p>
-                        <strong>Use DEM (generic term) when:</strong> Referring to elevation data generally without specification, working with lower-resolution datasets where feature distinction is not maintained (e.g., SRTM 30m), or conducting broad-scale topographic analysis where surface/terrain distinction is not critical.
-                    </p>
-                    <p>
-                        <strong>Use DTM when:</strong> Ground surface geometry is the variable of interest, conducting hydraulic or hydrological simulations requiring terrain-following flow, performing engineering calculations (earthwork volumes, slope stability), or analyzing geomorphological processes operating on the bare-earth surface.
-                    </p>
-                    <p>
-                        <strong>Use DSM when:</strong> Above-ground features are relevant to the analysis, quantifying vegetation structure or urban morphology, performing viewshed analysis where obstacles matter, calculating Canopy Height Models (CHM = DSM - DTM), or modeling solar irradiance or telecommunications propagation.
+                        This stepwise approach ensures efficient resource allocation while maintaining appropriate detail where it matters most.
                     </p>
 
-                    <h2>Methodological Considerations</h2>
+                    <h2>Conclusion: Matching Models to Purpose</h2>
                     <p>
-                        <strong>Data resolution</strong>: Spatial resolution requirements depend on application scale. Urban flood modeling may require ≤1 m resolution DTMs, while regional hydrological studies function adequately with 30 m resolution data.
+                        Flood modeling methods continue to evolve, with each approach serving specific needs:
                     </p>
+                    <ul>
+                        <li><strong>Bathtub Models:</strong> Suitable for high-level hazard screening but prone to overestimation due to simplified assumptions.</li>
+                        <li><strong>HAND Models:</strong> A practical alternative for regions with limited data, offering more realistic flood extents than bathtub approaches.</li>
+                        <li><strong>Hydrodynamic Models:</strong> The most accurate but resource-intensive, ideal for detailed site assessments and emergency planning.</li>
+                    </ul>
                     <p>
-                        <strong>Vertical datum</strong>: Ensure consistency in vertical reference systems when integrating multiple datasets. Common datums include EGM96/EGM2008 (gravimetric geoid), NAVD88 (North America), or local orthometric heights.
-                    </p>
-                    <p>
-                        <strong>Uncertainty quantification</strong>: Elevation model accuracy varies with terrain slope, vegetation density, and acquisition parameters. Propagate positional uncertainty through analytical workflows where appropriate.
-                    </p>
-                    <p>
-                        <strong>Temporal considerations</strong>: Elevation models represent conditions at acquisition time. Dynamic surfaces (coastal areas, active landslides, urban construction) may require updated data for time-sensitive applications.
+                        The future of flood risk management lies in integrated modeling frameworks that balance complexity with application needs. By leveraging the strengths of each approach and acknowledging their limitations, planners, engineers, and decision-makers can develop more effective flood mitigation strategies, ultimately enhancing community resilience and public safety.
                     </p>
 
-                    <h2>Conclusion</h2>
-                    <p>
-                        The distinction between DEM, DTM, and DSM is not merely semantic but reflects fundamental differences in data content and appropriate application domains. DTMs provide terrain-referenced ground surface elevation critical for geomorphological and hydrological applications, while DSMs capture the complete surface including above-ground features essential for urban analysis and ecological studies. DEM serves as the general terminology encompassing both specialized products.
+                    <h2>References</h2>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Association of State Floodplain Managers (ASFPM). (2024). <em>Throwing the Numbers Out with the Bathwater: Understanding Flood Model Limitations.</em> Retrieved from https://www.floods.org
                     </p>
-                    <p>
-                        Rigorous application of appropriate elevation model types ensures analytical validity and prevents systematic errors in geospatial modeling workflows. Researchers and practitioners must carefully evaluate their analytical requirements against elevation data characteristics to select optimal datasets for their specific applications.
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Kasmalkar, I., Wagenaar, D., Bill-Weilandt, A., Bick, I. A., Nirandjan, S., Jafino, B. A., ... & Suckale, J. (2024). Flow-Tub model: A modified bathtub flood model with hydraulic connectivity and path-based attenuation. <em>MethodsX</em>, <em>12</em>, 102524. https://doi.org/10.1016/j.mex.2023.102524
                     </p>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Li, Z., Mount, J., & Demir, I. (2022). Accounting for uncertainty in real-time flood inundation mapping using HAND model: Iowa case study. <em>Natural Hazards</em>, <em>112</em>(1), 977–1004. https://doi.org/10.1007/s11069-022-05215-z
+                    </p>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Purwanto, A., & Paiman. (2023). HAND as a Model for Rapid Flood Inundation Mapping in the Kapuas Sintang Sub Watershed. <em>Jurnal Penelitian Pendidikan IPA</em>, <em>9</em>(8), 5899–5905. https://doi.org/10.29303/jppipa.v9i8.4235
+                    </p>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Sanders, B. F., Wing, O. E. J., & Bates, P. D. (2024). Flooding is not like filling a bath. <em>Earth's Future</em>, <em>12</em>(1), e2023EF003466. https://doi.org/10.1029/2023EF003466
+                    </p>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Teng, J., Jakeman, A. J., Vaze, J., Croke, B. F. W., Dutta, D., & Kim, S. (2017). Flood inundation modelling: A review of methods, recent advances and uncertainty analysis. <em>Environmental Modelling & Software</em>, <em>90</em>, 201–216. https://doi.org/10.1016/j.envsoft.2017.01.006
+                    </p>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Thalakkottukara, N. T., Thomas, J., Watkins, M. K., Bhaskar, N. R., & Prasad, K. V. S. R. (2024). Suitability of the HAND model for flood inundation mapping in data-scarce regions: A comparative analysis with hydrodynamic models. <em>Earth Science Informatics</em>, <em>17</em>(3), 1907–1921. https://doi.org/10.1007/s12145-024-01243-3
+                    </p>
+
                     <p style="margin-top: 30px; font-style: italic; color: #666;">
-                        <em>References to specific datasets, software platforms, or additional technical specifications can be provided based on regional availability and project-specific requirements.</em>
+                        <em>Understanding the strengths and limitations of each modeling approach allows users to make informed decisions, enhancing resilience against future flood risks.</em>
                     </p>
                 </div>
 
                 <!-- Tags -->
                 <div class="post-tags">
-                    <span class="tag">Geospatial Analysis</span>
-                    <span class="tag">DEM</span>
                     <span class="tag">Flood Modeling</span>
+                    <span class="tag">Bathtub Model</span>
+                    <span class="tag">HAND Model</span>
+                    <span class="tag">Hydrodynamic Modeling</span>
                     <span class="tag">Coastal Engineering</span>
-                    <span class="tag">Remote Sensing</span>
-                    <span class="tag">LiDAR</span>
+                    <span class="tag">GIS</span>
+                    <span class="tag">Risk Assessment</span>
                 </div>
             </article>
 
@@ -298,58 +364,53 @@
 
     <script>
         // ============================================
-        // BLOG POSTS DATABASE
+        // BLOG POSTS DATABASE - ALL THREE POSTS
         // ============================================
-        // Add all your blog posts here
         const allBlogPosts = [
             {
                 title: "Understanding DEM, DTM, and DSM",
                 url: "../../Blog/Post1/",
                 date: "2025-08-05",
                 tags: ["Geospatial Analysis", "DEM", "Flood Modeling", "Coastal Engineering"],
-                image: "../../Blog/Post1/featured-image.jpg",
+                image: "../../Blog/Post1/cover.png",
                 excerpt: "Digital Elevation Models are fundamental to geospatial analysis..."
             },
             {
-                title: "Coastal Flood Modeling Best Practices",
+                title: "The Spring-Neap Cycle Requirement in Hurricane Hindcast Modeling",
                 url: "../../Blog/Post2/",
-                date: "2025-07-22",
-                tags: ["Flood Modeling", "Coastal", "Engineering"],
-                image: "../../Blog/Post2/featured-image.jpg",
-                excerpt: "Effective coastal flood modeling requires careful consideration..."
+                date: "2025-06-03",
+                tags: ["Storm Surge", "Hurricane Modeling", "Coastal Hydrology", "Flood Modeling"],
+                image: "../../Blog/Post2/cover.png",
+                excerpt: "A technical analysis of why hurricane hindcasts must span complete tidal cycles..."
             },
             {
-                title: "Machine Learning in Coastal Hydrology",
+                title: "Understanding Flood Mapping and Modeling: Bathtub, HAND, and Hydrodynamic Methods",
                 url: "../../Blog/Post3/",
-                date: "2025-06-15",
-                tags: ["Machine Learning", "AI", "Coastal Engineering"],
-                image: "../../Blog/Post3/featured-image.jpg",
-                excerpt: "Exploring deep learning approaches to predict extreme water levels..."
+                date: "2025-02-24",
+                tags: ["Flood Modeling", "Bathtub Model", "HAND Model", "Hydrodynamic Modeling", "Coastal Engineering"],
+                image: "../../Blog/Post3/cover.png",
+                excerpt: "Exploring three common flood modeling methods and their applications..."
             }
-            // ADD MORE POSTS HERE AS YOU CREATE THEM
         ];
 
         // ============================================
-        // CURRENT POST CONFIGURATION
+        // CURRENT POST CONFIGURATION - POST 3
         // ============================================
-        // UPDATE THIS FOR EACH POST
         const currentPost = {
-            title: "Understanding DEM, DTM, and DSM",
-            date: "2025-08-05",
-            tags: ["Geospatial Analysis", "DEM", "Flood Modeling", "Coastal Engineering"]
+            title: "Understanding Flood Mapping and Modeling: Bathtub, HAND, and Hydrodynamic Methods",
+            date: "2025-02-24",
+            tags: ["Flood Modeling", "Bathtub Model", "HAND Model", "Hydrodynamic Modeling", "Coastal Engineering"]
         };
 
         // ============================================
         // AUTO-POPULATE RELATED & NEWER POSTS
         // ============================================
         function populateSidebar() {
-            // Get newer posts (posts with date after current post)
             const newerPosts = allBlogPosts
                 .filter(post => post.title !== currentPost.title && new Date(post.date) > new Date(currentPost.date))
                 .sort((a, b) => new Date(b.date) - new Date(a.date))
                 .slice(0, 3);
 
-            // Get related posts (posts sharing tags with current post)
             const relatedPosts = allBlogPosts
                 .filter(post => {
                     if (post.title === currentPost.title) return false;
@@ -363,7 +424,6 @@
                 .sort((a, b) => b.relevance - a.relevance)
                 .slice(0, 3);
 
-            // Populate newer posts
             const newerPostsContainer = document.getElementById('newer-posts');
             if (newerPosts.length > 0) {
                 newerPostsContainer.innerHTML = newerPosts.map(post => createSidebarPostHTML(post)).join('');
@@ -371,7 +431,6 @@
                 newerPostsContainer.innerHTML = '<p class="no-posts">No newer posts yet</p>';
             }
 
-            // Populate related posts
             const relatedPostsContainer = document.getElementById('related-posts');
             if (relatedPosts.length > 0) {
                 relatedPostsContainer.innerHTML = relatedPosts.map(post => createSidebarPostHTML(post)).join('');
@@ -380,7 +439,6 @@
             }
         }
 
-        // Create HTML for sidebar post item
         function createSidebarPostHTML(post) {
             const postDate = new Date(post.date).toLocaleDateString('en-US', { 
                 month: 'short', 
@@ -391,7 +449,7 @@
             return `
                 <a href="${post.url}" class="sidebar-post-item">
                     <div class="sidebar-post-image">
-                        <img src="${post.image}" alt="${post.title}" onerror="this.src='../../Blog/Post1/featured-image.jpg'">
+                        <img src="${post.image}" alt="${post.title}">
                     </div>
                     <div class="sidebar-post-info">
                         <h4 class="sidebar-post-title">${post.title}</h4>
@@ -402,9 +460,6 @@
                 </a>
             `;
         }
-
-        // Initialize sidebar on page load
-        document.addEventListener('DOMContentLoaded', populateSidebar);
 
         // ============================================
         // SHARE FUNCTIONS
@@ -455,6 +510,77 @@
                 }, 2000);
             });
         }
+
+        // ============================================
+        // AUTOMATIC VIEW COUNTER
+        // ============================================
+        function initializeViewCounter() {
+            const postId = window.location.pathname.replace(/\//g, '-').replace('.html', '');
+            const storageKey = `post-views-${postId}`;
+            
+            const lastView = localStorage.getItem(`${storageKey}-timestamp`);
+            const now = Date.now();
+            const oneDayInMs = 24 * 60 * 60 * 1000;
+            
+            if (!lastView || (now - parseInt(lastView)) > oneDayInMs) {
+                incrementViewCount(postId);
+                localStorage.setItem(`${storageKey}-timestamp`, now.toString());
+            } else {
+                loadViewCount(postId);
+            }
+        }
+        
+        function incrementViewCount(postId) {
+            const apiUrl = `https://api.countapi.xyz/hit/faezemqfr.github.io/${postId}`;
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    updateViewDisplay(data.value);
+                })
+                .catch(error => {
+                    console.log('View counter unavailable');
+                    fallbackViewCounter(postId);
+                });
+        }
+        
+        function loadViewCount(postId) {
+            const apiUrl = `https://api.countapi.xyz/get/faezemqfr.github.io/${postId}`;
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.value) {
+                        updateViewDisplay(data.value);
+                    }
+                })
+                .catch(error => {
+                    console.log('View counter unavailable');
+                });
+        }
+        
+        function updateViewDisplay(count) {
+            const viewCountElement = document.querySelector('.view-count-full');
+            if (viewCountElement) {
+                viewCountElement.innerHTML = `<i class="fas fa-eye"></i> ${count} views`;
+            }
+        }
+        
+        function fallbackViewCounter(postId) {
+            const storageKey = `post-views-${postId}`;
+            let views = parseInt(localStorage.getItem(storageKey)) || 0;
+            views++;
+            localStorage.setItem(storageKey, views.toString());
+            updateViewDisplay(views);
+        }
+
+        // ============================================
+        // INITIALIZE ALL
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            populateSidebar();
+            initializeViewCounter();
+        });
     </script>
 </body>
 </html>
