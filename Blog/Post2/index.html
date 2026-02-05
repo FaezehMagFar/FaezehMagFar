@@ -49,7 +49,7 @@
                                     <span class="post-read-time-full">4 min read</span>
                                     <span class="post-dot">•</span>
                                     <span class="view-count-full">
-                                        <i class="fas fa-eye"></i> 24 views
+                                        <i class="fas fa-eye"></i> 0 views
                                     </span>
                                 </div>
                             </div>
@@ -78,13 +78,16 @@
                         A methodological framework for hydrodynamic modeling of storm surge events
                     </p>
 
-                    <!-- Featured Image -->
+                    <!-- FIRST PARAGRAPH -->
                     <p>
                         Hydrodynamic modeling of hurricane-driven storm surge requires careful consideration of temporal domain selection to ensure physical validity and statistical reliability. This article presents evidence-based guidance for simulation duration in coastal water level modeling, demonstrating why hindcasts must encompass a minimum of one complete spring-neap tidal cycle (approximately 14.8 days). We examine the physical mechanisms driving this requirement, including model spin-up dynamics, surge evolution timescales, and statistical metric stabilization.
                     </p>
+
+                    <!-- Featured Image AFTER first paragraph -->
                     <div class="post-featured-image">
                         <img src="fig1.png" alt="Spring-Neap Cycle in Hurricane Modeling">
                     </div>
+
                     <p>
                         Hurricane storm surge modeling constitutes a critical component of coastal flood risk assessment, infrastructure vulnerability analysis, and emergency management planning. Despite advances in numerical hydrodynamics, many practitioners encounter systematic model performance degradation when employing abbreviated simulation periods. Short-duration hindcasts frequently yield negative Nash-Sutcliffe Efficiency (NSE) coefficients and other unfavorable performance indicators, even when model configuration and parameterization are appropriate.
                     </p>
@@ -365,16 +368,15 @@
 
     <script>
         // ============================================
-        // BLOG POSTS DATABASE
+        // BLOG POSTS DATABASE - FIXED IMAGE PATHS
         // ============================================
-        // Add all your blog posts here
         const allBlogPosts = [
             {
                 title: "Understanding DEM, DTM, and DSM",
                 url: "../../Blog/Post1/",
                 date: "2025-08-05",
                 tags: ["Geospatial Analysis", "DEM", "Flood Modeling", "Coastal Engineering"],
-                image: "../../Blog/Post1/featured-image.jpg",
+                image: "../../Blog/Post1/cover.png",  // ✅ FIXED to cover.png
                 excerpt: "Digital Elevation Models are fundamental to geospatial analysis..."
             },
             {
@@ -382,7 +384,7 @@
                 url: "../../Blog/Post2/",
                 date: "2025-06-03",
                 tags: ["Storm Surge", "Hurricane Modeling", "Coastal Hydrology", "Flood Modeling"],
-                image: "../../Blog/Post2/featured-image.jpg",
+                image: "../../Blog/Post2/cover.png",  // ✅ FIXED to cover.png
                 excerpt: "A technical analysis of why hurricane hindcasts must span complete tidal cycles..."
             },
             {
@@ -390,16 +392,14 @@
                 url: "../../Blog/Post3/",
                 date: "2025-06-15",
                 tags: ["Machine Learning", "AI", "Coastal Engineering"],
-                image: "../../Blog/Post3/featured-image.jpg",
+                image: "../../Blog/Post3/featured-image.jpg",  // Post3 uses featured-image.jpg
                 excerpt: "Exploring deep learning approaches to predict extreme water levels..."
             }
-            // ADD MORE POSTS HERE AS YOU CREATE THEM
         ];
 
         // ============================================
         // CURRENT POST CONFIGURATION
         // ============================================
-        // UPDATE THIS FOR EACH POST
         const currentPost = {
             title: "The Spring-Neap Cycle Requirement in Hurricane Hindcast Modeling",
             date: "2025-06-03",
@@ -410,13 +410,11 @@
         // AUTO-POPULATE RELATED & NEWER POSTS
         // ============================================
         function populateSidebar() {
-            // Get newer posts (posts with date after current post)
             const newerPosts = allBlogPosts
                 .filter(post => post.title !== currentPost.title && new Date(post.date) > new Date(currentPost.date))
                 .sort((a, b) => new Date(b.date) - new Date(a.date))
                 .slice(0, 3);
 
-            // Get related posts (posts sharing tags with current post)
             const relatedPosts = allBlogPosts
                 .filter(post => {
                     if (post.title === currentPost.title) return false;
@@ -430,7 +428,6 @@
                 .sort((a, b) => b.relevance - a.relevance)
                 .slice(0, 3);
 
-            // Populate newer posts
             const newerPostsContainer = document.getElementById('newer-posts');
             if (newerPosts.length > 0) {
                 newerPostsContainer.innerHTML = newerPosts.map(post => createSidebarPostHTML(post)).join('');
@@ -438,7 +435,6 @@
                 newerPostsContainer.innerHTML = '<p class="no-posts">No newer posts yet</p>';
             }
 
-            // Populate related posts
             const relatedPostsContainer = document.getElementById('related-posts');
             if (relatedPosts.length > 0) {
                 relatedPostsContainer.innerHTML = relatedPosts.map(post => createSidebarPostHTML(post)).join('');
@@ -447,7 +443,6 @@
             }
         }
 
-        // Create HTML for sidebar post item
         function createSidebarPostHTML(post) {
             const postDate = new Date(post.date).toLocaleDateString('en-US', { 
                 month: 'short', 
@@ -458,7 +453,7 @@
             return `
                 <a href="${post.url}" class="sidebar-post-item">
                     <div class="sidebar-post-image">
-                        <img src="${post.image}" alt="${post.title}" onerror="this.src='../../Blog/Post1/featured-image.jpg'">
+                        <img src="${post.image}" alt="${post.title}">
                     </div>
                     <div class="sidebar-post-info">
                         <h4 class="sidebar-post-title">${post.title}</h4>
@@ -469,9 +464,6 @@
                 </a>
             `;
         }
-
-        // Initialize sidebar on page load
-        document.addEventListener('DOMContentLoaded', populateSidebar);
 
         // ============================================
         // SHARE FUNCTIONS
@@ -522,6 +514,77 @@
                 }, 2000);
             });
         }
+
+        // ============================================
+        // AUTOMATIC VIEW COUNTER
+        // ============================================
+        function initializeViewCounter() {
+            const postId = window.location.pathname.replace(/\//g, '-').replace('.html', '');
+            const storageKey = `post-views-${postId}`;
+            
+            const lastView = localStorage.getItem(`${storageKey}-timestamp`);
+            const now = Date.now();
+            const oneDayInMs = 24 * 60 * 60 * 1000;
+            
+            if (!lastView || (now - parseInt(lastView)) > oneDayInMs) {
+                incrementViewCount(postId);
+                localStorage.setItem(`${storageKey}-timestamp`, now.toString());
+            } else {
+                loadViewCount(postId);
+            }
+        }
+        
+        function incrementViewCount(postId) {
+            const apiUrl = `https://api.countapi.xyz/hit/faezemqfr.github.io/${postId}`;
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    updateViewDisplay(data.value);
+                })
+                .catch(error => {
+                    console.log('View counter unavailable');
+                    fallbackViewCounter(postId);
+                });
+        }
+        
+        function loadViewCount(postId) {
+            const apiUrl = `https://api.countapi.xyz/get/faezemqfr.github.io/${postId}`;
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.value) {
+                        updateViewDisplay(data.value);
+                    }
+                })
+                .catch(error => {
+                    console.log('View counter unavailable');
+                });
+        }
+        
+        function updateViewDisplay(count) {
+            const viewCountElement = document.querySelector('.view-count-full');
+            if (viewCountElement) {
+                viewCountElement.innerHTML = `<i class="fas fa-eye"></i> ${count} views`;
+            }
+        }
+        
+        function fallbackViewCounter(postId) {
+            const storageKey = `post-views-${postId}`;
+            let views = parseInt(localStorage.getItem(storageKey)) || 0;
+            views++;
+            localStorage.setItem(storageKey, views.toString());
+            updateViewDisplay(views);
+        }
+
+        // ============================================
+        // INITIALIZE ALL
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            populateSidebar();
+            initializeViewCounter();
+        });
     </script>
 </body>
 </html>
