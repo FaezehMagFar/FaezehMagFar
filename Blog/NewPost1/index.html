@@ -97,7 +97,7 @@
 
                     <h3>1. Correlation Coefficient (r)</h3>
                     <p>
-                        The correlation coefficient measures the linear relationship between patterns in the test dataset and the reference dataset. It ranges from -1 to +1, where +1 indicates perfect positive correlation, 0 indicates no linear relationship, and -1 indicates perfect negative correlation. In the Taylor diagram, correlation is represented by the angular position, with the angle $\theta$ measured from the horizontal axis. Higher correlations (closer to 1) appear at smaller angles, closer to the reference point on the horizontal axis.
+                        The correlation coefficient measures the linear relationship between patterns in the test dataset and the reference dataset. It ranges from -1 to +1, where +1 indicates perfect positive correlation, 0 indicates no linear relationship, and -1 indicates perfect negative correlation. In the Taylor diagram, correlation is represented by the angular position, with the angle \(\theta\) measured from the horizontal axis. Higher correlations (closer to 1) appear at smaller angles, closer to the reference point on the horizontal axis.
                     </p>
 
                     <h3>2. Standard Deviation (σ)</h3>
@@ -117,7 +117,7 @@
 
                     <h3>Step-by-Step Calculation</h3>
                     <p>
-                        Let's denote the reference dataset as <strong>R</strong> and the test dataset as <strong>T</strong>, where both contain $n$ data points.
+                        Let's denote the reference dataset as <strong>R</strong> and the test dataset as <strong>T</strong>, where both contain \(n\) data points.
                     </p>
 
                     <p><strong>Step 1: Calculate Means</strong></p>
@@ -154,7 +154,7 @@
                         $$\text{Normalized } \sigma_t = \frac{\sigma_t}{\sigma_r}$$
                         $$\text{Normalized } E' = \frac{E'}{\sigma_r}$$
                     </div>
-                    <p>The reference dataset then has $\sigma_r = 1.0$ by definition.</p>
+                    <p>The reference dataset then has \(\sigma_r = 1.0\) by definition.</p>
 
                     <h3>The Law of Cosines Relationship</h3>
                     <p>
@@ -163,12 +163,12 @@
                     <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
                         $$E'^2 = \sigma_r^2 + \sigma_t^2 - 2 \cdot \sigma_r \cdot \sigma_t \cdot r$$
                     </div>
-                    <p>When normalized with $\sigma_r = 1$:</p>
+                    <p>When normalized with \(\sigma_r = 1\):</p>
                     <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
                         $$E'^2 = 1 + \sigma_t^2 - 2 \cdot \sigma_t \cdot r$$
                     </div>
                     <p>
-                        This equation means that once you plot a point at coordinates $(\sigma_t \cdot \cos(\theta), \sigma_t \cdot \sin(\theta))$, where $\theta = \arccos(r)$, the distance from that point to the reference automatically represents $E'$.
+                        This equation means that once you plot a point at coordinates \((\sigma_t \cdot \cos(\theta), \sigma_t \cdot \sin(\theta))\), where \(\theta = \arccos(r)\), the distance from that point to the reference automatically represents \(E'\).
                     </p>
 
                     <h2>Constructing the Diagram</h2>
@@ -178,10 +178,10 @@
                         For each test dataset:
                     </p>
                     <ol>
-                        <li>Calculate $r$, $\sigma_t$, and $E'$ using the equations above</li>
-                        <li>Convert to polar coordinates: radial distance = $\sigma_t$ (normalized), angle = $\arccos(r)$</li>
+                        <li>Calculate \(r\), \(\sigma_t\), and \(E'\) using the equations above</li>
+                        <li>Convert to polar coordinates: radial distance = \(\sigma_t\) (normalized), angle = \(\arccos(r)\)</li>
                         <li>Plot the point on polar axes</li>
-                        <li>The reference dataset sits at $(1, 0°)$ on the horizontal axis</li>
+                        <li>The reference dataset sits at \((1, 0°)\) on the horizontal axis</li>
                         <li>Optionally draw contours of constant RMSD as arcs centered on the reference point</li>
                     </ol>
 
@@ -189,7 +189,7 @@
 
                     <h3>Ideal Performance</h3>
                     <p>
-                        The perfect model would plot exactly on the reference point, having correlation $r = 1.0$, identical standard deviation ($\sigma_t = \sigma_r$), and zero RMSD.
+                        The perfect model would plot exactly on the reference point, having correlation \(r = 1.0\), identical standard deviation (\(\sigma_t = \sigma_r\)), and zero RMSD.
                     </p>
 
                     <h3>Reading the Signals</h3>
@@ -281,7 +281,7 @@
                     <h3>Data Requirements</h3>
                     <ul>
                         <li>All datasets must be on the same spatial/temporal grid</li>
-                        <li>Sufficient sample size (typically $n > 30$) for stable statistics</li>
+                        <li>Sufficient sample size (typically \(n > 30\)) for stable statistics</li>
                         <li>Same variables and units across all datasets being compared</li>
                     </ul>
 
