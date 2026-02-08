@@ -6,6 +6,9 @@
     <title>Understanding Taylor Diagrams: A Comprehensive Educational Guide - Faezeh (Rojan)</title>
     <link rel="stylesheet" href="../../styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -94,7 +97,7 @@
 
                     <h3>1. Correlation Coefficient (r)</h3>
                     <p>
-                        The correlation coefficient measures the linear relationship between patterns in the test dataset and the reference dataset. It ranges from -1 to +1, where +1 indicates perfect positive correlation, 0 indicates no linear relationship, and -1 indicates perfect negative correlation. In the Taylor diagram, correlation is represented by the angular position, with the angle θ measured from the horizontal axis. Higher correlations (closer to 1) appear at smaller angles, closer to the reference point on the horizontal axis.
+                        The correlation coefficient measures the linear relationship between patterns in the test dataset and the reference dataset. It ranges from -1 to +1, where +1 indicates perfect positive correlation, 0 indicates no linear relationship, and -1 indicates perfect negative correlation. In the Taylor diagram, correlation is represented by the angular position, with the angle $\theta$ measured from the horizontal axis. Higher correlations (closer to 1) appear at smaller angles, closer to the reference point on the horizontal axis.
                     </p>
 
                     <h3>2. Standard Deviation (σ)</h3>
@@ -114,33 +117,33 @@
 
                     <h3>Step-by-Step Calculation</h3>
                     <p>
-                        Let's denote the reference dataset as <strong>R</strong> and the test dataset as <strong>T</strong>, where both contain n data points.
+                        Let's denote the reference dataset as <strong>R</strong> and the test dataset as <strong>T</strong>, where both contain $n$ data points.
                     </p>
 
                     <p><strong>Step 1: Calculate Means</strong></p>
                     <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        <code>R̄ = (1/n) Σ R<sub>i</sub></code><br>
-                        <code>T̄ = (1/n) Σ T<sub>i</sub></code>
+                        $$\bar{R} = \frac{1}{n} \sum_{i=1}^{n} R_i$$
+                        $$\bar{T} = \frac{1}{n} \sum_{i=1}^{n} T_i$$
                     </div>
 
                     <p><strong>Step 2: Calculate Standard Deviations</strong></p>
                     <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        <code>σ<sub>r</sub> = √[(1/n) Σ(R<sub>i</sub> - R̄)²]</code><br>
-                        <code>σ<sub>t</sub> = √[(1/n) Σ(T<sub>i</sub> - T̄)²]</code>
+                        $$\sigma_r = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (R_i - \bar{R})^2}$$
+                        $$\sigma_t = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (T_i - \bar{T})^2}$$
                     </div>
 
                     <p><strong>Step 3: Calculate Correlation Coefficient</strong></p>
                     <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        <code>r = [Σ(R<sub>i</sub> - R̄)(T<sub>i</sub> - T̄)] / [n·σ<sub>r</sub>·σ<sub>t</sub>]</code>
+                        $$r = \frac{\sum_{i=1}^{n} (R_i - \bar{R})(T_i - \bar{T})}{n \cdot \sigma_r \cdot \sigma_t}$$
                     </div>
                     <p>Alternatively:</p>
                     <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        <code>r = [Σ(R<sub>i</sub>·T<sub>i</sub>) - n·R̄·T̄] / [n·σ<sub>r</sub>·σ<sub>t</sub>]</code>
+                        $$r = \frac{\sum_{i=1}^{n} R_i \cdot T_i - n \cdot \bar{R} \cdot \bar{T}}{n \cdot \sigma_r \cdot \sigma_t}$$
                     </div>
 
                     <p><strong>Step 4: Calculate Centered RMSD</strong></p>
                     <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        <code>E' = √[(1/n) Σ((R<sub>i</sub> - R̄) - (T<sub>i</sub> - T̄))²]</code>
+                        $$E' = \sqrt{\frac{1}{n} \sum_{i=1}^{n} \left[(R_i - \bar{R}) - (T_i - \bar{T})\right]^2}$$
                     </div>
 
                     <p><strong>Step 5: Normalize (Optional but Common)</strong></p>
@@ -148,24 +151,24 @@
                         For easier comparison across variables with different units:
                     </p>
                     <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        <code>Normalized σ<sub>t</sub> = σ<sub>t</sub> / σ<sub>r</sub></code><br>
-                        <code>Normalized E' = E' / σ<sub>r</sub></code>
+                        $$\text{Normalized } \sigma_t = \frac{\sigma_t}{\sigma_r}$$
+                        $$\text{Normalized } E' = \frac{E'}{\sigma_r}$$
                     </div>
-                    <p>The reference dataset then has σ<sub>r</sub> = 1.0 by definition.</p>
+                    <p>The reference dataset then has $\sigma_r = 1.0$ by definition.</p>
 
                     <h3>The Law of Cosines Relationship</h3>
                     <p>
                         The elegance of Taylor diagrams comes from the geometric relationship:
                     </p>
                     <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        <code>E'² = σ<sub>r</sub>² + σ<sub>t</sub>² - 2·σ<sub>r</sub>·σ<sub>t</sub>·r</code>
+                        $$E'^2 = \sigma_r^2 + \sigma_t^2 - 2 \cdot \sigma_r \cdot \sigma_t \cdot r$$
                     </div>
-                    <p>When normalized with σ<sub>r</sub> = 1:</p>
+                    <p>When normalized with $\sigma_r = 1$:</p>
                     <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        <code>E'² = 1 + σ<sub>t</sub>² - 2·σ<sub>t</sub>·r</code>
+                        $$E'^2 = 1 + \sigma_t^2 - 2 \cdot \sigma_t \cdot r$$
                     </div>
                     <p>
-                        This equation means that once you plot a point at coordinates (σ<sub>t</sub>·cos(θ), σ<sub>t</sub>·sin(θ)), where θ = arccos(r), the distance from that point to the reference automatically represents E'.
+                        This equation means that once you plot a point at coordinates $(\sigma_t \cdot \cos(\theta), \sigma_t \cdot \sin(\theta))$, where $\theta = \arccos(r)$, the distance from that point to the reference automatically represents $E'$.
                     </p>
 
                     <h2>Constructing the Diagram</h2>
@@ -175,10 +178,10 @@
                         For each test dataset:
                     </p>
                     <ol>
-                        <li>Calculate r, σ<sub>t</sub>, and E' using the equations above</li>
-                        <li>Convert to polar coordinates: radial distance = σ<sub>t</sub> (normalized), angle = arccos(r)</li>
+                        <li>Calculate $r$, $\sigma_t$, and $E'$ using the equations above</li>
+                        <li>Convert to polar coordinates: radial distance = $\sigma_t$ (normalized), angle = $\arccos(r)$</li>
                         <li>Plot the point on polar axes</li>
-                        <li>The reference dataset sits at (1, 0°) on the horizontal axis</li>
+                        <li>The reference dataset sits at $(1, 0°)$ on the horizontal axis</li>
                         <li>Optionally draw contours of constant RMSD as arcs centered on the reference point</li>
                     </ol>
 
@@ -186,7 +189,7 @@
 
                     <h3>Ideal Performance</h3>
                     <p>
-                        The perfect model would plot exactly on the reference point, having correlation r = 1.0, identical standard deviation (σ<sub>t</sub> = σ<sub>r</sub>), and zero RMSD.
+                        The perfect model would plot exactly on the reference point, having correlation $r = 1.0$, identical standard deviation ($\sigma_t = \sigma_r$), and zero RMSD.
                     </p>
 
                     <h3>Reading the Signals</h3>
@@ -278,7 +281,7 @@
                     <h3>Data Requirements</h3>
                     <ul>
                         <li>All datasets must be on the same spatial/temporal grid</li>
-                        <li>Sufficient sample size (typically n > 30) for stable statistics</li>
+                        <li>Sufficient sample size (typically $n > 30$) for stable statistics</li>
                         <li>Same variables and units across all datasets being compared</li>
                     </ul>
 
