@@ -33,6 +33,68 @@
 
         <div class="blog-posts-container">
             
+            <!-- Blog New Post Card 1 -->
+            <article class="blog-post-card" onclick="openPost('Blog/NewPost1/')">
+                <div class="blog-post-image">
+                    <img src="Blog/Post1/cover.png" alt="Understanding Taylor Diagrams: A Comprehensive Educational Guide">
+                    <div class="post-overlay">
+                        <span class="read-more-overlay">Read Article →</span>
+                    </div>
+                </div>
+                <div class="blog-post-details">
+                    <div class="blog-post-header">
+                        <div class="blog-author-section">
+                            <img src="profile-photo.jpg" alt="Rojan" class="blog-author-avatar">
+                            <div class="blog-author-info">
+                                <span class="blog-author-name">Rojan</span>
+                                <div class="blog-post-metadata">
+                                    <span class="blog-post-date">Feb 8, 2026</span>
+                                    <span class="metadata-dot">•</span>
+                                    <span class="blog-read-time">12 min read</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blog-actions">
+                            <button class="blog-share-btn" onclick="event.stopPropagation(); toggleBlogMenu(event, 'blogmenu1')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                            <div class="blog-share-menu" id="blogmenu1">
+                                <button onclick="event.stopPropagation(); shareBlogPost('Understanding Taylor Diagrams: A Comprehensive Educational Guide', 'Blog/NewPost1/', 'linkedin')">
+                                    <i class="fab fa-linkedin"></i> LinkedIn
+                                </button>
+                                <button onclick="event.stopPropagation(); shareBlogPost('Understanding Taylor Diagrams: A Comprehensive Educational Guide', 'Blog/NewPost1/', 'twitter')">
+                                    <i class="fab fa-twitter"></i> Twitter
+                                </button>
+                                <button onclick="event.stopPropagation(); shareBlogPost('Understanding Taylor Diagrams: A Comprehensive Educational Guide', 'Blog/NewPost1/', 'facebook')">
+                                    <i class="fab fa-facebook"></i> Facebook
+                                </button>
+                                <button onclick="event.stopPropagation(); copyBlogLink('Blog/NewPost1/')">
+                                    <i class="fas fa-link"></i> Copy Link
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="blog-post-title">Understanding Taylor Diagrams: A Comprehensive Educational Guide</h2>
+                    
+                    <p class="blog-post-excerpt">
+                       Taylor diagrams are sophisticated visualization tools that revolutionize model performance comparison across multiple datasets. Learn the mathematics, interpretation, and practical applications in climate science, machine learning, and deep learning model validation...
+                    </p>
+                    
+                    <div class="blog-post-footer">
+                        <div class="blog-view-count" data-post-id="Blog-Post1">
+                            <i class="fas fa-eye"></i>
+                            <span class="view-count-number">50</span> views
+                        </div>
+                        <div class="blog-tags-preview">
+                            <span class="blog-tag-small">Taylor Diagrams</span>
+                            <span class="blog-tag-small">Model Validation</span>
+                            <span class="blog-tag-small">Machine Learning </span>
+                        </div>
+                    </div>
+                </div>
+            </article>            
+            
             <!-- Blog Post Card 1 -->
             <article class="blog-post-card" onclick="openPost('Blog/Post1/')">
                 <div class="blog-post-image">
