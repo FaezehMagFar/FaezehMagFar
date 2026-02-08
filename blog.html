@@ -404,11 +404,71 @@
                 </div>
             </article>
 
+            <!-- Blog Post Card 6 -->
+            <article class="blog-post-card" onclick="openPost('Blog/Post5/')">
+                <div class="blog-post-image">
+                    <img src="Blog/Post6/cover.png" alt="Introduction to Statistical Downscaling: Techniques and Applications">
+                    <div class="post-overlay">
+                        <span class="read-more-overlay">Read Article →</span>
+                    </div>
+                </div>
+                <div class="blog-post-details">
+                    <div class="blog-post-header">
+                        <div class="blog-author-section">
+                            <img src="profile-photo.jpg" alt="Rojan" class="blog-author-avatar">
+                            <div class="blog-author-info">
+                                <span class="blog-author-name">Rojan</span>
+                                <div class="blog-post-metadata">
+                                    <span class="blog-post-date">Oct 15, 2024</span>
+                                    <span class="metadata-dot">•</span>
+                                    <span class="blog-read-time">10 min read</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blog-actions">
+                            <button class="blog-share-btn" onclick="event.stopPropagation(); toggleBlogMenu(event, 'blogmenu5')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                            <div class="blog-share-menu" id="blogmenu5">
+                                <button onclick="event.stopPropagation(); shareBlogPost('Introduction to Statistical Downscaling: Techniques and Applications', 'Blog/Post6/', 'linkedin')">
+                                    <i class="fab fa-linkedin"></i> LinkedIn
+                                </button>
+                                <button onclick="event.stopPropagation(); shareBlogPost('Introduction to Statistical Downscaling: Techniques and Applications', 'Blog/Post6/', 'twitter')">
+                                    <i class="fab fa-twitter"></i> Twitter
+                                </button>
+                                <button onclick="event.stopPropagation(); shareBlogPost('Introduction to Statistical Downscaling: Techniques and Applications', 'Blog/Post6/', 'facebook')">
+                                    <i class="fab fa-facebook"></i> Facebook
+                                </button>
+                                <button onclick="event.stopPropagation(); copyBlogLink('Blog/Post6/')">
+                                    <i class="fas fa-link"></i> Copy Link
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="blog-post-title">Introduction to Statistical Downscaling: Techniques and Applications</h2>
+                    
+                    <p class="blog-post-excerpt">
+                    A comprehensive guide to statistical downscaling methods that bridge the gap between coarse global climate models and fine-scale regional projections. Explore regression methods, bias correction, machine learning, and more...
+                    </p>
+                    
+                    <div class="blog-post-footer">
+                        <div class="blog-view-count" data-post-id="Blog-Post5">
+                            <i class="fas fa-eye"></i>
+                            <span class="view-count-number">216</span> views
+                        </div>
+                        <div class="blog-tags-preview">
+                            <span class="blog-tag-small">Downscaling</span>
+                            <span class="blog-tag-small">Climate Modeling</span>
+                        </div>
+                    </div>
+                </div>
+            </article>            
         </div>
     </main>
 
     <footer class="footer">
-        <p>&copy; 2026 Faezeh (Rojan) Maghsoodifar. All rights reserved.</p>
+        <p>&copy; 2021 Faezeh (Rojan) Maghsoodifar. All rights reserved.</p>
     </footer>
 
     <script>
