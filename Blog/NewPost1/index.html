@@ -9,6 +9,290 @@
     <!-- MathJax for LaTeX rendering -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- React for Interactive Tool -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        /* Interactive Tool Styles */
+        .interactive-tool-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            margin: 40px -20px;
+            border-radius: 15px;
+        }
+
+        .tool-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .tool-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .tool-header h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .tool-header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .tool-main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .tool-diagram-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .tool-controls-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            max-height: 800px;
+            overflow-y: auto;
+        }
+
+        .tool-canvas {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: crosshair;
+        }
+
+        .tool-tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tool-tab-button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: #e9ecef;
+            color: #495057;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tool-tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tool-tab-button:hover:not(.active) {
+            background: #dee2e6;
+        }
+
+        .tool-input-group {
+            margin-bottom: 20px;
+        }
+
+        .tool-input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .tool-input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .tool-input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .tool-color-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .tool-color-input input[type="color"] {
+            width: 60px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .tool-button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .tool-button-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tool-button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .tool-button-danger {
+            background: #dc3545;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .tool-button-danger:hover {
+            background: #c82333;
+        }
+
+        .tool-model-list {
+            margin-top: 20px;
+        }
+
+        .tool-model-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tool-model-info {
+            flex: 1;
+        }
+
+        .tool-model-name {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 4px;
+        }
+
+        .tool-model-stats {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .tool-model-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .tool-delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .tool-delete-btn:hover {
+            background: #c82333;
+        }
+
+        .tool-example-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tool-example-btn {
+            padding: 10px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tool-example-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .tool-info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .tool-legend {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .tool-legend-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+
+        .tool-legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .tool-legend-line {
+            width: 30px;
+            height: 2px;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 1024px) {
+            .tool-main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .tool-controls-section {
+                max-height: none;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -304,6 +588,23 @@
                         <li><strong>MATLAB:</strong> Built-in or custom functions</li>
                         <li><strong>NCL (NCAR Command Language):</strong> Extensive Taylor diagram capabilities</li>
                     </ul>
+
+                    <!-- INTERACTIVE TOOL SECTION -->
+                    <h2>Interactive Taylor Diagram Tool</h2>
+                    <p>
+                        Now that you understand the theory, try the interactive tool below to create your own Taylor diagrams! You can add custom models, explore pre-loaded examples, and visualize how different statistical metrics relate to each other on the diagram.
+                    </p>
+
+                    <div class="interactive-tool-section">
+                        <div class="tool-container">
+                            <div class="tool-header">
+                                <h3>📊 Interactive Taylor Diagram</h3>
+                                <p>Create and explore Taylor diagrams with real-time visualization</p>
+                            </div>
+
+                            <div id="taylor-tool-root"></div>
+                        </div>
+                    </div>
 
                     <h2>Advanced Considerations</h2>
 
@@ -631,6 +932,557 @@
             populateSidebar();
             initializeViewCounter();
         });
+    </script>
+
+    <!-- Interactive Taylor Diagram Tool React Component -->
+    <script type="text/babel">
+        const { useState, useRef, useEffect } = React;
+
+        function TaylorDiagramTool() {
+            const canvasRef = useRef(null);
+            const [activeTab, setActiveTab] = useState('add');
+            const [models, setModels] = useState([]);
+            const [currentModel, setCurrentModel] = useState({
+                name: '',
+                correlation: 0.8,
+                stdDev: 1.0,
+                color: '#667eea'
+            });
+            const [showRMSD, setShowRMSD] = useState(true);
+            const [showCorrelationLines, setShowCorrelationLines] = useState(true);
+
+            const CANVAS_SIZE = 600;
+            const CENTER_X = CANVAS_SIZE / 2;
+            const CENTER_Y = CANVAS_SIZE / 2;
+            const RADIUS = 200;
+
+            useEffect(() => {
+                drawDiagram();
+            }, [models, showRMSD, showCorrelationLines]);
+
+            const drawDiagram = () => {
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+
+                if (showCorrelationLines) {
+                    drawCorrelationLines(ctx);
+                }
+
+                drawStdDevCircles(ctx);
+
+                if (showRMSD) {
+                    drawRMSDContours(ctx);
+                }
+
+                drawAxes(ctx);
+                drawReferencePoint(ctx);
+
+                models.forEach(model => {
+                    drawModelPoint(ctx, model);
+                });
+
+                drawLabels(ctx);
+            };
+
+            const drawCorrelationLines = (ctx) => {
+                const correlations = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99];
+                
+                ctx.strokeStyle = '#e0e0e0';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 5]);
+
+                correlations.forEach(corr => {
+                    const angle = Math.acos(corr);
+                    const endX = CENTER_X + RADIUS * 1.5 * Math.cos(angle);
+                    const endY = CENTER_Y - RADIUS * 1.5 * Math.sin(angle);
+
+                    ctx.beginPath();
+                    ctx.moveTo(CENTER_X, CENTER_Y);
+                    ctx.lineTo(endX, endY);
+                    ctx.stroke();
+
+                    const labelX = CENTER_X + (RADIUS * 1.6) * Math.cos(angle);
+                    const labelY = CENTER_Y - (RADIUS * 1.6) * Math.sin(angle);
+                    ctx.fillStyle = '#666';
+                    ctx.font = '11px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(corr.toFixed(2), labelX, labelY);
+                });
+
+                ctx.setLineDash([]);
+            };
+
+            const drawStdDevCircles = (ctx) => {
+                const stdDevs = [0.25, 0.5, 0.75, 1.0, 1.25, 1.5];
+                
+                ctx.strokeStyle = '#d0d0d0';
+                ctx.lineWidth = 1;
+
+                stdDevs.forEach(std => {
+                    const radius = std * RADIUS;
+                    ctx.beginPath();
+                    ctx.arc(CENTER_X, CENTER_Y, radius, 0, Math.PI, true);
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#666';
+                    ctx.font = '11px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(std.toFixed(2), CENTER_X + radius, CENTER_Y + 20);
+                });
+            };
+
+            const drawRMSDContours = (ctx) => {
+                const refX = CENTER_X + RADIUS;
+                const refY = CENTER_Y;
+                const rmsds = [0.25, 0.5, 0.75, 1.0, 1.25];
+
+                ctx.strokeStyle = '#90caf9';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([3, 3]);
+
+                rmsds.forEach(rmsd => {
+                    const radius = rmsd * RADIUS;
+                    ctx.beginPath();
+                    ctx.arc(refX, refY, radius, Math.PI / 2, 3 * Math.PI / 2, false);
+                    ctx.stroke();
+                });
+
+                ctx.setLineDash([]);
+            };
+
+            const drawAxes = (ctx) => {
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(CENTER_X, CENTER_Y);
+                ctx.lineTo(CENTER_X + RADIUS * 1.6, CENTER_Y);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(CENTER_X, CENTER_Y, RADIUS * 1.5, Math.PI, 0, true);
+                ctx.stroke();
+
+                ctx.fillStyle = '#333';
+                ctx.beginPath();
+                ctx.moveTo(CENTER_X + RADIUS * 1.6, CENTER_Y);
+                ctx.lineTo(CENTER_X + RADIUS * 1.6 - 10, CENTER_Y - 5);
+                ctx.lineTo(CENTER_X + RADIUS * 1.6 - 10, CENTER_Y + 5);
+                ctx.fill();
+            };
+
+            const drawReferencePoint = (ctx) => {
+                const refX = CENTER_X + RADIUS;
+                const refY = CENTER_Y;
+
+                ctx.fillStyle = '#f44336';
+                ctx.strokeStyle = '#d32f2f';
+                ctx.lineWidth = 2;
+
+                ctx.beginPath();
+                ctx.arc(refX, refY, 8, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('REF', refX, refY - 15);
+            };
+
+            const drawModelPoint = (ctx, model) => {
+                const angle = Math.acos(Math.max(-1, Math.min(1, model.correlation)));
+                const x = CENTER_X + model.stdDev * RADIUS * Math.cos(angle);
+                const y = CENTER_Y - model.stdDev * RADIUS * Math.sin(angle);
+
+                ctx.fillStyle = model.color;
+                ctx.strokeStyle = model.color;
+                ctx.lineWidth = 2;
+
+                ctx.beginPath();
+                ctx.arc(x, y, 6, 0, 2 * Math.PI);
+                ctx.fill();
+
+                ctx.font = 'bold 12px Arial';
+                ctx.fillStyle = '#333';
+                ctx.textAlign = 'center';
+                ctx.fillText(model.name, x, y - 12);
+            };
+
+            const drawLabels = (ctx) => {
+                ctx.fillStyle = '#333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Standard Deviation', CENTER_X + RADIUS * 0.8, CENTER_Y + 50);
+
+                ctx.save();
+                ctx.translate(CENTER_X - 50, CENTER_Y - RADIUS * 0.5);
+                ctx.rotate(-Math.PI / 2);
+                ctx.fillText('Standard Deviation', 0, 0);
+                ctx.restore();
+
+                ctx.fillText('Correlation', CENTER_X + RADIUS * 1.2, CENTER_Y - RADIUS * 1.3);
+
+                if (showRMSD) {
+                    ctx.fillStyle = '#2196F3';
+                    ctx.font = '12px Arial';
+                    ctx.fillText('RMSD', CENTER_X + RADIUS * 1.4, CENTER_Y - 20);
+                }
+            };
+
+            const calculateRMSD = (corr, stdDev) => {
+                return Math.sqrt(1 + stdDev * stdDev - 2 * stdDev * corr);
+            };
+
+            const addModel = () => {
+                if (currentModel.name.trim() === '') {
+                    alert('Please enter a model name');
+                    return;
+                }
+
+                const rmsd = calculateRMSD(currentModel.correlation, currentModel.stdDev);
+                
+                setModels([...models, {
+                    ...currentModel,
+                    rmsd: rmsd
+                }]);
+
+                setCurrentModel({
+                    name: '',
+                    correlation: 0.8,
+                    stdDev: 1.0,
+                    color: `#${Math.floor(Math.random()*16777215).toString(16)}`
+                });
+            };
+
+            const deleteModel = (index) => {
+                setModels(models.filter((_, i) => i !== index));
+            };
+
+            const loadExample = (exampleType) => {
+                let exampleModels = [];
+
+                if (exampleType === 'weather') {
+                    exampleModels = [
+                        { name: 'Model A', correlation: 0.92, stdDev: 1.05, color: '#2196F3' },
+                        { name: 'Model B', correlation: 0.85, stdDev: 0.95, color: '#4CAF50' },
+                        { name: 'Model C', correlation: 0.78, stdDev: 1.15, color: '#FF9800' },
+                        { name: 'Model D', correlation: 0.65, stdDev: 0.85, color: '#9C27B0' }
+                    ];
+                } else if (exampleType === 'ml') {
+                    exampleModels = [
+                        { name: 'CNN', correlation: 0.88, stdDev: 1.02, color: '#E91E63' },
+                        { name: 'LSTM', correlation: 0.82, stdDev: 0.98, color: '#00BCD4' },
+                        { name: 'RF', correlation: 0.75, stdDev: 0.92, color: '#8BC34A' },
+                        { name: 'Linear', correlation: 0.68, stdDev: 0.88, color: '#FF5722' }
+                    ];
+                } else if (exampleType === 'climate') {
+                    exampleModels = [
+                        { name: 'CMIP6-A', correlation: 0.95, stdDev: 1.08, color: '#3F51B5' },
+                        { name: 'CMIP6-B', correlation: 0.91, stdDev: 1.12, color: '#009688' },
+                        { name: 'CMIP5-A', correlation: 0.87, stdDev: 0.96, color: '#FFC107' },
+                        { name: 'CMIP5-B', correlation: 0.83, stdDev: 1.05, color: '#795548' }
+                    ];
+                } else if (exampleType === 'ensemble') {
+                    exampleModels = [
+                        { name: 'Ens Mean', correlation: 0.93, stdDev: 0.98, color: '#673AB7' },
+                        { name: 'Member 1', correlation: 0.88, stdDev: 1.05, color: '#CDDC39' },
+                        { name: 'Member 2', correlation: 0.85, stdDev: 0.95, color: '#FF6F00' },
+                        { name: 'Member 3', correlation: 0.82, stdDev: 1.08, color: '#607D8B' }
+                    ];
+                }
+
+                setModels(exampleModels.map(m => ({
+                    ...m,
+                    rmsd: calculateRMSD(m.correlation, m.stdDev)
+                })));
+            };
+
+            const handleCanvasClick = (e) => {
+                const canvas = canvasRef.current;
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const dx = x - CENTER_X;
+                const dy = y - CENTER_Y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance <= RADIUS * 1.5 && dy <= 0) {
+                    const angle = Math.atan2(-dy, dx);
+                    const correlation = Math.cos(angle);
+                    const stdDev = distance / RADIUS;
+
+                    if (correlation >= 0 && correlation <= 1 && stdDev >= 0 && stdDev <= 1.5) {
+                        setCurrentModel({
+                            ...currentModel,
+                            correlation: parseFloat(correlation.toFixed(3)),
+                            stdDev: parseFloat(stdDev.toFixed(3))
+                        });
+                        setActiveTab('add');
+                    }
+                }
+            };
+
+            return (
+                <div className="tool-main-content">
+                    <div className="tool-diagram-section">
+                        <canvas
+                            ref={canvasRef}
+                            className="tool-canvas"
+                            width={CANVAS_SIZE}
+                            height={CANVAS_SIZE}
+                            onClick={handleCanvasClick}
+                        />
+
+                        <div className="tool-legend">
+                            <div className="tool-legend-title">Legend & Controls</div>
+                            <div className="tool-legend-item">
+                                <div className="tool-legend-line" style={{backgroundColor: '#d0d0d0'}}></div>
+                                <span>Standard Deviation Circles</span>
+                            </div>
+                            <div className="tool-legend-item">
+                                <div className="tool-legend-line" style={{backgroundColor: '#90caf9', borderStyle: 'dashed'}}></div>
+                                <span>RMSD Contours (centered on REF)</span>
+                            </div>
+                            <div className="tool-legend-item">
+                                <div className="tool-legend-line" style={{backgroundColor: '#e0e0e0', borderStyle: 'dashed'}}></div>
+                                <span>Correlation Lines</span>
+                            </div>
+                            <div style={{marginTop: '15px', display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
+                                <label style={{display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer'}}>
+                                    <input 
+                                        type="checkbox" 
+                                        checked={showRMSD}
+                                        onChange={(e) => setShowRMSD(e.target.checked)}
+                                    />
+                                    Show RMSD Contours
+                                </label>
+                                <label style={{display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer'}}>
+                                    <input 
+                                        type="checkbox" 
+                                        checked={showCorrelationLines}
+                                        onChange={(e) => setShowCorrelationLines(e.target.checked)}
+                                    />
+                                    Show Correlation Lines
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="tool-controls-section">
+                        <div className="tool-tab-buttons">
+                            <button 
+                                className={`tool-tab-button ${activeTab === 'add' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('add')}
+                            >
+                                Add Model
+                            </button>
+                            <button 
+                                className={`tool-tab-button ${activeTab === 'examples' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('examples')}
+                            >
+                                Examples
+                            </button>
+                            <button 
+                                className={`tool-tab-button ${activeTab === 'learn' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('learn')}
+                            >
+                                Learn
+                            </button>
+                        </div>
+
+                        {activeTab === 'add' && (
+                            <div>
+                                <div className="tool-info-box">
+                                    💡 Click on the diagram to set correlation and standard deviation, or use the inputs below.
+                                </div>
+
+                                <div className="tool-input-group">
+                                    <label>Model Name</label>
+                                    <input
+                                        type="text"
+                                        value={currentModel.name}
+                                        onChange={(e) => setCurrentModel({...currentModel, name: e.target.value})}
+                                        placeholder="e.g., CNN Model, LSTM, etc."
+                                    />
+                                </div>
+
+                                <div className="tool-input-group">
+                                    <label>Correlation (r): {currentModel.correlation.toFixed(3)}</label>
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="1"
+                                        step="0.01"
+                                        value={currentModel.correlation}
+                                        onChange={(e) => setCurrentModel({...currentModel, correlation: parseFloat(e.target.value)})}
+                                    />
+                                </div>
+
+                                <div className="tool-input-group">
+                                    <label>Normalized Std Dev (σ): {currentModel.stdDev.toFixed(3)}</label>
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="2"
+                                        step="0.01"
+                                        value={currentModel.stdDev}
+                                        onChange={(e) => setCurrentModel({...currentModel, stdDev: parseFloat(e.target.value)})}
+                                    />
+                                </div>
+
+                                <div className="tool-input-group">
+                                    <label>Color</label>
+                                    <div className="tool-color-input">
+                                        <input
+                                            type="color"
+                                            value={currentModel.color}
+                                            onChange={(e) => setCurrentModel({...currentModel, color: e.target.value})}
+                                        />
+                                        <span>{currentModel.color}</span>
+                                    </div>
+                                </div>
+
+                                <div className="tool-info-box" style={{background: '#f0f0f0', borderLeft: '4px solid #666'}}>
+                                    <strong>Calculated RMSD:</strong> {calculateRMSD(currentModel.correlation, currentModel.stdDev).toFixed(3)}
+                                </div>
+
+                                <button className="tool-button tool-button-primary" onClick={addModel}>
+                                    Add Model to Diagram
+                                </button>
+
+                                {models.length > 0 && (
+                                    <button 
+                                        className="tool-button tool-button-danger" 
+                                        onClick={() => setModels([])}
+                                    >
+                                        Clear All Models
+                                    </button>
+                                )}
+
+                                <div className="tool-model-list">
+                                    <h3 style={{marginBottom: '10px', color: '#495057'}}>Current Models ({models.length})</h3>
+                                    {models.map((model, index) => (
+                                        <div key={index} className="tool-model-item">
+                                            <div style={{display: 'flex', alignItems: 'center', flex: 1}}>
+                                                <div 
+                                                    className="tool-model-color" 
+                                                    style={{backgroundColor: model.color}}
+                                                ></div>
+                                                <div className="tool-model-info">
+                                                    <div className="tool-model-name">{model.name}</div>
+                                                    <div className="tool-model-stats">
+                                                        r: {model.correlation.toFixed(3)} | 
+                                                        σ: {model.stdDev.toFixed(3)} | 
+                                                        RMSD: {model.rmsd.toFixed(3)}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button 
+                                                className="tool-delete-btn"
+                                                onClick={() => deleteModel(index)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'examples' && (
+                            <div>
+                                <div className="tool-info-box">
+                                    Load pre-configured examples to explore different scenarios
+                                </div>
+
+                                <div className="tool-example-buttons">
+                                    <button className="tool-example-btn" onClick={() => loadExample('weather')}>
+                                        🌦️ Weather Models
+                                    </button>
+                                    <button className="tool-example-btn" onClick={() => loadExample('ml')}>
+                                        🤖 ML Comparison
+                                    </button>
+                                    <button className="tool-example-btn" onClick={() => loadExample('climate')}>
+                                        🌍 Climate Models
+                                    </button>
+                                    <button className="tool-example-btn" onClick={() => loadExample('ensemble')}>
+                                        📊 Ensemble Forecast
+                                    </button>
+                                </div>
+
+                                <div className="tool-info-box" style={{background: '#fff3cd', borderLeft: '4px solid #ffc107', marginTop: '20px'}}>
+                                    <strong>Weather Models:</strong> Compare different numerical weather prediction models<br/><br/>
+                                    <strong>ML Comparison:</strong> Compare CNN, LSTM, Random Forest, and Linear Regression<br/><br/>
+                                    <strong>Climate Models:</strong> CMIP5 vs CMIP6 model comparison<br/><br/>
+                                    <strong>Ensemble Forecast:</strong> Ensemble mean vs individual members
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'learn' && (
+                            <div>
+                                <div className="tool-info-box">
+                                    <strong>📚 Understanding Taylor Diagrams</strong>
+                                </div>
+
+                                <div className="tool-info-box" style={{background: '#e8f5e9', borderLeft: '4px solid #4CAF50'}}>
+                                    <strong>Correlation (r):</strong><br/>
+                                    Measures pattern similarity between model and reference. Ranges from 0 to 1.
+                                    Higher correlation = better pattern matching.
+                                </div>
+
+                                <div className="tool-info-box" style={{background: '#fff3e0', borderLeft: '4px solid #FF9800'}}>
+                                    <strong>Standard Deviation (σ):</strong><br/>
+                                    Measures variability. When normalized, reference = 1.0.
+                                    Values &gt; 1 = overestimate variability<br/>
+                                    Values &lt; 1 = underestimate variability
+                                </div>
+
+                                <div className="tool-info-box" style={{background: '#e3f2fd', borderLeft: '4px solid #2196F3'}}>
+                                    <strong>RMSD (Root Mean Square Difference):</strong><br/>
+                                    Overall error magnitude. Distance from any point to the reference point.
+                                    Smaller RMSD = better overall agreement.
+                                </div>
+
+                                <div className="tool-info-box" style={{background: '#f3e5f5', borderLeft: '4px solid #9C27B0'}}>
+                                    <strong>🎯 Perfect Model:</strong><br/>
+                                    Would plot exactly on the reference point (REF) with:<br/>
+                                    • Correlation = 1.0<br/>
+                                    • Std Dev = 1.0<br/>
+                                    • RMSD = 0.0
+                                </div>
+
+                                <div className="tool-info-box" style={{background: '#fce4ec', borderLeft: '4px solid #E91E63'}}>
+                                    <strong>💡 Reading the Diagram:</strong><br/>
+                                    • <strong>Closer to REF</strong> = Better performance<br/>
+                                    • <strong>Same angle</strong> = Same correlation<br/>
+                                    • <strong>Same radius</strong> = Same variability<br/>
+                                    • <strong>Same RMSD arc</strong> = Same overall error
+                                </div>
+
+                                <div className="tool-info-box" style={{background: '#fff9c4', borderLeft: '4px solid #FFEB3B'}}>
+                                    <strong>🔬 Applications:</strong><br/>
+                                    • Climate model evaluation<br/>
+                                    • Weather forecast verification<br/>
+                                    • Machine learning model comparison<br/>
+                                    • Spatial prediction assessment<br/>
+                                    • Time series forecasting
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<TaylorDiagramTool />, document.getElementById('taylor-tool-root'));
     </script>
 </body>
 </html>
