@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dive into Mesh Generation for Hydrodynamic Modeling with Delft3D-FM - Faezeh (Rojan)</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="../../index.html">About Me</a></li>
+                <li><a href="../../professional-contributions.html">Professional Contributions</a></li>
+                <li><a href="../../research-projects.html">Research Projects</a></li>
+                <li><a href="../../blog.html" class="active">Blog</a></li>
+                <li><a href="../../my-toon-world.html">My Toon World</a></li>
+                <li><a href="../../tools.html">Tools</a></li>
+                <li><a href="../../knowledge-practice.html">Knowledge & Practice</a></li>
+            </ul>
+            <a href="../../index.html" class="nav-logo">
+                <img src="../../logo.png" alt="FMF Logo">
+            </a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="blog-post-container">
+            <!-- LEFT SIDE: Main Post Content -->
+            <article class="blog-post-full">
+                <!-- Back to Blog -->
+                <a href="../../blog.html" class="back-to-blog">
+                    <i class="fas fa-arrow-left"></i> Back to Blog
+                </a>
+
+                <!-- Post Header -->
+                <header class="post-header">
+                    <h1 class="post-title-full">Dive into Mesh Generation for Hydrodynamic Modeling with Delft3D-FM</h1>
+                    
+                    <div class="post-meta-full">
+                        <div class="author-info-full">
+                            <img src="../../profile-photo.jpg" alt="Rojan" class="author-avatar-full">
+                            <div>
+                                <span class="author-name-full">Rojan</span>
+                                <div class="post-details-full">
+                                    <span class="post-date-full">Nov 6, 2024</span>
+                                    <span class="post-dot">•</span>
+                                    <span class="post-read-time-full">6 min read</span>
+                                    <span class="post-dot">•</span>
+                                    <span class="view-count-full">
+                                        <i class="fas fa-eye"></i> 0 views
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="share-buttons">
+                            <button class="share-btn" onclick="sharePost('linkedin')" title="Share on LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </button>
+                            <button class="share-btn" onclick="sharePost('twitter')" title="Share on Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+                            <button class="share-btn" onclick="sharePost('facebook')" title="Share on Facebook">
+                                <i class="fab fa-facebook"></i>
+                            </button>
+                            <button class="share-btn" onclick="copyPostLink()" title="Copy Link">
+                                <i class="fas fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Post Content -->
+                <div class="post-content">
+                    <p style="font-style: italic; color: #555; margin-bottom: 20px;">
+                        Images created by DALL-E through OpenAI's platform
+                    </p>
+
+                    <!-- FIRST PARAGRAPH -->
+                    <p>
+                        Mesh generation is the foundation of hydrodynamic modeling, and with Delft3D-Flexible Mesh (Delft3D-FM) by Deltares, users have access to powerful tools to create structured, unstructured, and even hybrid meshes. Each of these mesh types serves unique functions in hydrodynamic models, particularly for complex environments like coastlines, estuaries, and riverine systems. In this comprehensive guide, we'll explore mesh types, mesh refinement techniques, and advanced approaches, including hybrid mesh setups and the use of transition and interface zones, to achieve a reliable, high-resolution model.
+                    </p>
+
+                    <!-- FEATURED IMAGE (AFTER FIRST PARAGRAPH) -->
+                    <div class="post-featured-image">
+                        <img src="overview.png" alt="Mesh Generation for Hydrodynamic Modeling">
+                    </div>
+
+                    <h2>The Basics: What's a Mesh and Why Should You Care?</h2>
+                    <p>
+                        Think of a mesh as a giant net thrown over the area you want to study. This net divides your study area into smaller cells where all the mathematical magic happens. The way these cells are arranged can significantly impact your model's accuracy and how long it takes to run.
+                    </p>
+
+                    <h2>Types of Meshes</h2>
+
+                    <h3>Structured Meshes: The Classic Grid</h3>
+                    <p>
+                        Remember graph paper from math class? That's essentially what a structured mesh looks like—nice, regular squares or rectangles arranged in a perfect grid. It's the simplest form of mesh and works beautifully for straightforward scenarios.
+                    </p>
+                    <p>
+                        <strong>When to use it:</strong>
+                    </p>
+                    <ul>
+                        <li>Modeling open ocean areas</li>
+                        <li>Large lakes with simple bathymetry</li>
+                        <li>Any situation where your study area is relatively uniform</li>
+                    </ul>
+                    <p>
+                        <strong>Pro tip:</strong> If your area looks like a rectangle and doesn't have complex features, start with a structured mesh. You'll save yourself hours of computation time.
+                    </p>
+
+                    <h3>Unstructured Meshes: The Free Spirit</h3>
+                    <p>
+                        Unstructured meshes are like the modern art of the modeling world—they break free from rigid patterns and adapt to whatever shape your study area demands. Using triangles and irregular quadrilaterals, these meshes can wrap around coastlines and capture complex features with impressive detail.
+                    </p>
+                    <p>
+                        <strong>Perfect for:</strong>
+                    </p>
+                    <ul>
+                        <li>Intricate coastlines</li>
+                        <li>Estuaries and river mouths</li>
+                        <li>Areas with lots of islands or structures</li>
+                        <li>Regions with dramatic depth changes</li>
+                    </ul>
+
+                    <h3>Hybrid Meshes: The Best of Both Worlds</h3>
+                    <p>
+                        A hybrid mesh combines structured and unstructured mesh types within a single model, offering flexibility and efficiency by leveraging the strengths of each. Hybrid meshes are beneficial in domains that contain both simple open-water areas (where structured meshes are efficient) and complex boundaries (where unstructured meshes provide accuracy).
+                    </p>
+                    <p>
+                        <strong>Real-world example:</strong> In a coastal model, you might use an unstructured mesh near the shoreline where you need detail, then transition to a structured mesh in the open ocean where things are simpler. This approach can cut your computation time significantly while maintaining accuracy where it matters.
+                    </p>
+
+                    <h3>Advantages of Hybrid Meshes</h3>
+                    <p>
+                        <strong>Optimized Resolution:</strong> Structured meshes are applied in regions with minimal depth changes, while unstructured meshes capture the intricacies of complex boundaries, such as shorelines or inlets.
+                    </p>
+                    <p>
+                        <strong>Computational Efficiency:</strong> By using structured grids in simple areas and unstructured grids only where needed, hybrid meshes can save computational resources.
+                    </p>
+                    <p>
+                        <strong>Interface Flexibility:</strong> Hybrid meshes allow a smooth transition between structured and unstructured regions using interface zones, enabling accurate and stable modeling across diverse hydrodynamic conditions.
+                    </p>
+
+                    <h3>Challenges with Hybrid Meshes</h3>
+                    <p>
+                        <strong>Complexity in Mesh Setup:</strong> Configuring a hybrid mesh requires careful planning, particularly in managing the transition between structured and unstructured areas.
+                    </p>
+                    <p>
+                        <strong>Boundary Management:</strong> Interface zones must be well-aligned to ensure continuity in hydrodynamic calculations.
+                    </p>
+
+                    <h2>The Art of Mesh Refinement</h2>
+                    <p>
+                        Here's where things get interesting. Just like a photographer adjusts their focus, modelers can refine their mesh in areas of particular interest. We call this mesh refinement, and it's crucial for getting good results without burning through computational resources.
+                    </p>
+
+                    <h3>Smart Refinement Strategies</h3>
+                    <p>
+                        <strong>The Gradual Approach:</strong> Start coarse and refine gradually. Don't jump from huge cells to tiny ones—your model won't thank you for it.
+                    </p>
+                    <p>
+                        <strong>Focus on What Matters:</strong> Identify your areas of interest early. Is it the harbor entrance? The river bend? That's where you want your finest mesh resolution.
+                    </p>
+                    <p>
+                        <strong>Mind the Transitions:</strong> Keep transitions between different mesh resolutions smooth. Abrupt changes can create numerical instabilities—the modeling equivalent of turbulence.
+                    </p>
+
+                    <h3>Common Pitfalls to Avoid</h3>
+                    <p>
+                        After years of seeing models succeed and fail, here are some tips to keep in mind:
+                    </p>
+                    <p>
+                        <strong>Don't Over-Refine:</strong> More detail isn't always better. Each level of refinement increases computation time exponentially. Be strategic!
+                    </p>
+                    <p>
+                        <strong>Check Your Angles:</strong> Weird cell angles can cause numerical problems. Keep your cells as regular as possible, especially in areas with strong flows.
+                    </p>
+                    <p>
+                        <strong>Test, Test, Test:</strong> Start with a coarse mesh and test your model setup. Only add refinement when you're sure your basic setup works.
+                    </p>
+
+                    <h2>Importance of Mesh Refinement</h2>
+                    <p>
+                        <strong>Accuracy in Key Areas:</strong> Refinement is essential where precision is critical, such as around structures, shorelines, or regions with steep bathymetric gradients.
+                    </p>
+                    <p>
+                        <strong>Efficient Resource Allocation:</strong> Refining only where needed minimizes unnecessary computational load, balancing model detail and processing time.
+                    </p>
+                    <p>
+                        <strong>Improved Hydrodynamic Representation:</strong> By focusing on areas with rapid changes in water flow or depth, mesh refinement helps accurately simulate local hydrodynamic behavior, such as turbulence, eddies, or wave breaking.
+                    </p>
+
+                    <h2>Types of Mesh Refinement Techniques</h2>
+
+                    <h3>Local Refinement Zones</h3>
+                    <p>
+                        Specific areas of the model, such as estuaries or inlets, can be assigned higher resolution to capture fine-scale features. These refinement zones are defined manually in the mesh generation tool (RGFGRID) by setting finer grid spacing for designated regions.
+                    </p>
+
+                    <h3>Adaptive Refinement</h3>
+                    <p>
+                        In some advanced models, mesh refinement can adapt based on hydrodynamic conditions, where the model refines cells in response to high-gradient areas as the simulation progresses. Delft3D-FM doesn't automatically adapt meshes during runtime, but preemptively refining areas with known variability achieves similar outcomes.
+                    </p>
+
+                    <h3>Boundary and Transition Refinement</h3>
+                    <p>
+                        Refining cells along boundaries or transition zones between different resolutions ensures smooth, stable transitions across the model. This approach helps in accurately capturing boundary conditions, such as tidal or river inflows, which require high precision.
+                    </p>
+
+                    <h2>Steps for Effective Mesh Generation and Refinement</h2>
+                    <p>
+                        Creating an accurate and efficient mesh for a hydrodynamic model involves careful planning, data preparation, and execution.
+                    </p>
+
+                    <h3>1. Define the Modeling Domain and Boundaries</h3>
+                    <p>
+                        First, establish the extent of the study area, including upstream, downstream, and lateral boundaries. By carefully defining boundaries, you can prevent unnecessary calculations in regions outside the area of interest.
+                    </p>
+
+                    <h3>2. Import Bathymetric Data</h3>
+                    <p>
+                        Bathymetric data provides essential depth information, defining the underwater topography within the model. In Delft3D-FM, this data is linked to mesh nodes, allowing the mesh to reflect the true shape of the seabed.
+                    </p>
+
+                    <h3>3. Generate and Refine the Mesh with RGFGRID</h3>
+                    <p>
+                        RGFGRID is a tool in Delft3D-FM used to create structured, unstructured, or hybrid meshes. It allows for the generation of primary cells and the definition of refinement zones, especially in high-interest areas.
+                    </p>
+                    <p>
+                        <strong>Steps in RGFGRID:</strong>
+                    </p>
+                    <ul>
+                        <li><strong>Draw Boundary Lines:</strong> Outline the domain boundaries and establish interface zones for hybrid meshes.</li>
+                        <li><strong>Create Initial Mesh Cells:</strong> Set up a base mesh for the entire domain, choosing structured or unstructured cells based on the area.</li>
+                        <li><strong>Define Local Refinement Zones:</strong> Manually adjust cell size in specific areas, increasing resolution in key hydrodynamic zones.</li>
+                    </ul>
+
+                    <h3>4. Apply Transition Zones for Smooth Resolution Shifts</h3>
+                    <p>
+                        Transition zones help gradually shift between high and low-resolution areas, preventing abrupt jumps in cell size that could cause numerical instability. A smooth transition zone ensures stability across the model, particularly where high gradients or rapid hydrodynamic changes occur.
+                    </p>
+
+                    <h3>5. Implement Interface Zones for Hybrid Meshes</h3>
+                    <p>
+                        In hybrid meshes, interface zones provide a seamless boundary between structured and unstructured regions. Interface zones require careful alignment of cells and nodes to prevent numerical errors and ensure accurate hydrodynamic data flow across mesh types.
+                    </p>
+
+                    <h3>6. Perform Quality Control and Optimization</h3>
+                    <p>
+                        Quality control is critical in mesh generation. Key checks include:
+                    </p>
+                    <ul>
+                        <li><strong>Aspect Ratio and Skewness:</strong> Keep aspect ratios low and minimize skewness to reduce numerical errors.</li>
+                        <li><strong>Node Density:</strong> Adjust node density at boundaries and in refinement zones to optimize computational resources.</li>
+                        <li><strong>Transition Smoothing:</strong> Ensure smooth transitions between different resolution zones and mesh types to enhance stability.</li>
+                    </ul>
+
+                    <h2>Technical Considerations for High-Quality Meshes</h2>
+                    <p>
+                        Achieving a high-quality mesh requires attention to technical details. Here are some key considerations:
+                    </p>
+                    <p>
+                        <strong>Aspect Ratio and Skewness:</strong> Maintain a low aspect ratio and minimize skewness in high-resolution areas to avoid distortions in hydrodynamic calculations.
+                    </p>
+                    <p>
+                        <strong>Boundary Node Density:</strong> Increase node density along active boundaries, such as shorelines or river inlets, to improve model resolution in areas with dynamic changes.
+                    </p>
+                    <p>
+                        <strong>Interface Zone Alignment:</strong> In hybrid meshes, ensure nodes at interface zones align between structured and unstructured regions for consistent data flow.
+                    </p>
+                    <p>
+                        <strong>Bathymetry Accuracy:</strong> Double-check bathymetric data integration, as it directly affects model accuracy. High-resolution bathymetry in complex regions ensures a realistic representation of the seafloor.
+                    </p>
+
+                    <h2>The Bottom Line</h2>
+                    <p>
+                        Choosing the right mesh type and refinement strategy is more art than science. While there are technical guidelines to follow, experience plays a huge role. Start simple, refine where necessary, and always keep your project goals in mind.
+                    </p>
+                    <p>
+                        Remember: the best mesh isn't always the most complex one—it's the one that gives you accurate results in the areas you care about, in a reasonable amount of time.
+                    </p>
+
+                    <h2>Key References</h2>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Kernkamp, H. W. J., Van Dam, A., Stelling, G. S., & de Goede, E. D. (2011). Efficient scheme for the shallow water equations on unstructured grids with application to the Continental Shelf. <em>Ocean Dynamics</em>, <em>61</em>(8), 1175–1188. https://doi.org/10.1007/s10236-011-0423-6
+                    </p>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Loseille, A., & Löhner, R. (2016). Adaptive anisotropic simulations in aerodynamics. <em>AIAA Journal</em>, <em>54</em>(12), 3710–3729. https://doi.org/10.2514/1.J055387
+                    </p>
+                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
+                        Deltares. (2023). <em>Delft3D-Flexible Mesh Suite: User Manual</em>. Deltares, Delft, The Netherlands.
+                    </p>
+                </div>
+
+                <!-- Tags -->
+                <div class="post-tags">
+                    <span class="tag">Mesh Generation</span>
+                    <span class="tag">Delft3D-FM</span>
+                    <span class="tag">Hydrodynamic Modeling</span>
+                    <span class="tag">Computational Modeling</span>
+                    <span class="tag">RGFGRID</span>
+                    <span class="tag">Coastal Engineering</span>
+                </div>
+            </article>
+
+            <!-- RIGHT SIDE: Sidebar with Related/Newer Posts -->
+            <aside class="post-sidebar">
+                <!-- Recent Posts Section -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-clock"></i> Recent Posts
+                    </h3>
+                    <div id="newer-posts" class="sidebar-posts-list">
+                        <!-- Auto-populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Related Posts Section -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-tags"></i> Related Posts
+                    </h3>
+                    <div id="related-posts" class="sidebar-posts-list">
+                        <!-- Auto-populated by JavaScript -->
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Faezeh (Rojan) Maghsoodifar. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // ============================================
+        // BLOG POSTS DATABASE - ALL FIVE POSTS
+        // ============================================
+        const allBlogPosts = [
+            {
+                title: "Understanding DEM, DTM, and DSM",
+                url: "../../Blog/Post1/",
+                date: "2025-08-05",
+                tags: ["Geospatial Analysis", "DEM", "Flood Modeling", "Coastal Engineering"],
+                image: "../../Blog/Post1/cover.png",
+                excerpt: "Digital Elevation Models are fundamental to geospatial analysis..."
+            },
+            {
+                title: "The Spring-Neap Cycle Requirement in Hurricane Hindcast Modeling",
+                url: "../../Blog/Post2/",
+                date: "2025-06-03",
+                tags: ["Storm Surge", "Hurricane Modeling", "Coastal Hydrology", "Flood Modeling"],
+                image: "../../Blog/Post2/cover.png",
+                excerpt: "A technical analysis of why hurricane hindcasts must span complete tidal cycles..."
+            },
+            {
+                title: "Understanding Flood Mapping and Modeling: Bathtub, HAND, and Hydrodynamic Methods",
+                url: "../../Blog/Post3/",
+                date: "2025-02-24",
+                tags: ["Flood Modeling", "Bathtub Model", "HAND Model", "Hydrodynamic Modeling", "Coastal Engineering"],
+                image: "../../Blog/Post3/cover.png",
+                excerpt: "Exploring three common flood modeling methods and their applications..."
+            },
+            {
+                title: "The Role of Bathymetry in Hydrodynamic Modeling and Coastal Resilience",
+                url: "../../Blog/Post4/",
+                date: "2024-11-10",
+                tags: ["Bathymetry", "Coastal Engineering", "Hydrodynamic Modeling", "Flood Modeling", "Estuaries"],
+                image: "../../Blog/Post4/cover.png",
+                excerpt: "How underwater topography shapes coastal processes and flood risk..."
+            },
+            {
+                title: "Dive into Mesh Generation for Hydrodynamic Modeling with Delft3D-FM",
+                url: "../../Blog/Post5/",
+                date: "2024-11-06",
+                tags: ["Mesh Generation", "Delft3D-FM", "Hydrodynamic Modeling", "Computational Modeling", "Coastal Engineering"],
+                image: "../../Blog/Post5/cover.png",
+                excerpt: "A comprehensive guide to mesh types and refinement strategies..."
+            }
+        ];
+
+        // ============================================
+        // CURRENT POST CONFIGURATION - POST 5
+        // ============================================
+        const currentPost = {
+            title: "Dive into Mesh Generation for Hydrodynamic Modeling with Delft3D-FM",
+            date: "2024-11-06",
+            tags: ["Mesh Generation", "Delft3D-FM", "Hydrodynamic Modeling", "Computational Modeling", "Coastal Engineering"]
+        };
+
+        // ============================================
+        // AUTO-POPULATE RELATED & NEWER POSTS
+        // ============================================
+        function populateSidebar() {
+            const newerPosts = allBlogPosts
+                .filter(post => post.title !== currentPost.title && new Date(post.date) > new Date(currentPost.date))
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 3);
+
+            const relatedPosts = allBlogPosts
+                .filter(post => {
+                    if (post.title === currentPost.title) return false;
+                    const sharedTags = post.tags.filter(tag => currentPost.tags.includes(tag));
+                    return sharedTags.length > 0;
+                })
+                .map(post => {
+                    const sharedTags = post.tags.filter(tag => currentPost.tags.includes(tag));
+                    return { ...post, relevance: sharedTags.length };
+                })
+                .sort((a, b) => b.relevance - a.relevance)
+                .slice(0, 3);
+
+            const newerPostsContainer = document.getElementById('newer-posts');
+            if (newerPosts.length > 0) {
+                newerPostsContainer.innerHTML = newerPosts.map(post => createSidebarPostHTML(post)).join('');
+            } else {
+                newerPostsContainer.innerHTML = '<p class="no-posts">No newer posts yet</p>';
+            }
+
+            const relatedPostsContainer = document.getElementById('related-posts');
+            if (relatedPosts.length > 0) {
+                relatedPostsContainer.innerHTML = relatedPosts.map(post => createSidebarPostHTML(post)).join('');
+            } else {
+                relatedPostsContainer.innerHTML = '<p class="no-posts">No related posts found</p>';
+            }
+        }
+
+        function createSidebarPostHTML(post) {
+            const postDate = new Date(post.date).toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+
+            return `
+                <a href="${post.url}" class="sidebar-post-item">
+                    <div class="sidebar-post-image">
+                        <img src="${post.image}" alt="${post.title}">
+                    </div>
+                    <div class="sidebar-post-info">
+                        <h4 class="sidebar-post-title">${post.title}</h4>
+                        <span class="sidebar-post-date">
+                            <i class="fas fa-calendar-alt"></i> ${postDate}
+                        </span>
+                    </div>
+                </a>
+            `;
+        }
+
+        // ============================================
+        // SHARE FUNCTIONS
+        // ============================================
+        function sharePost(platform) {
+            const title = document.querySelector('.post-title-full').textContent;
+            const url = window.location.href;
+            const text = encodeURIComponent(title);
+            const shareUrl = encodeURIComponent(url);
+            
+            let shareLink = '';
+            
+            switch(platform) {
+                case 'linkedin':
+                    shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`;
+                    break;
+                case 'twitter':
+                    shareLink = `https://twitter.com/intent/tweet?text=${text}&url=${shareUrl}`;
+                    break;
+                case 'facebook':
+                    shareLink = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+                    break;
+            }
+            
+            if (shareLink) {
+                window.open(shareLink, '_blank', 'width=600,height=400');
+            }
+        }
+
+        function copyPostLink() {
+            const url = window.location.href;
+            
+            navigator.clipboard.writeText(url).then(() => {
+                const notification = document.createElement('div');
+                notification.className = 'copy-notification';
+                notification.textContent = '✓ Link copied to clipboard!';
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 2000);
+            });
+        }
+
+        // ============================================
+        // AUTOMATIC VIEW COUNTER
+        // ============================================
+        function initializeViewCounter() {
+            const postId = window.location.pathname.replace(/\//g, '-').replace('.html', '');
+            const storageKey = `post-views-${postId}`;
+            
+            const lastView = localStorage.getItem(`${storageKey}-timestamp`);
+            const now = Date.now();
+            const oneDayInMs = 24 * 60 * 60 * 1000;
+            
+            if (!lastView || (now - parseInt(lastView)) > oneDayInMs) {
+                incrementViewCount(postId);
+                localStorage.setItem(`${storageKey}-timestamp`, now.toString());
+            } else {
+                loadViewCount(postId);
+            }
+        }
+        
+        function incrementViewCount(postId) {
+            const apiUrl = `https://api.countapi.xyz/hit/faezemqfr.github.io/${postId}`;
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    updateViewDisplay(data.value);
+                })
+                .catch(error => {
+                    console.log('View counter unavailable');
+                    fallbackViewCounter(postId);
+                });
+        }
+        
+        function loadViewCount(postId) {
+            const apiUrl = `https://api.countapi.xyz/get/faezemqfr.github.io/${postId}`;
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.value) {
+                        updateViewDisplay(data.value);
+                    }
+                })
+                .catch(error => {
+                    console.log('View counter unavailable');
+                });
+        }
+        
+        function updateViewDisplay(count) {
+            const viewCountElement = document.querySelector('.view-count-full');
+            if (viewCountElement) {
+                viewCountElement.innerHTML = `<i class="fas fa-eye"></i> ${count} views`;
+            }
+        }
+        
+        function fallbackViewCounter(postId) {
+            const storageKey = `post-views-${postId}`;
+            let views = parseInt(localStorage.getItem(storageKey)) || 0;
+            views++;
+            localStorage.setItem(storageKey, views.toString());
+            updateViewDisplay(views);
+        }
+
+        // ============================================
+        // INITIALIZE ALL
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            populateSidebar();
+            initializeViewCounter();
+        });
+    </script>
+</body>
+</html>
