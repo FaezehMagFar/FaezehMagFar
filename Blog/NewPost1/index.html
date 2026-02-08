@@ -3,938 +3,397 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Understanding Taylor Diagrams: A Comprehensive Educational Guide - Faezeh (Rojan)</title>
-    <link rel="stylesheet" href="../../styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- MathJax for LaTeX rendering -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <!-- React for Interactive Tool -->
+    <title>Interactive Taylor Diagram - Professional Style</title>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
     <style>
-        /* Interactive Tool Styles */
-        .interactive-tool-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 40px 20px;
-            margin: 40px -20px;
-            border-radius: 15px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .tool-container {
-            max-width: 1400px;
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
-        .tool-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .header {
+            background: linear-gradient(135deg, #1C4587 0%, #2E5C8A 100%);
             color: white;
-            padding: 30px;
+            padding: 25px;
             text-align: center;
         }
 
-        .tool-header h3 {
+        .header h1 {
             font-size: 2em;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
-        .tool-header p {
-            font-size: 1.1em;
-            opacity: 0.9;
+        .header p {
+            opacity: 0.95;
+            font-size: 1.05em;
         }
 
-        .tool-main-content {
+        .main-content {
             display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 20px;
+            grid-template-columns: 1fr 380px;
+            gap: 0;
+        }
+
+        .diagram-section {
             padding: 30px;
+            background: white;
+            border-right: 2px solid #e0e0e0;
         }
 
-        .tool-diagram-section {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-        }
-
-        .tool-controls-section {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-            max-height: 800px;
+        .controls-section {
+            padding: 25px;
+            background: #fafafa;
+            max-height: 850px;
             overflow-y: auto;
         }
 
-        .tool-canvas {
+        canvas {
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 2px solid black;
+            border-radius: 4px;
             cursor: crosshair;
         }
 
-        .tool-tab-buttons {
+        .tab-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
         }
 
-        .tool-tab-button {
+        .tab-button {
             flex: 1;
             padding: 12px;
             border: none;
-            background: #e9ecef;
-            color: #495057;
-            border-radius: 8px;
+            background: transparent;
+            color: #666;
+            border-bottom: 3px solid transparent;
             cursor: pointer;
             font-weight: 600;
+            font-size: 14px;
             transition: all 0.3s;
         }
 
-        .tool-tab-button.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        .tab-button.active {
+            color: #1C4587;
+            border-bottom-color: #1C4587;
+            background: white;
         }
 
-        .tool-tab-button:hover:not(.active) {
-            background: #dee2e6;
+        .tab-button:hover:not(.active) {
+            color: #2E5C8A;
+            background: #f0f0f0;
         }
 
-        .tool-input-group {
-            margin-bottom: 20px;
+        .input-group {
+            margin-bottom: 18px;
         }
 
-        .tool-input-group label {
+        .input-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
-            color: #495057;
+            color: #333;
+            font-size: 13px;
         }
 
-        .tool-input-group input {
+        .input-group input[type="text"] {
             width: 100%;
             padding: 10px;
-            border: 2px solid #dee2e6;
-            border-radius: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
             font-size: 14px;
         }
 
-        .tool-input-group input:focus {
+        .input-group input[type="text"]:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #1C4587;
         }
 
-        .tool-color-input {
+        .input-group input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+        }
+
+        .input-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #1C4587;
+            cursor: pointer;
+        }
+
+        .input-group input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #1C4587;
+            cursor: pointer;
+            border: none;
+        }
+
+        .color-input {
             display: flex;
             gap: 10px;
             align-items: center;
         }
 
-        .tool-color-input input[type="color"] {
-            width: 60px;
+        .color-input input[type="color"] {
+            width: 50px;
             height: 40px;
-            border: none;
-            border-radius: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
             cursor: pointer;
         }
 
-        .tool-button {
+        .button {
             width: 100%;
             padding: 12px;
             border: none;
-            border-radius: 8px;
+            border-radius: 4px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             font-size: 14px;
         }
 
-        .tool-button-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .button-primary {
+            background: #1C4587;
             color: white;
         }
 
-        .tool-button-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        .button-primary:hover {
+            background: #2E5C8A;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(28, 69, 135, 0.3);
         }
 
-        .tool-button-danger {
-            background: #dc3545;
+        .button-danger {
+            background: #d32f2f;
             color: white;
             margin-top: 10px;
         }
 
-        .tool-button-danger:hover {
-            background: #c82333;
+        .button-danger:hover {
+            background: #b71c1c;
         }
 
-        .tool-model-list {
+        .marker-select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .marker-select:focus {
+            outline: none;
+            border-color: #1C4587;
+        }
+
+        .model-list {
             margin-top: 20px;
         }
 
-        .tool-model-item {
+        .model-item {
             background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
         }
 
-        .tool-model-info {
+        .model-info {
             flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .tool-model-name {
+        .model-marker {
+            width: 24px;
+            height: 24px;
+            border: 2px solid black;
+            border-radius: 2px;
+        }
+
+        .model-name {
             font-weight: 600;
-            color: #495057;
-            margin-bottom: 4px;
+            color: #333;
+            font-size: 13px;
         }
 
-        .tool-model-stats {
-            font-size: 12px;
-            color: #6c757d;
+        .model-stats {
+            font-size: 11px;
+            color: #666;
+            margin-top: 3px;
         }
 
-        .tool-model-color {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .tool-delete-btn {
-            background: #dc3545;
+        .delete-btn {
+            background: #d32f2f;
             color: white;
             border: none;
             padding: 6px 12px;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
+            font-weight: 600;
         }
 
-        .tool-delete-btn:hover {
-            background: #c82333;
+        .delete-btn:hover {
+            background: #b71c1c;
         }
 
-        .tool-example-buttons {
+        .example-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 18px;
         }
 
-        .tool-example-btn {
+        .example-btn {
             padding: 10px;
-            border: 2px solid #667eea;
+            border: 2px solid #1C4587;
             background: white;
-            color: #667eea;
-            border-radius: 8px;
+            color: #1C4587;
+            border-radius: 4px;
             cursor: pointer;
             font-weight: 600;
+            font-size: 12px;
             transition: all 0.3s;
         }
 
-        .tool-example-btn:hover {
-            background: #667eea;
+        .example-btn:hover {
+            background: #1C4587;
             color: white;
         }
 
-        .tool-info-box {
-            background: #e7f3ff;
-            border-left: 4px solid #2196F3;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            line-height: 1.6;
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #1976D2;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 18px;
+            font-size: 13px;
+            line-height: 1.5;
         }
 
-        .tool-legend {
-            background: white;
+        .stats-box {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .stats-box strong {
+            color: #1C4587;
+        }
+
+        .legend {
+            background: #fafafa;
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 4px;
             margin-top: 20px;
+            border: 1px solid #ddd;
         }
 
-        .tool-legend-title {
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #495057;
+        .legend-title {
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #333;
+            font-size: 13px;
         }
 
-        .tool-legend-item {
+        .legend-item {
             display: flex;
             align-items: center;
             margin-bottom: 8px;
-            font-size: 14px;
+            font-size: 12px;
         }
 
-        .tool-legend-line {
+        .legend-line {
             width: 30px;
             height: 2px;
             margin-right: 10px;
         }
 
-        @media (max-width: 1024px) {
-            .tool-main-content {
+        .legend-symbol {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border: 2px solid black;
+        }
+
+        .controls-toggle {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .toggle-label input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
                 grid-template-columns: 1fr;
             }
             
-            .tool-controls-section {
+            .diagram-section {
+                border-right: none;
+                border-bottom: 2px solid #e0e0e0;
+            }
+            
+            .controls-section {
                 max-height: none;
             }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <ul class="nav-menu">
-                <li><a href="../../index.html">About Me</a></li>
-                <li><a href="../../professional-contributions.html">Professional Contributions</a></li>
-                <li><a href="../../research-projects.html">Research Projects</a></li>
-                <li><a href="../../blog.html" class="active">Blog</a></li>
-                <li><a href="../../my-toon-world.html">My Toon World</a></li>
-                <li><a href="../../tools.html">Tools</a></li>
-                <li><a href="../../knowledge-practice.html">Knowledge & Practice</a></li>
-            </ul>
-            <a href="../../index.html" class="nav-logo">
-                <img src="../../logo.png" alt="FMF Logo">
-            </a>
-        </div>
-    </nav>
+    <div id="root"></div>
 
-    <main class="main-content">
-        <div class="blog-post-container">
-            <!-- LEFT SIDE: Main Post Content -->
-            <article class="blog-post-full">
-                <!-- Back to Blog -->
-                <a href="../../blog.html" class="back-to-blog">
-                    <i class="fas fa-arrow-left"></i> Back to Blog
-                </a>
-
-                <!-- Post Header -->
-                <header class="post-header">
-                    <h1 class="post-title-full">Understanding Taylor Diagrams: A Comprehensive Educational Guide</h1>
-                    
-                    <div class="post-meta-full">
-                        <div class="author-info-full">
-                            <img src="../../profile-photo.jpg" alt="Rojan" class="author-avatar-full">
-                            <div>
-                                <span class="author-name-full">Rojan</span>
-                                <div class="post-details-full">
-                                    <span class="post-date-full">Feb 8, 2026</span>
-                                    <span class="post-dot">•</span>
-                                    <span class="post-read-time-full">12 min read</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="share-buttons">
-                            <button class="share-btn" onclick="sharePost('linkedin')" title="Share on LinkedIn">
-                                <i class="fab fa-linkedin"></i>
-                            </button>
-                            <button class="share-btn" onclick="sharePost('twitter')" title="Share on Twitter">
-                                <i class="fab fa-twitter"></i>
-                            </button>
-                            <button class="share-btn" onclick="sharePost('facebook')" title="Share on Facebook">
-                                <i class="fab fa-facebook"></i>
-                            </button>
-                            <button class="share-btn" onclick="copyPostLink()" title="Copy Link">
-                                <i class="fas fa-link"></i>
-                            </button>
-                        </div>
-                    </div>
-                </header>
-
-                <!-- Post Content -->
-                <div class="post-content">
-
-                    <!-- FIRST PARAGRAPH -->
-                    <p>
-                        Taylor diagrams are sophisticated yet intuitive visualization tools that have revolutionized how researchers compare model performance across multiple datasets. Originally developed by Karl Taylor in 2001 for climate model evaluation, these diagrams have found applications across atmospheric sciences, oceanography, hydrology, and increasingly in machine learning and deep learning model validation. This comprehensive guide explores the mathematics, interpretation, and practical applications of Taylor diagrams, with special attention to their growing role in modern computational modeling.
-                    </p>
-
-                    <!-- FEATURED IMAGE (AFTER FIRST PARAGRAPH) -->
-                    <div class="post-featured-image">
-                        <img src="overview.png" alt="Taylor Diagram Overview">
-                    </div>
-
-                    <h2>What Taylor Diagrams Reveal</h2>
-                    <p>
-                        At their core, Taylor diagrams provide a concise statistical summary of pattern matching between datasets. They simultaneously display three key metrics: the correlation coefficient between a test dataset and reference data, the root-mean-square difference (RMSD) between them, and the ratio of their standard deviations (or variances). This triple display is what makes Taylor diagrams so efficient—information that would normally require multiple plots or tables can be absorbed at a glance.
-                    </p>
-                    <p>
-                        Taylor diagrams elegantly compress these three fundamental statistical measures into a single two-dimensional plot, making them remarkably efficient for model intercomparison studies. The reference dataset is typically plotted along the horizontal axis, while test datasets occupy positions determined by their statistical relationship to this reference.
-                    </p>
-
-                    <h2>The Three Pillars of Taylor Diagrams</h2>
-
-                    <h3>1. Correlation Coefficient (r)</h3>
-                    <p>
-                        The correlation coefficient measures the linear relationship between patterns in the test dataset and the reference dataset. It ranges from -1 to +1, where +1 indicates perfect positive correlation, 0 indicates no linear relationship, and -1 indicates perfect negative correlation. In the Taylor diagram, correlation is represented by the angular position, with the angle \(\theta\) measured from the horizontal axis. Higher correlations (closer to 1) appear at smaller angles, closer to the reference point on the horizontal axis.
-                    </p>
-
-                    <h3>2. Standard Deviation (σ)</h3>
-                    <p>
-                        Standard deviation quantifies the variability or spread in the data. The Taylor diagram represents standard deviation as the radial distance from the origin. The reference dataset's standard deviation is typically normalized to 1.0 and plotted on the horizontal axis. Test datasets with similar variability to the reference will plot at similar radial distances, while those with higher or lower variability will plot farther or closer to the origin, respectively.
-                    </p>
-
-                    <h3>3. Root-Mean-Square Difference (RMSD)</h3>
-                    <p>
-                        The centered root-mean-square difference measures the overall magnitude of error between the test and reference patterns after removing any bias in the mean. This metric is not explicitly plotted as an axis but emerges geometrically from the law of cosines: the distance between any plotted point and the reference point represents the centered RMSD. Smaller distances indicate better agreement between patterns.
-                    </p>
-
-                    <h2>The Mathematical Foundation</h2>
-                    <p>
-                        Understanding the mathematics behind Taylor diagrams helps in both construction and interpretation. Let's walk through the step-by-step calculation process.
-                    </p>
-
-                    <h3>Step-by-Step Calculation</h3>
-                    <p>
-                        Let's denote the reference dataset as <strong>R</strong> and the test dataset as <strong>T</strong>, where both contain \(n\) data points.
-                    </p>
-
-                    <p><strong>Step 1: Calculate Means</strong></p>
-                    <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        $$\bar{R} = \frac{1}{n} \sum_{i=1}^{n} R_i$$
-                        $$\bar{T} = \frac{1}{n} \sum_{i=1}^{n} T_i$$
-                    </div>
-
-                    <p><strong>Step 2: Calculate Standard Deviations</strong></p>
-                    <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        $$\sigma_r = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (R_i - \bar{R})^2}$$
-                        $$\sigma_t = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (T_i - \bar{T})^2}$$
-                    </div>
-
-                    <p><strong>Step 3: Calculate Correlation Coefficient</strong></p>
-                    <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        $$r = \frac{\sum_{i=1}^{n} (R_i - \bar{R})(T_i - \bar{T})}{n \cdot \sigma_r \cdot \sigma_t}$$
-                    </div>
-                    <p>Alternatively:</p>
-                    <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        $$r = \frac{\sum_{i=1}^{n} R_i \cdot T_i - n \cdot \bar{R} \cdot \bar{T}}{n \cdot \sigma_r \cdot \sigma_t}$$
-                    </div>
-
-                    <p><strong>Step 4: Calculate Centered RMSD</strong></p>
-                    <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        $$E' = \sqrt{\frac{1}{n} \sum_{i=1}^{n} \left[(R_i - \bar{R}) - (T_i - \bar{T})\right]^2}$$
-                    </div>
-
-                    <p><strong>Step 5: Normalize (Optional but Common)</strong></p>
-                    <p>
-                        For easier comparison across variables with different units:
-                    </p>
-                    <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        $$\text{Normalized } \sigma_t = \frac{\sigma_t}{\sigma_r}$$
-                        $$\text{Normalized } E' = \frac{E'}{\sigma_r}$$
-                    </div>
-                    <p>The reference dataset then has \(\sigma_r = 1.0\) by definition.</p>
-
-                    <h3>The Law of Cosines Relationship</h3>
-                    <p>
-                        The elegance of Taylor diagrams comes from the geometric relationship:
-                    </p>
-                    <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        $$E'^2 = \sigma_r^2 + \sigma_t^2 - 2 \cdot \sigma_r \cdot \sigma_t \cdot r$$
-                    </div>
-                    <p>When normalized with \(\sigma_r = 1\):</p>
-                    <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #2c5282; margin: 15px 0;">
-                        $$E'^2 = 1 + \sigma_t^2 - 2 \cdot \sigma_t \cdot r$$
-                    </div>
-                    <p>
-                        This equation means that once you plot a point at coordinates \((\sigma_t \cdot \cos(\theta), \sigma_t \cdot \sin(\theta))\), where \(\theta = \arccos(r)\), the distance from that point to the reference automatically represents \(E'\).
-                    </p>
-
-                    <h2>Constructing the Diagram</h2>
-
-                    <h3>Polar Coordinate Plotting</h3>
-                    <p>
-                        For each test dataset:
-                    </p>
-                    <ol>
-                        <li>Calculate \(r\), \(\sigma_t\), and \(E'\) using the equations above</li>
-                        <li>Convert to polar coordinates: radial distance = \(\sigma_t\) (normalized), angle = \(\arccos(r)\)</li>
-                        <li>Plot the point on polar axes</li>
-                        <li>The reference dataset sits at \((1, 0°)\) on the horizontal axis</li>
-                        <li>Optionally draw contours of constant RMSD as arcs centered on the reference point</li>
-                    </ol>
-
-                    <h2>Interpreting Taylor Diagrams</h2>
-
-                    <h3>Ideal Performance</h3>
-                    <p>
-                        The perfect model would plot exactly on the reference point, having correlation \(r = 1.0\), identical standard deviation (\(\sigma_t = \sigma_r\)), and zero RMSD.
-                    </p>
-
-                    <h3>Reading the Signals</h3>
-                    <p>
-                        <strong>High Correlation, Similar Standard Deviation:</strong> Points near the reference indicate models that capture both the pattern and amplitude of variability well. These are your top performers.
-                    </p>
-                    <p>
-                        <strong>High Correlation, Different Standard Deviation:</strong> Points along the same angular line but at different radial distances show models that capture spatial or temporal patterns well but either overestimate (farther from origin) or underestimate (closer to origin) the magnitude of variability.
-                    </p>
-                    <p>
-                        <strong>Low Correlation, Any Standard Deviation:</strong> Points at large angles from the reference indicate poor pattern agreement, regardless of variability matching. These models fundamentally misrepresent the spatial or temporal structure.
-                    </p>
-                    <p>
-                        <strong>RMSD Contours:</strong> Circular arcs centered on the reference point represent lines of constant RMSD. Points on the same arc have equivalent overall error magnitudes, though the breakdown between correlation and variability errors may differ.
-                    </p>
-
-                    <h2>Applications in Machine Learning and Deep Learning</h2>
-                    <p>
-                        Taylor diagrams have found increasingly important applications in evaluating machine learning and deep learning models, particularly in domains involving spatial or temporal predictions.
-                    </p>
-
-                    <h3>Why Taylor Diagrams for ML/DL?</h3>
-                    <p>
-                        Traditional ML metrics like MAE (Mean Absolute Error) or RMSE (Root Mean Square Error) tell you how far predictions are from truth but don't reveal whether the model captures the underlying patterns and variability structure. Taylor diagrams address this gap by showing whether your model:
-                    </p>
-                    <ul>
-                        <li>Captures the spatial or temporal correlations in the data (pattern matching)</li>
-                        <li>Reproduces the correct magnitude of variability (variance matching)</li>
-                        <li>Minimizes overall prediction errors (RMSD)</li>
-                    </ul>
-
-                    <h3>Common ML/DL Use Cases</h3>
-
-                    <h4>Weather and Climate Prediction</h4>
-                    <p>
-                        Deep learning models like U-Net, ConvLSTM, or Transformers that predict weather variables can be evaluated using Taylor diagrams to compare predictions against reanalysis data or observations. Multiple forecast lead times can be plotted simultaneously to show how prediction quality degrades over time.
-                    </p>
-
-                    <h4>Image Super-Resolution</h4>
-                    <p>
-                        When enhancing low-resolution images, Taylor diagrams can compare the reconstructed high-resolution images against ground truth, evaluating whether the model captures both fine-scale texture patterns and overall intensity distributions.
-                    </p>
-
-                    <h4>Spatial Data Prediction</h4>
-                    <p>
-                        Models predicting quantities like air quality, soil moisture, or sea surface temperature across geographic regions benefit from Taylor diagram evaluation. You can compare CNN-based models, Random Forests, Gaussian Processes, and other methods on a single diagram.
-                    </p>
-
-                    <h4>Time Series Forecasting</h4>
-                    <p>
-                        For multivariate time series (like sensor networks or financial data), Taylor diagrams can evaluate how well LSTM, GRU, or Transformer models capture temporal patterns and variability across multiple prediction horizons.
-                    </p>
-
-                    <h4>Generative Models</h4>
-                    <p>
-                        GANs or diffusion models generating spatial patterns (like satellite imagery or climate fields) can be evaluated against real data samples using Taylor diagrams to ensure generated samples have realistic correlation structures and variability.
-                    </p>
-
-                    <h3>Example: Evaluating a CNN for Precipitation Prediction</h3>
-                    <p>
-                        Suppose you've trained a convolutional neural network to predict daily precipitation fields:
-                    </p>
-                    <ol>
-                        <li><strong>Prepare Data:</strong> Flatten your predicted precipitation maps and observed precipitation maps into vectors (ensuring spatial alignment)</li>
-                        <li><strong>Calculate Statistics:</strong> For each test day or averaging window, compute correlation between predicted and observed fields, compute standard deviation of predicted field (normalized by observed), and compute centered RMSD</li>
-                        <li><strong>Plot Multiple Scenarios:</strong> You might plot different model architectures (ResNet, U-Net, etc.), different training dataset sizes, different forecast lead times (1-day, 3-day, 7-day ahead), and different seasons or geographic regions</li>
-                        <li><strong>Interpret Results:</strong> Models closer to the reference point better capture both precipitation patterns and intensity distributions. You might find that one architecture excels at pattern correlation but overestimates variability, while another has balanced performance</li>
-                    </ol>
-
-                    <h3>Comparing Traditional ML vs Deep Learning</h3>
-                    <p>
-                        Taylor diagrams excel at comparing fundamentally different model types. You might plot:
-                    </p>
-                    <ul>
-                        <li>Linear regression baseline</li>
-                        <li>Random Forest</li>
-                        <li>Support Vector Regression</li>
-                        <li>Shallow neural network</li>
-                        <li>Deep CNN</li>
-                        <li>Recurrent architectures (LSTM/GRU)</li>
-                        <li>Attention-based models (Transformers)</li>
-                    </ul>
-                    <p>
-                        This allows immediate visual comparison: Does the added complexity of deep learning actually improve pattern matching and variability reproduction compared to simpler methods?
-                    </p>
-
-                    <h2>Practical Implementation Tips</h2>
-
-                    <h3>Data Requirements</h3>
-                    <ul>
-                        <li>All datasets must be on the same spatial/temporal grid</li>
-                        <li>Sufficient sample size (typically \(n > 30\)) for stable statistics</li>
-                        <li>Same variables and units across all datasets being compared</li>
-                    </ul>
-
-                    <h3>Common Enhancements</h3>
-                    <ul>
-                        <li>Color-code points by model type, region, or variable</li>
-                        <li>Add symbol shapes to represent different categories</li>
-                        <li>Include percent bias as point size or annotation</li>
-                        <li>Plot skill scores or additional metrics alongside</li>
-                        <li>Use semi-transparent markers when many points overlap</li>
-                    </ul>
-
-                    <h3>Software Tools</h3>
-                    <p>
-                        Multiple scientific computing environments provide Taylor diagram functionality:
-                    </p>
-                    <ul>
-                        <li><strong>Python:</strong> <code>skill_metrics</code> package, custom matplotlib implementations</li>
-                        <li><strong>R:</strong> <code>plotrix</code> package with <code>taylor.diagram()</code> function</li>
-                        <li><strong>MATLAB:</strong> Built-in or custom functions</li>
-                        <li><strong>NCL (NCAR Command Language):</strong> Extensive Taylor diagram capabilities</li>
-                    </ul>
-
-                    <!-- INTERACTIVE TOOL SECTION -->
-                    <h2>Interactive Taylor Diagram Tool</h2>
-                    <p>
-                        Now that you understand the theory, try the interactive tool below to create your own Taylor diagrams! You can add custom models, explore pre-loaded examples, and visualize how different statistical metrics relate to each other on the diagram.
-                    </p>
-
-                    <div class="interactive-tool-section">
-                        <div class="tool-container">
-                            <div class="tool-header">
-                                <h3>📊 Interactive Taylor Diagram</h3>
-                                <p>Create and explore Taylor diagrams with real-time visualization</p>
-                            </div>
-
-                            <div id="taylor-tool-root"></div>
-                        </div>
-                    </div>
-
-                    <h2>Advanced Considerations</h2>
-
-                    <h3>Multiple Reference Datasets</h3>
-                    <p>
-                        Sometimes you may want to compare models against multiple observational datasets or reanalyses. You can either create separate diagrams or use different reference points with different RMSD contour centers.
-                    </p>
-
-                    <h3>Weighted Statistics</h3>
-                    <p>
-                        When data points have different reliability or importance, weighted correlation and standard deviation calculations ensure more relevant regions contribute more to the assessment.
-                    </p>
-
-                    <h3>Seasonal or Regional Analysis</h3>
-                    <p>
-                        Creating separate Taylor diagrams for different seasons, regions, or regimes reveals whether model performance varies systematically across conditions.
-                    </p>
-
-                    <h3>Ensemble Predictions</h3>
-                    <p>
-                        For ensemble forecasts or ensemble ML models, you can plot ensemble mean performance and potentially show ensemble spread using error bars or symbol sizing.
-                    </p>
-
-                    <h2>Key Takeaways</h2>
-                    <p>
-                        Taylor diagrams transform complex multi-metric model evaluation into an intuitive visual format. Their power lies in simultaneous representation of pattern correlation, variability matching, and overall error. For machine learning practitioners, they provide crucial insights beyond simple error metrics, revealing whether models capture the underlying structure and dynamics of the system being modeled.
-                    </p>
-                    <p>
-                        Whether validating climate models against decades of observations, comparing deep learning architectures for spatial prediction, or evaluating ensemble forecasts, Taylor diagrams offer a rigorous yet accessible framework for performance assessment. As Karl Taylor demonstrated over two decades ago, sometimes the best way to understand model behavior is to look at the complete statistical picture—all at once.
-                    </p>
-
-                    <h2>Further Resources</h2>
-                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
-                        Taylor, K. E. (2001). Summarizing multiple aspects of model performance in a single diagram. <em>Journal of Geophysical Research</em>, <em>106</em>(D7), 7183–7192. https://doi.org/10.1029/2000JD900719
-                    </p>
-                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
-                        Taylor, K. E. Taylor Diagram Primer. Program for Climate Model Diagnosis and Intercomparison, Lawrence Livermore National Laboratory. http://www-pcmdi.llnl.gov/about/staff/Taylor/CV/Taylor_diagram_primer.htm
-                    </p>
-                    <p style="margin-left: 20px; text-indent: -20px; margin-bottom: 10px;">
-                        Jolliff, J. K., Kindle, J. C., Shulman, I., Penta, B., Friedrichs, M. A. M., Helber, R., & Arnone, R. A. (2009). Summary diagrams for coupled hydrodynamic-ecosystem model skill assessment. <em>Journal of Marine Systems</em>, <em>76</em>(1-2), 64–82. https://doi.org/10.1016/j.jmarsys.2008.05.014
-                    </p>
-                </div>
-
-                <!-- Tags -->
-                <div class="post-tags">
-                    <span class="tag">Taylor Diagrams</span>
-                    <span class="tag">Model Validation</span>
-                    <span class="tag">Statistical Analysis</span>
-                    <span class="tag">Machine Learning</span>
-                    <span class="tag">Deep Learning</span>
-                    <span class="tag">Climate Modeling</span>
-                    <span class="tag">Data Visualization</span>
-                </div>
-            </article>
-
-            <!-- RIGHT SIDE: Sidebar with Related/Newer Posts -->
-            <aside class="post-sidebar">
-                <!-- Recent Posts Section -->
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-clock"></i> Recent Posts
-                    </h3>
-                    <div id="newer-posts" class="sidebar-posts-list">
-                        <!-- Auto-populated by JavaScript -->
-                    </div>
-                </div>
-
-                <!-- Related Posts Section -->
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-tags"></i> Related Posts
-                    </h3>
-                    <div id="related-posts" class="sidebar-posts-list">
-                        <!-- Auto-populated by JavaScript -->
-                    </div>
-                </div>
-            </aside>
-        </div>
-    </main>
-
-    <footer class="footer">
-        <p>&copy; 2026 Faezeh (Rojan) Maghsoodifar. All rights reserved.</p>
-    </footer>
-
-    <script>
-        // ============================================
-        // BLOG POSTS DATABASE - ALL POSTS INCLUDING THIS ONE
-        // ============================================
-        const allBlogPosts = [
-            {
-                title: "Understanding Taylor Diagrams: A Comprehensive Educational Guide",
-                url: "../../Blog/Post6/",
-                date: "2026-02-08",
-                tags: ["Taylor Diagrams", "Model Validation", "Statistical Analysis", "Machine Learning", "Deep Learning", "Climate Modeling", "Data Visualization"],
-                image: "../../Blog/Post6/cover.png",
-                excerpt: "A comprehensive guide to Taylor diagrams and their applications in model validation..."
-            },
-            {
-                title: "Understanding DEM, DTM, and DSM",
-                url: "../../Blog/Post1/",
-                date: "2025-08-05",
-                tags: ["Geospatial Analysis", "DEM", "Flood Modeling", "Coastal Engineering"],
-                image: "../../Blog/Post1/cover.png",
-                excerpt: "Digital Elevation Models are fundamental to geospatial analysis..."
-            },
-            {
-                title: "The Spring-Neap Cycle Requirement in Hurricane Hindcast Modeling",
-                url: "../../Blog/Post2/",
-                date: "2025-06-03",
-                tags: ["Storm Surge", "Hurricane Modeling", "Coastal Hydrology", "Flood Modeling"],
-                image: "../../Blog/Post2/cover.png",
-                excerpt: "A technical analysis of why hurricane hindcasts must span complete tidal cycles..."
-            },
-            {
-                title: "Understanding Flood Mapping and Modeling: Bathtub, HAND, and Hydrodynamic Methods",
-                url: "../../Blog/Post3/",
-                date: "2025-02-24",
-                tags: ["Flood Modeling", "Bathtub Model", "HAND Model", "Hydrodynamic Modeling", "Coastal Engineering"],
-                image: "../../Blog/Post3/cover.png",
-                excerpt: "Exploring three common flood modeling methods and their applications..."
-            },
-            {
-                title: "The Role of Bathymetry in Hydrodynamic Modeling and Coastal Resilience",
-                url: "../../Blog/Post4/",
-                date: "2024-11-10",
-                tags: ["Bathymetry", "Coastal Engineering", "Hydrodynamic Modeling", "Flood Modeling", "Estuaries"],
-                image: "../../Blog/Post4/cover.png",
-                excerpt: "How underwater topography shapes coastal processes and flood risk..."
-            },
-            {
-                title: "Dive into Mesh Generation for Hydrodynamic Modeling with Delft3D-FM",
-                url: "../../Blog/Post5/",
-                date: "2024-11-06",
-                tags: ["Mesh Generation", "Delft3D-FM", "Hydrodynamic Modeling", "Computational Modeling", "Coastal Engineering"],
-                image: "../../Blog/Post5/cover.png",
-                excerpt: "A comprehensive guide to mesh types and refinement strategies..."
-            }
-        ];
-
-        // ============================================
-        // CURRENT POST CONFIGURATION - POST 6
-        // ============================================
-        const currentPost = {
-            title: "Understanding Taylor Diagrams: A Comprehensive Educational Guide",
-            date: "2026-02-08",
-            tags: ["Taylor Diagrams", "Model Validation", "Statistical Analysis", "Machine Learning", "Deep Learning", "Climate Modeling", "Data Visualization"]
-        };
-
-        // ============================================
-        // AUTO-POPULATE RELATED & NEWER POSTS
-        // ============================================
-        function populateSidebar() {
-            const newerPosts = allBlogPosts
-                .filter(post => post.title !== currentPost.title && new Date(post.date) > new Date(currentPost.date))
-                .sort((a, b) => new Date(b.date) - new Date(a.date))
-                .slice(0, 3);
-
-            const relatedPosts = allBlogPosts
-                .filter(post => {
-                    if (post.title === currentPost.title) return false;
-                    const sharedTags = post.tags.filter(tag => currentPost.tags.includes(tag));
-                    return sharedTags.length > 0;
-                })
-                .map(post => {
-                    const sharedTags = post.tags.filter(tag => currentPost.tags.includes(tag));
-                    return { ...post, relevance: sharedTags.length };
-                })
-                .sort((a, b) => b.relevance - a.relevance)
-                .slice(0, 3);
-
-            const newerPostsContainer = document.getElementById('newer-posts');
-            if (newerPosts.length > 0) {
-                newerPostsContainer.innerHTML = newerPosts.map(post => createSidebarPostHTML(post)).join('');
-            } else {
-                newerPostsContainer.innerHTML = '<p class="no-posts">No newer posts yet</p>';
-            }
-
-            const relatedPostsContainer = document.getElementById('related-posts');
-            if (relatedPosts.length > 0) {
-                relatedPostsContainer.innerHTML = relatedPosts.map(post => createSidebarPostHTML(post)).join('');
-            } else {
-                relatedPostsContainer.innerHTML = '<p class="no-posts">No related posts found</p>';
-            }
-        }
-
-        function createSidebarPostHTML(post) {
-            const postDate = new Date(post.date).toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric', 
-                year: 'numeric' 
-            });
-
-            return `
-                <a href="${post.url}" class="sidebar-post-item">
-                    <div class="sidebar-post-image">
-                        <img src="${post.image}" alt="${post.title}">
-                    </div>
-                    <div class="sidebar-post-info">
-                        <h4 class="sidebar-post-title">${post.title}</h4>
-                        <span class="sidebar-post-date">
-                            <i class="fas fa-calendar-alt"></i> ${postDate}
-                        </span>
-                    </div>
-                </a>
-            `;
-        }
-
-        // ============================================
-        // SHARE FUNCTIONS
-        // ============================================
-        function sharePost(platform) {
-            const title = document.querySelector('.post-title-full').textContent;
-            const url = window.location.href;
-            const text = encodeURIComponent(title);
-            const shareUrl = encodeURIComponent(url);
-            
-            let shareLink = '';
-            
-            switch(platform) {
-                case 'linkedin':
-                    shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`;
-                    break;
-                case 'twitter':
-                    shareLink = `https://twitter.com/intent/tweet?text=${text}&url=${shareUrl}`;
-                    break;
-                case 'facebook':
-                    shareLink = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
-                    break;
-            }
-            
-            if (shareLink) {
-                window.open(shareLink, '_blank', 'width=600,height=400');
-            }
-        }
-
-        function copyPostLink() {
-            const url = window.location.href;
-            
-            navigator.clipboard.writeText(url).then(() => {
-                const notification = document.createElement('div');
-                notification.className = 'copy-notification';
-                notification.textContent = '✓ Link copied to clipboard!';
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.classList.add('show');
-                }, 10);
-                
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                    setTimeout(() => {
-                        document.body.removeChild(notification);
-                    }, 300);
-                }, 2000);
-            });
-        }
-
-        // ============================================
-        // AUTOMATIC VIEW COUNTER
-        // ============================================
-        function initializeViewCounter() {
-            const postId = window.location.pathname.replace(/\//g, '-').replace('.html', '');
-            const storageKey = `post-views-${postId}`;
-            
-            const lastView = localStorage.getItem(`${storageKey}-timestamp`);
-            const now = Date.now();
-            const oneDayInMs = 24 * 60 * 60 * 1000;
-            
-            if (!lastView || (now - parseInt(lastView)) > oneDayInMs) {
-                incrementViewCount(postId);
-                localStorage.setItem(`${storageKey}-timestamp`, now.toString());
-            } else {
-                loadViewCount(postId);
-            }
-        }
-        
-        function incrementViewCount(postId) {
-            const apiUrl = `https://api.countapi.xyz/hit/faezemqfr.github.io/${postId}`;
-            
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    updateViewDisplay(data.value);
-                })
-                .catch(error => {
-                    console.log('View counter unavailable');
-                    fallbackViewCounter(postId);
-                });
-        }
-        
-        function loadViewCount(postId) {
-            const apiUrl = `https://api.countapi.xyz/get/faezemqfr.github.io/${postId}`;
-            
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.value) {
-                        updateViewDisplay(data.value);
-                    }
-                })
-                .catch(error => {
-                    console.log('View counter unavailable');
-                });
-        }
-        
-        function updateViewDisplay(count) {
-            const viewCountElement = document.querySelector('.view-count-full');
-            if (viewCountElement) {
-                viewCountElement.innerHTML = `<i class="fas fa-eye"></i> ${count} views`;
-            }
-        }
-        
-        function fallbackViewCounter(postId) {
-            const storageKey = `post-views-${postId}`;
-            let views = parseInt(localStorage.getItem(storageKey)) || 0;
-            views++;
-            localStorage.setItem(storageKey, views.toString());
-            updateViewDisplay(views);
-        }
-
-        // ============================================
-        // INITIALIZE ALL
-        // ============================================
-        document.addEventListener('DOMContentLoaded', function() {
-            populateSidebar();
-            initializeViewCounter();
-        });
-    </script>
-
-    <!-- Interactive Taylor Diagram Tool React Component -->
     <script type="text/babel">
         const { useState, useRef, useEffect } = React;
 
@@ -945,20 +404,23 @@
             const [currentModel, setCurrentModel] = useState({
                 name: '',
                 correlation: 0.8,
-                stdDev: 1.0,
-                color: '#667eea'
+                sdr: 1.0,  // Standard Deviation Ratio
+                color: '#6FA8DC',
+                marker: 'circle'
             });
             const [showRMSD, setShowRMSD] = useState(true);
             const [showCorrelationLines, setShowCorrelationLines] = useState(true);
+            const [showGrid, setShowGrid] = useState(true);
 
-            const CANVAS_SIZE = 600;
+            const CANVAS_SIZE = 700;
             const CENTER_X = CANVAS_SIZE / 2;
             const CENTER_Y = CANVAS_SIZE / 2;
-            const RADIUS = 200;
+            const RADIUS = 240;
+            const MAX_SDR = 1.3;  // Maximum SDR on axis
 
             useEffect(() => {
                 drawDiagram();
-            }, [models, showRMSD, showCorrelationLines]);
+            }, [models, showRMSD, showCorrelationLines, showGrid]);
 
             const drawDiagram = () => {
                 const canvas = canvasRef.current;
@@ -967,14 +429,20 @@
                 const ctx = canvas.getContext('2d');
                 ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
+                // White background
                 ctx.fillStyle = '#ffffff';
                 ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+
+                // Draw elements in order
+                if (showGrid) {
+                    drawGrid(ctx);
+                }
 
                 if (showCorrelationLines) {
                     drawCorrelationLines(ctx);
                 }
 
-                drawStdDevCircles(ctx);
+                drawSDRCircles(ctx);
 
                 if (showRMSD) {
                     drawRMSDContours(ctx);
@@ -987,156 +455,287 @@
                     drawModelPoint(ctx, model);
                 });
 
-                drawLabels(ctx);
+                drawAxisLabels(ctx);
             };
 
-            const drawCorrelationLines = (ctx) => {
-                const correlations = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99];
-                
-                ctx.strokeStyle = '#e0e0e0';
-                ctx.lineWidth = 1;
-                ctx.setLineDash([5, 5]);
+            const drawGrid = (ctx) => {
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
+                ctx.lineWidth = 0.5;
+                ctx.setLineDash([2, 2]);
 
+                // Radial grid lines
+                const sdrValues = [0.25, 0.5, 0.75, 1.0, 1.25];
+                sdrValues.forEach(sdr => {
+                    const radius = (sdr / MAX_SDR) * RADIUS;
+                    ctx.beginPath();
+                    ctx.arc(CENTER_X, CENTER_Y, radius, Math.PI, 0, true);
+                    ctx.stroke();
+                });
+
+                // Angular grid lines
+                const correlations = [0.2, 0.4, 0.6, 0.8, 0.9];
                 correlations.forEach(corr => {
                     const angle = Math.acos(corr);
-                    const endX = CENTER_X + RADIUS * 1.5 * Math.cos(angle);
-                    const endY = CENTER_Y - RADIUS * 1.5 * Math.sin(angle);
-
+                    const endX = CENTER_X + RADIUS * 1.2 * Math.cos(angle);
+                    const endY = CENTER_Y - RADIUS * 1.2 * Math.sin(angle);
                     ctx.beginPath();
                     ctx.moveTo(CENTER_X, CENTER_Y);
                     ctx.lineTo(endX, endY);
                     ctx.stroke();
-
-                    const labelX = CENTER_X + (RADIUS * 1.6) * Math.cos(angle);
-                    const labelY = CENTER_Y - (RADIUS * 1.6) * Math.sin(angle);
-                    ctx.fillStyle = '#666';
-                    ctx.font = '11px Arial';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(corr.toFixed(2), labelX, labelY);
                 });
 
                 ctx.setLineDash([]);
             };
 
-            const drawStdDevCircles = (ctx) => {
-                const stdDevs = [0.25, 0.5, 0.75, 1.0, 1.25, 1.5];
+            const drawCorrelationLines = (ctx) => {
+                const correlations = [0.2, 0.4, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99];
                 
-                ctx.strokeStyle = '#d0d0d0';
+                ctx.strokeStyle = 'rgba(100, 149, 237, 0.3)';
                 ctx.lineWidth = 1;
+                ctx.setLineDash([5, 5]);
 
-                stdDevs.forEach(std => {
-                    const radius = std * RADIUS;
+                correlations.forEach(corr => {
+                    const angle = Math.acos(corr);
+                    const endX = CENTER_X + RADIUS * 1.15 * Math.cos(angle);
+                    const endY = CENTER_Y - RADIUS * 1.15 * Math.sin(angle);
+
                     ctx.beginPath();
-                    ctx.arc(CENTER_X, CENTER_Y, radius, 0, Math.PI, true);
+                    ctx.moveTo(CENTER_X, CENTER_Y);
+                    ctx.lineTo(endX, endY);
+                    ctx.stroke();
+                });
+
+                ctx.setLineDash([]);
+            };
+
+            const drawSDRCircles = (ctx) => {
+                const sdrValues = [0.25, 0.5, 0.75, 1.0, 1.25];
+                
+                ctx.strokeStyle = '#000000';
+                ctx.lineWidth = 1.2;
+
+                sdrValues.forEach(sdr => {
+                    const radius = (sdr / MAX_SDR) * RADIUS;
+                    ctx.beginPath();
+                    ctx.arc(CENTER_X, CENTER_Y, radius, Math.PI, 0, true);
                     ctx.stroke();
 
-                    ctx.fillStyle = '#666';
-                    ctx.font = '11px Arial';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(std.toFixed(2), CENTER_X + radius, CENTER_Y + 20);
+                    // Labels on right side
+                    ctx.fillStyle = '#000000';
+                    ctx.font = 'bold 11px Arial';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(sdr.toFixed(2), CENTER_X + radius + 8, CENTER_Y + 5);
                 });
             };
 
             const drawRMSDContours = (ctx) => {
-                const refX = CENTER_X + RADIUS;
+                const refX = CENTER_X + RADIUS * (1.0 / MAX_SDR);
                 const refY = CENTER_Y;
-                const rmsds = [0.25, 0.5, 0.75, 1.0, 1.25];
+                const rmsdLevels = [0.2, 0.4, 0.6, 0.8, 1.0];
 
-                ctx.strokeStyle = '#90caf9';
-                ctx.lineWidth = 1.5;
-                ctx.setLineDash([3, 3]);
+                ctx.strokeStyle = '#32CD32';  // Lime green
+                ctx.lineWidth = 1.3;
+                ctx.setLineDash([4, 4]);
 
-                rmsds.forEach(rmsd => {
-                    const radius = rmsd * RADIUS;
+                rmsdLevels.forEach(rmsd => {
+                    const radius = (rmsd / MAX_SDR) * RADIUS;
                     ctx.beginPath();
                     ctx.arc(refX, refY, radius, Math.PI / 2, 3 * Math.PI / 2, false);
                     ctx.stroke();
+
+                    // Label
+                    const labelX = refX - radius * 0.7;
+                    const labelY = refY - radius * 0.7;
+                    ctx.fillStyle = '#32CD32';
+                    ctx.font = 'bold 10px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(rmsd.toFixed(1), labelX, labelY);
                 });
 
                 ctx.setLineDash([]);
             };
 
             const drawAxes = (ctx) => {
-                ctx.strokeStyle = '#333';
+                // Horizontal axis
+                ctx.strokeStyle = '#000000';
                 ctx.lineWidth = 2;
                 ctx.beginPath();
                 ctx.moveTo(CENTER_X, CENTER_Y);
-                ctx.lineTo(CENTER_X + RADIUS * 1.6, CENTER_Y);
+                ctx.lineTo(CENTER_X + RADIUS * 1.25, CENTER_Y);
                 ctx.stroke();
 
+                // Vertical semicircle arc
                 ctx.beginPath();
-                ctx.arc(CENTER_X, CENTER_Y, RADIUS * 1.5, Math.PI, 0, true);
+                ctx.arc(CENTER_X, CENTER_Y, RADIUS * 1.15, Math.PI, 0, true);
                 ctx.stroke();
 
-                ctx.fillStyle = '#333';
-                ctx.beginPath();
-                ctx.moveTo(CENTER_X + RADIUS * 1.6, CENTER_Y);
-                ctx.lineTo(CENTER_X + RADIUS * 1.6 - 10, CENTER_Y - 5);
-                ctx.lineTo(CENTER_X + RADIUS * 1.6 - 10, CENTER_Y + 5);
-                ctx.fill();
+                // Correlation ticks and labels (blue)
+                const correlations = [0, 0.2, 0.4, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99];
+                correlations.forEach(corr => {
+                    const angle = Math.acos(corr);
+                    const x = CENTER_X + RADIUS * 1.15 * Math.cos(angle);
+                    const y = CENTER_Y - RADIUS * 1.15 * Math.sin(angle);
+
+                    // Tick mark
+                    const tickX = CENTER_X + RADIUS * 1.18 * Math.cos(angle);
+                    const tickY = CENTER_Y - RADIUS * 1.18 * Math.sin(angle);
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(tickX, tickY);
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+
+                    // Label
+                    const labelX = CENTER_X + RADIUS * 1.28 * Math.cos(angle);
+                    const labelY = CENTER_Y - RADIUS * 1.28 * Math.sin(angle);
+                    ctx.fillStyle = 'royalblue';
+                    ctx.font = 'bold 10px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(corr.toFixed(2), labelX, labelY);
+                });
             };
 
             const drawReferencePoint = (ctx) => {
-                const refX = CENTER_X + RADIUS;
+                const refX = CENTER_X + RADIUS * (1.0 / MAX_SDR);
                 const refY = CENTER_Y;
 
-                ctx.fillStyle = '#f44336';
-                ctx.strokeStyle = '#d32f2f';
-                ctx.lineWidth = 2;
+                // Black star
+                drawStar(ctx, refX, refY, 14, '#000000', '#000000');
 
+                // Reference line
+                ctx.strokeStyle = '#000000';
+                ctx.lineWidth = 1.2;
+                ctx.setLineDash([5, 5]);
                 ctx.beginPath();
-                ctx.arc(refX, refY, 8, 0, 2 * Math.PI);
-                ctx.fill();
+                const t = [];
+                for (let i = 0; i <= 100; i++) {
+                    t.push((Math.PI * i) / 100);
+                }
+                t.forEach((angle, i) => {
+                    const x = CENTER_X + RADIUS * (1.0 / MAX_SDR) * Math.cos(angle);
+                    const y = CENTER_Y - RADIUS * (1.0 / MAX_SDR) * Math.sin(angle);
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                });
                 ctx.stroke();
+                ctx.setLineDash([]);
 
-                ctx.fillStyle = '#333';
-                ctx.font = 'bold 14px Arial';
+                // Label
+                ctx.fillStyle = '#000000';
+                ctx.font = 'bold 12px Arial';
                 ctx.textAlign = 'center';
-                ctx.fillText('REF', refX, refY - 15);
+                ctx.fillText('Observed', refX, refY - 20);
             };
 
             const drawModelPoint = (ctx, model) => {
-                const angle = Math.acos(Math.max(-1, Math.min(1, model.correlation)));
-                const x = CENTER_X + model.stdDev * RADIUS * Math.cos(angle);
-                const y = CENTER_Y - model.stdDev * RADIUS * Math.sin(angle);
+                const angle = Math.acos(Math.max(0, Math.min(1, model.correlation)));
+                const x = CENTER_X + (model.sdr / MAX_SDR) * RADIUS * Math.cos(angle);
+                const y = CENTER_Y - (model.sdr / MAX_SDR) * RADIUS * Math.sin(angle);
 
-                ctx.fillStyle = model.color;
-                ctx.strokeStyle = model.color;
-                ctx.lineWidth = 2;
+                // Draw marker
+                if (model.marker === 'circle') {
+                    ctx.beginPath();
+                    ctx.arc(x, y, 7, 0, 2 * Math.PI);
+                    ctx.fillStyle = model.color;
+                    ctx.fill();
+                    ctx.strokeStyle = '#000000';
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+                } else if (model.marker === 'triangle') {
+                    drawTriangle(ctx, x, y, 14, model.color);
+                } else if (model.marker === 'square') {
+                    ctx.fillStyle = model.color;
+                    ctx.strokeStyle = '#000000';
+                    ctx.lineWidth = 1.5;
+                    ctx.fillRect(x - 7, y - 7, 14, 14);
+                    ctx.strokeRect(x - 7, y - 7, 14, 14);
+                } else if (model.marker === 'diamond') {
+                    drawDiamond(ctx, x, y, 14, model.color);
+                }
 
-                ctx.beginPath();
-                ctx.arc(x, y, 6, 0, 2 * Math.PI);
-                ctx.fill();
-
-                ctx.font = 'bold 12px Arial';
-                ctx.fillStyle = '#333';
+                // Label
+                ctx.fillStyle = '#000000';
+                ctx.font = 'bold 11px Arial';
                 ctx.textAlign = 'center';
-                ctx.fillText(model.name, x, y - 12);
+                ctx.fillText(model.name, x, y - 14);
             };
 
-            const drawLabels = (ctx) => {
-                ctx.fillStyle = '#333';
+            const drawStar = (ctx, x, y, size, fillColor, strokeColor) => {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                    const angle = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+                    const radius = i % 2 === 0 ? size : size / 2.5;
+                    const px = radius * Math.cos(angle);
+                    const py = radius * Math.sin(angle);
+                    if (i === 0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
+                }
+                ctx.closePath();
+                ctx.fillStyle = fillColor;
+                ctx.fill();
+                ctx.strokeStyle = strokeColor;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                ctx.restore();
+            };
+
+            const drawTriangle = (ctx, x, y, size, color) => {
+                ctx.beginPath();
+                ctx.moveTo(x, y - size / 2);
+                ctx.lineTo(x - size / 2, y + size / 2);
+                ctx.lineTo(x + size / 2, y + size / 2);
+                ctx.closePath();
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = '#000000';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            };
+
+            const drawDiamond = (ctx, x, y, size, color) => {
+                ctx.beginPath();
+                ctx.moveTo(x, y - size / 2);
+                ctx.lineTo(x + size / 2, y);
+                ctx.lineTo(x, y + size / 2);
+                ctx.lineTo(x - size / 2, y);
+                ctx.closePath();
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = '#000000';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            };
+
+            const drawAxisLabels = (ctx) => {
+                // Top: Correlation Coefficient (blue, bold)
+                ctx.fillStyle = 'royalblue';
                 ctx.font = 'bold 14px Arial';
                 ctx.textAlign = 'center';
-                ctx.fillText('Standard Deviation', CENTER_X + RADIUS * 0.8, CENTER_Y + 50);
+                ctx.fillText('Correlation Coefficient', CENTER_X, CENTER_Y - RADIUS * 1.42);
 
+                // Right: SDR (black, bold)
                 ctx.save();
-                ctx.translate(CENTER_X - 50, CENTER_Y - RADIUS * 0.5);
+                ctx.translate(CENTER_X + RADIUS * 1.35, CENTER_Y - RADIUS * 0.4);
                 ctx.rotate(-Math.PI / 2);
-                ctx.fillText('Standard Deviation', 0, 0);
+                ctx.fillStyle = '#000000';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Standard Deviation Ratio (SDR)', 0, 0);
                 ctx.restore();
 
-                ctx.fillText('Correlation', CENTER_X + RADIUS * 1.2, CENTER_Y - RADIUS * 1.3);
-
+                // Bottom: Normalized RMSD (green, bold)
                 if (showRMSD) {
-                    ctx.fillStyle = '#2196F3';
-                    ctx.font = '12px Arial';
-                    ctx.fillText('RMSD', CENTER_X + RADIUS * 1.4, CENTER_Y - 20);
+                    ctx.fillStyle = '#32CD32';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Normalized RMSD', CENTER_X, CENTER_Y + RADIUS * 0.5);
                 }
             };
 
-            const calculateRMSD = (corr, stdDev) => {
-                return Math.sqrt(1 + stdDev * stdDev - 2 * stdDev * corr);
+            const calculateRMSD = (corr, sdr) => {
+                return Math.sqrt(1 + sdr * sdr - 2 * sdr * corr);
             };
 
             const addModel = () => {
@@ -1145,7 +744,7 @@
                     return;
                 }
 
-                const rmsd = calculateRMSD(currentModel.correlation, currentModel.stdDev);
+                const rmsd = calculateRMSD(currentModel.correlation, currentModel.sdr);
                 
                 setModels([...models, {
                     ...currentModel,
@@ -1155,8 +754,9 @@
                 setCurrentModel({
                     name: '',
                     correlation: 0.8,
-                    stdDev: 1.0,
-                    color: `#${Math.floor(Math.random()*16777215).toString(16)}`
+                    sdr: 1.0,
+                    color: '#6FA8DC',
+                    marker: 'circle'
                 });
             };
 
@@ -1167,39 +767,35 @@
             const loadExample = (exampleType) => {
                 let exampleModels = [];
 
-                if (exampleType === 'weather') {
+                if (exampleType === 'mhhw') {
                     exampleModels = [
-                        { name: 'Model A', correlation: 0.92, stdDev: 1.05, color: '#2196F3' },
-                        { name: 'Model B', correlation: 0.85, stdDev: 0.95, color: '#4CAF50' },
-                        { name: 'Model C', correlation: 0.78, stdDev: 1.15, color: '#FF9800' },
-                        { name: 'Model D', correlation: 0.65, stdDev: 0.85, color: '#9C27B0' }
+                        { name: 'Uncorrected', correlation: 0.85, sdr: 1.12, color: '#6FA8DC', marker: 'circle' },
+                        { name: 'Bias-Corrected', correlation: 0.93, sdr: 1.02, color: '#1C4587', marker: 'triangle' }
                     ];
-                } else if (exampleType === 'ml') {
+                } else if (exampleType === 'gt') {
                     exampleModels = [
-                        { name: 'CNN', correlation: 0.88, stdDev: 1.02, color: '#E91E63' },
-                        { name: 'LSTM', correlation: 0.82, stdDev: 0.98, color: '#00BCD4' },
-                        { name: 'RF', correlation: 0.75, stdDev: 0.92, color: '#8BC34A' },
-                        { name: 'Linear', correlation: 0.68, stdDev: 0.88, color: '#FF5722' }
+                        { name: 'Uncorrected', correlation: 0.78, sdr: 1.18, color: '#6FA8DC', marker: 'circle' },
+                        { name: 'Bias-Corrected', correlation: 0.91, sdr: 0.98, color: '#1C4587', marker: 'triangle' }
                     ];
                 } else if (exampleType === 'climate') {
                     exampleModels = [
-                        { name: 'CMIP6-A', correlation: 0.95, stdDev: 1.08, color: '#3F51B5' },
-                        { name: 'CMIP6-B', correlation: 0.91, stdDev: 1.12, color: '#009688' },
-                        { name: 'CMIP5-A', correlation: 0.87, stdDev: 0.96, color: '#FFC107' },
-                        { name: 'CMIP5-B', correlation: 0.83, stdDev: 1.05, color: '#795548' }
+                        { name: 'Model A', correlation: 0.92, sdr: 1.05, color: '#2196F3', marker: 'circle' },
+                        { name: 'Model B', correlation: 0.88, sdr: 0.95, color: '#4CAF50', marker: 'triangle' },
+                        { name: 'Model C', correlation: 0.82, sdr: 1.15, color: '#FF9800', marker: 'square' },
+                        { name: 'Model D', correlation: 0.75, sdr: 0.90, color: '#9C27B0', marker: 'diamond' }
                     ];
-                } else if (exampleType === 'ensemble') {
+                } else if (exampleType === 'ml') {
                     exampleModels = [
-                        { name: 'Ens Mean', correlation: 0.93, stdDev: 0.98, color: '#673AB7' },
-                        { name: 'Member 1', correlation: 0.88, stdDev: 1.05, color: '#CDDC39' },
-                        { name: 'Member 2', correlation: 0.85, stdDev: 0.95, color: '#FF6F00' },
-                        { name: 'Member 3', correlation: 0.82, stdDev: 1.08, color: '#607D8B' }
+                        { name: 'CNN', correlation: 0.88, sdr: 1.02, color: '#E91E63', marker: 'circle' },
+                        { name: 'LSTM', correlation: 0.82, sdr: 0.98, color: '#00BCD4', marker: 'triangle' },
+                        { name: 'RF', correlation: 0.75, sdr: 0.92, color: '#8BC34A', marker: 'square' },
+                        { name: 'Linear', correlation: 0.68, sdr: 0.88, color: '#FF5722', marker: 'diamond' }
                     ];
                 }
 
                 setModels(exampleModels.map(m => ({
                     ...m,
-                    rmsd: calculateRMSD(m.correlation, m.stdDev)
+                    rmsd: calculateRMSD(m.correlation, m.sdr)
                 })));
             };
 
@@ -1213,16 +809,16 @@
                 const dy = y - CENTER_Y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance <= RADIUS * 1.5 && dy <= 0) {
+                if (distance <= RADIUS && dy <= 0) {
                     const angle = Math.atan2(-dy, dx);
                     const correlation = Math.cos(angle);
-                    const stdDev = distance / RADIUS;
+                    const sdr = (distance / RADIUS) * MAX_SDR;
 
-                    if (correlation >= 0 && correlation <= 1 && stdDev >= 0 && stdDev <= 1.5) {
+                    if (correlation >= 0 && correlation <= 1 && sdr >= 0 && sdr <= MAX_SDR) {
                         setCurrentModel({
                             ...currentModel,
                             correlation: parseFloat(correlation.toFixed(3)),
-                            stdDev: parseFloat(stdDev.toFixed(3))
+                            sdr: parseFloat(sdr.toFixed(3))
                         });
                         setActiveTab('add');
                     }
@@ -1230,259 +826,257 @@
             };
 
             return (
-                <div className="tool-main-content">
-                    <div className="tool-diagram-section">
-                        <canvas
-                            ref={canvasRef}
-                            className="tool-canvas"
-                            width={CANVAS_SIZE}
-                            height={CANVAS_SIZE}
-                            onClick={handleCanvasClick}
-                        />
-
-                        <div className="tool-legend">
-                            <div className="tool-legend-title">Legend & Controls</div>
-                            <div className="tool-legend-item">
-                                <div className="tool-legend-line" style={{backgroundColor: '#d0d0d0'}}></div>
-                                <span>Standard Deviation Circles</span>
-                            </div>
-                            <div className="tool-legend-item">
-                                <div className="tool-legend-line" style={{backgroundColor: '#90caf9', borderStyle: 'dashed'}}></div>
-                                <span>RMSD Contours (centered on REF)</span>
-                            </div>
-                            <div className="tool-legend-item">
-                                <div className="tool-legend-line" style={{backgroundColor: '#e0e0e0', borderStyle: 'dashed'}}></div>
-                                <span>Correlation Lines</span>
-                            </div>
-                            <div style={{marginTop: '15px', display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
-                                <label style={{display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer'}}>
-                                    <input 
-                                        type="checkbox" 
-                                        checked={showRMSD}
-                                        onChange={(e) => setShowRMSD(e.target.checked)}
-                                    />
-                                    Show RMSD Contours
-                                </label>
-                                <label style={{display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer'}}>
-                                    <input 
-                                        type="checkbox" 
-                                        checked={showCorrelationLines}
-                                        onChange={(e) => setShowCorrelationLines(e.target.checked)}
-                                    />
-                                    Show Correlation Lines
-                                </label>
-                            </div>
-                        </div>
+                <div className="container">
+                    <div className="header">
+                        <h1>📊 Interactive Taylor Diagram</h1>
+                        <p>Professional single-quadrant Taylor diagram matching matplotlib style</p>
                     </div>
 
-                    <div className="tool-controls-section">
-                        <div className="tool-tab-buttons">
-                            <button 
-                                className={`tool-tab-button ${activeTab === 'add' ? 'active' : ''}`}
-                                onClick={() => setActiveTab('add')}
-                            >
-                                Add Model
-                            </button>
-                            <button 
-                                className={`tool-tab-button ${activeTab === 'examples' ? 'active' : ''}`}
-                                onClick={() => setActiveTab('examples')}
-                            >
-                                Examples
-                            </button>
-                            <button 
-                                className={`tool-tab-button ${activeTab === 'learn' ? 'active' : ''}`}
-                                onClick={() => setActiveTab('learn')}
-                            >
-                                Learn
-                            </button>
-                        </div>
+                    <div className="main-content">
+                        <div className="diagram-section">
+                            <canvas
+                                ref={canvasRef}
+                                width={CANVAS_SIZE}
+                                height={CANVAS_SIZE}
+                                onClick={handleCanvasClick}
+                            />
 
-                        {activeTab === 'add' && (
-                            <div>
-                                <div className="tool-info-box">
-                                    💡 Click on the diagram to set correlation and standard deviation, or use the inputs below.
-                                </div>
-
-                                <div className="tool-input-group">
-                                    <label>Model Name</label>
-                                    <input
-                                        type="text"
-                                        value={currentModel.name}
-                                        onChange={(e) => setCurrentModel({...currentModel, name: e.target.value})}
-                                        placeholder="e.g., CNN Model, LSTM, etc."
-                                    />
-                                </div>
-
-                                <div className="tool-input-group">
-                                    <label>Correlation (r): {currentModel.correlation.toFixed(3)}</label>
-                                    <input
-                                        type="range"
-                                        min="0"
-                                        max="1"
-                                        step="0.01"
-                                        value={currentModel.correlation}
-                                        onChange={(e) => setCurrentModel({...currentModel, correlation: parseFloat(e.target.value)})}
-                                    />
-                                </div>
-
-                                <div className="tool-input-group">
-                                    <label>Normalized Std Dev (σ): {currentModel.stdDev.toFixed(3)}</label>
-                                    <input
-                                        type="range"
-                                        min="0"
-                                        max="2"
-                                        step="0.01"
-                                        value={currentModel.stdDev}
-                                        onChange={(e) => setCurrentModel({...currentModel, stdDev: parseFloat(e.target.value)})}
-                                    />
-                                </div>
-
-                                <div className="tool-input-group">
-                                    <label>Color</label>
-                                    <div className="tool-color-input">
-                                        <input
-                                            type="color"
-                                            value={currentModel.color}
-                                            onChange={(e) => setCurrentModel({...currentModel, color: e.target.value})}
+                            <div className="legend">
+                                <div className="legend-title">Display Controls</div>
+                                <div className="controls-toggle">
+                                    <label className="toggle-label">
+                                        <input 
+                                            type="checkbox" 
+                                            checked={showRMSD}
+                                            onChange={(e) => setShowRMSD(e.target.checked)}
                                         />
-                                        <span>{currentModel.color}</span>
+                                        <span>RMSD Contours</span>
+                                    </label>
+                                    <label className="toggle-label">
+                                        <input 
+                                            type="checkbox" 
+                                            checked={showCorrelationLines}
+                                            onChange={(e) => setShowCorrelationLines(e.target.checked)}
+                                        />
+                                        <span>Correlation Lines</span>
+                                    </label>
+                                    <label className="toggle-label">
+                                        <input 
+                                            type="checkbox" 
+                                            checked={showGrid}
+                                            onChange={(e) => setShowGrid(e.target.checked)}
+                                        />
+                                        <span>Grid Lines</span>
+                                    </label>
+                                </div>
+
+                                <div style={{marginTop: '15px'}}>
+                                    <div className="legend-title">Legend</div>
+                                    <div className="legend-item">
+                                        <div className="legend-symbol" style={{background: '#000000', clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)'}}></div>
+                                        <span>Observed (Reference)</span>
+                                    </div>
+                                    <div className="legend-item">
+                                        <div className="legend-line" style={{background: '#000000', height: '2px'}}></div>
+                                        <span>SDR Circles</span>
+                                    </div>
+                                    <div className="legend-item">
+                                        <div className="legend-line" style={{background: 'royalblue', height: '2px', borderTop: '2px dashed royalblue'}}></div>
+                                        <span>Correlation Lines</span>
+                                    </div>
+                                    <div className="legend-item">
+                                        <div className="legend-line" style={{background: '#32CD32', height: '2px', borderTop: '2px dashed #32CD32'}}></div>
+                                        <span>Normalized RMSD</span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <div className="tool-info-box" style={{background: '#f0f0f0', borderLeft: '4px solid #666'}}>
-                                    <strong>Calculated RMSD:</strong> {calculateRMSD(currentModel.correlation, currentModel.stdDev).toFixed(3)}
-                                </div>
-
-                                <button className="tool-button tool-button-primary" onClick={addModel}>
-                                    Add Model to Diagram
+                        <div className="controls-section">
+                            <div className="tab-buttons">
+                                <button 
+                                    className={`tab-button ${activeTab === 'add' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('add')}
+                                >
+                                    Add Model
                                 </button>
+                                <button 
+                                    className={`tab-button ${activeTab === 'examples' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('examples')}
+                                >
+                                    Examples
+                                </button>
+                            </div>
 
-                                {models.length > 0 && (
-                                    <button 
-                                        className="tool-button tool-button-danger" 
-                                        onClick={() => setModels([])}
-                                    >
-                                        Clear All Models
+                            {activeTab === 'add' && (
+                                <div>
+                                    <div className="info-box">
+                                        💡 <strong>Click on the diagram</strong> to set values, or use controls below
+                                    </div>
+
+                                    <div className="input-group">
+                                        <label>Model Name</label>
+                                        <input
+                                            type="text"
+                                            value={currentModel.name}
+                                            onChange={(e) => setCurrentModel({...currentModel, name: e.target.value})}
+                                            placeholder="e.g., Uncorrected, CNN, etc."
+                                        />
+                                    </div>
+
+                                    <div className="input-group">
+                                        <label>Correlation: {currentModel.correlation.toFixed(3)}</label>
+                                        <input
+                                            type="range"
+                                            min="0"
+                                            max="1"
+                                            step="0.01"
+                                            value={currentModel.correlation}
+                                            onChange={(e) => setCurrentModel({...currentModel, correlation: parseFloat(e.target.value)})}
+                                        />
+                                    </div>
+
+                                    <div className="input-group">
+                                        <label>SDR (σ/σ_ref): {currentModel.sdr.toFixed(3)}</label>
+                                        <input
+                                            type="range"
+                                            min="0"
+                                            max="1.5"
+                                            step="0.01"
+                                            value={currentModel.sdr}
+                                            onChange={(e) => setCurrentModel({...currentModel, sdr: parseFloat(e.target.value)})}
+                                        />
+                                    </div>
+
+                                    <div className="input-group">
+                                        <label>Marker Type</label>
+                                        <select 
+                                            className="marker-select"
+                                            value={currentModel.marker}
+                                            onChange={(e) => setCurrentModel({...currentModel, marker: e.target.value})}
+                                        >
+                                            <option value="circle">Circle (●)</option>
+                                            <option value="triangle">Triangle (▲)</option>
+                                            <option value="square">Square (■)</option>
+                                            <option value="diamond">Diamond (◆)</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="input-group">
+                                        <label>Color</label>
+                                        <div className="color-input">
+                                            <input
+                                                type="color"
+                                                value={currentModel.color}
+                                                onChange={(e) => setCurrentModel({...currentModel, color: e.target.value})}
+                                            />
+                                            <span style={{fontSize: '12px', color: '#666'}}>{currentModel.color}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="stats-box">
+                                        <strong>Normalized RMSD:</strong> {calculateRMSD(currentModel.correlation, currentModel.sdr).toFixed(3)}
+                                    </div>
+
+                                    <button className="button button-primary" onClick={addModel}>
+                                        Add Model to Diagram
                                     </button>
-                                )}
 
-                                <div className="tool-model-list">
-                                    <h3 style={{marginBottom: '10px', color: '#495057'}}>Current Models ({models.length})</h3>
-                                    {models.map((model, index) => (
-                                        <div key={index} className="tool-model-item">
-                                            <div style={{display: 'flex', alignItems: 'center', flex: 1}}>
-                                                <div 
-                                                    className="tool-model-color" 
-                                                    style={{backgroundColor: model.color}}
-                                                ></div>
-                                                <div className="tool-model-info">
-                                                    <div className="tool-model-name">{model.name}</div>
-                                                    <div className="tool-model-stats">
-                                                        r: {model.correlation.toFixed(3)} | 
-                                                        σ: {model.stdDev.toFixed(3)} | 
-                                                        RMSD: {model.rmsd.toFixed(3)}
+                                    {models.length > 0 && (
+                                        <button 
+                                            className="button button-danger" 
+                                            onClick={() => setModels([])}
+                                        >
+                                            Clear All Models
+                                        </button>
+                                    )}
+
+                                    <div className="model-list">
+                                        <h3 style={{marginBottom: '12px', color: '#333', fontSize: '14px', fontWeight: '700'}}>
+                                            Current Models ({models.length})
+                                        </h3>
+                                        {models.map((model, index) => (
+                                            <div key={index} className="model-item">
+                                                <div className="model-info">
+                                                    <div 
+                                                        className="model-marker" 
+                                                        style={{
+                                                            backgroundColor: model.color,
+                                                            clipPath: model.marker === 'triangle' ? 'polygon(50% 0%, 0% 100%, 100% 100%)' :
+                                                                     model.marker === 'diamond' ? 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' :
+                                                                     model.marker === 'square' ? 'none' : 'circle(50%)'
+                                                        }}
+                                                    ></div>
+                                                    <div>
+                                                        <div className="model-name">{model.name}</div>
+                                                        <div className="model-stats">
+                                                            r: {model.correlation.toFixed(3)} | 
+                                                            SDR: {model.sdr.toFixed(3)} | 
+                                                            RMSD: {model.rmsd.toFixed(3)}
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <button 
+                                                    className="delete-btn"
+                                                    onClick={() => deleteModel(index)}
+                                                >
+                                                    Delete
+                                                </button>
                                             </div>
-                                            <button 
-                                                className="tool-delete-btn"
-                                                onClick={() => deleteModel(index)}
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
 
-                        {activeTab === 'examples' && (
-                            <div>
-                                <div className="tool-info-box">
-                                    Load pre-configured examples to explore different scenarios
-                                </div>
+                            {activeTab === 'examples' && (
+                                <div>
+                                    <div className="info-box">
+                                        Load pre-configured examples based on your Python code style
+                                    </div>
 
-                                <div className="tool-example-buttons">
-                                    <button className="tool-example-btn" onClick={() => loadExample('weather')}>
-                                        🌦️ Weather Models
-                                    </button>
-                                    <button className="tool-example-btn" onClick={() => loadExample('ml')}>
-                                        🤖 ML Comparison
-                                    </button>
-                                    <button className="tool-example-btn" onClick={() => loadExample('climate')}>
-                                        🌍 Climate Models
-                                    </button>
-                                    <button className="tool-example-btn" onClick={() => loadExample('ensemble')}>
-                                        📊 Ensemble Forecast
-                                    </button>
-                                </div>
+                                    <div className="example-buttons">
+                                        <button className="example-btn" onClick={() => loadExample('mhhw')}>
+                                            🌊 MHHW Example
+                                        </button>
+                                        <button className="example-btn" onClick={() => loadExample('gt')}>
+                                            📊 GT Example
+                                        </button>
+                                        <button className="example-btn" onClick={() => loadExample('climate')}>
+                                            🌍 Climate Models
+                                        </button>
+                                        <button className="example-btn" onClick={() => loadExample('ml')}>
+                                            🤖 ML Comparison
+                                        </button>
+                                    </div>
 
-                                <div className="tool-info-box" style={{background: '#fff3cd', borderLeft: '4px solid #ffc107', marginTop: '20px'}}>
-                                    <strong>Weather Models:</strong> Compare different numerical weather prediction models<br/><br/>
-                                    <strong>ML Comparison:</strong> Compare CNN, LSTM, Random Forest, and Linear Regression<br/><br/>
-                                    <strong>Climate Models:</strong> CMIP5 vs CMIP6 model comparison<br/><br/>
-                                    <strong>Ensemble Forecast:</strong> Ensemble mean vs individual members
-                                </div>
-                            </div>
-                        )}
+                                    <div className="info-box" style={{background: '#fff3cd', borderLeft: '4px solid #ffc107'}}>
+                                        <strong>MHHW Example:</strong> Mean Higher High Water comparison - uncorrected vs bias-corrected<br/><br/>
+                                        <strong>GT Example:</strong> Great Diurnal Range comparison - uncorrected vs bias-corrected<br/><br/>
+                                        <strong>Climate Models:</strong> Multi-model comparison with different markers<br/><br/>
+                                        <strong>ML Comparison:</strong> Machine learning model performance comparison
+                                    </div>
 
-                        {activeTab === 'learn' && (
-                            <div>
-                                <div className="tool-info-box">
-                                    <strong>📚 Understanding Taylor Diagrams</strong>
+                                    <div className="info-box" style={{background: '#e8f5e9', borderLeft: '4px solid #4CAF50'}}>
+                                        <strong>📚 Key Concepts:</strong><br/><br/>
+                                        <strong>SDR (Standard Deviation Ratio):</strong> σ_model / σ_observed<br/>
+                                        • SDR = 1.0: Perfect variance match<br/>
+                                        • SDR &gt; 1.0: Model overestimates variability<br/>
+                                        • SDR &lt; 1.0: Model underestimates variability<br/><br/>
+                                        
+                                        <strong>Normalized RMSD:</strong><br/>
+                                        RMSD² = 1 + SDR² - 2·SDR·r<br/><br/>
+                                        
+                                        <strong>Perfect Model:</strong> At reference point with r=1.0, SDR=1.0, RMSD=0.0
+                                    </div>
                                 </div>
-
-                                <div className="tool-info-box" style={{background: '#e8f5e9', borderLeft: '4px solid #4CAF50'}}>
-                                    <strong>Correlation (r):</strong><br/>
-                                    Measures pattern similarity between model and reference. Ranges from 0 to 1.
-                                    Higher correlation = better pattern matching.
-                                </div>
-
-                                <div className="tool-info-box" style={{background: '#fff3e0', borderLeft: '4px solid #FF9800'}}>
-                                    <strong>Standard Deviation (σ):</strong><br/>
-                                    Measures variability. When normalized, reference = 1.0.
-                                    Values &gt; 1 = overestimate variability<br/>
-                                    Values &lt; 1 = underestimate variability
-                                </div>
-
-                                <div className="tool-info-box" style={{background: '#e3f2fd', borderLeft: '4px solid #2196F3'}}>
-                                    <strong>RMSD (Root Mean Square Difference):</strong><br/>
-                                    Overall error magnitude. Distance from any point to the reference point.
-                                    Smaller RMSD = better overall agreement.
-                                </div>
-
-                                <div className="tool-info-box" style={{background: '#f3e5f5', borderLeft: '4px solid #9C27B0'}}>
-                                    <strong>🎯 Perfect Model:</strong><br/>
-                                    Would plot exactly on the reference point (REF) with:<br/>
-                                    • Correlation = 1.0<br/>
-                                    • Std Dev = 1.0<br/>
-                                    • RMSD = 0.0
-                                </div>
-
-                                <div className="tool-info-box" style={{background: '#fce4ec', borderLeft: '4px solid #E91E63'}}>
-                                    <strong>💡 Reading the Diagram:</strong><br/>
-                                    • <strong>Closer to REF</strong> = Better performance<br/>
-                                    • <strong>Same angle</strong> = Same correlation<br/>
-                                    • <strong>Same radius</strong> = Same variability<br/>
-                                    • <strong>Same RMSD arc</strong> = Same overall error
-                                </div>
-
-                                <div className="tool-info-box" style={{background: '#fff9c4', borderLeft: '4px solid #FFEB3B'}}>
-                                    <strong>🔬 Applications:</strong><br/>
-                                    • Climate model evaluation<br/>
-                                    • Weather forecast verification<br/>
-                                    • Machine learning model comparison<br/>
-                                    • Spatial prediction assessment<br/>
-                                    • Time series forecasting
-                                </div>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </div>
                 </div>
             );
         }
 
-        ReactDOM.render(<TaylorDiagramTool />, document.getElementById('taylor-tool-root'));
+        ReactDOM.render(<TaylorDiagramTool />, document.getElementById('root'));
     </script>
 </body>
 </html>
